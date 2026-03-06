@@ -366,6 +366,51 @@
             "file": "logo/horizontal/png/horizontal-full-dark-animated.webp",
             "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-full-dark-animated.webp"
           }
+        },
+        {
+          "id": "horizontal-rainbow",
+          "description": "Rainbow logo mark, sliding window of 4 colors",
+          "withText": false,
+          "animated": false,
+          "theme": "light",
+          "svg": {
+            "file": "logo/horizontal/svg/horizontal-rainbow.svg",
+            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/svg/horizontal-rainbow.svg"
+          },
+          "png": {
+            "file": "logo/horizontal/png/horizontal-rainbow.png",
+            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-rainbow.png"
+          },
+          "webp": {
+            "file": "logo/horizontal/png/horizontal-rainbow.webp",
+            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-rainbow.webp"
+          }
+        },
+        {
+          "id": "horizontal-rainbow-animated",
+          "description": "Animated rainbow logo mark cycling all 7 colors one step at a time",
+          "withText": false,
+          "animated": true,
+          "theme": "light",
+          "frameCount": 7,
+          "frameDurationMs": 10000,
+          "colors": [
+            "#F2705E",
+            "#F9BA61",
+            "#F2CD37",
+            "#73DCA1",
+            "#9FC3E9",
+            "#9195CA",
+            "#AC78BA"
+          ],
+          "gif": {
+            "file": "logo/horizontal/png/horizontal-rainbow-animated.gif",
+            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-rainbow-animated.gif"
+          },
+          "webp": {
+            "file": "logo/horizontal/png/horizontal-rainbow-animated.webp",
+            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-rainbow-animated.webp"
+          }
         }
       ]
     }

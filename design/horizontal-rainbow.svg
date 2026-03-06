@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="339.557685" height="90.251594" viewBox="0 0 339.557685 90.251594"
+     xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(0.000000, 0)">
+    <!-- Symmetric LEGO minifig head.
+     ViewBox: 0 0 76.674316 90.251594  (same as original)
+     Center x: 38.337158
+
+     Symmetry axes used throughout:
+       head/nub  x: cx ± 19.0  → [19.337, 57.337]
+       body      x: cx ± 37.0  → [ 1.337, 75.337]
+       neck      x: cx ± 16.5  → [21.837, 54.837]
+       eyes      x: cx ± 14.305 at cy = 41.644, r = 9.676 (6.451 × 1.5)
+       smile     x: cx ± 18.0  → [20.337, 56.337], U-band y=70..82/75.5
+-->
+
+<defs
+     id="defs1" />
+  <!-- Head outline: nub on top, face body, narrow neck at bottom.
+       Path is clockwise from nub top-left.
+       Every right-side coordinate mirrors its left-side counterpart
+       around cx = 38.337158. -->
+  <path
+     style="fill:#f2705e;stroke-width:0.264583"
+     d="m 24.517273,0.14302202 h 29.52319 L 54.197441,9.5 c 10,0.5 21.296537,8.77912 21.296537,12.77912 C 76.156978,36.27912 76,65 75.337,79 c 0,4.5 -7.546484,4.843022 -17.046484,4.843022 v 6.252 L 19.168374,90.252 V 84 C 9.6683743,84 2.2788679,80.988352 2.2788679,76.488352 c -0.663,-14 -0.819978,-38.953409 -0.156978,-52.953409 0,-4 12.3953831,-13.691921 22.3953831,-14.191921 z"
+     id="path9-2" />
+  <path
+     style="fill:#151100;stroke-width:0"
+     d="m 15.610417,51.064592 c 0,28.926294 45.690626,28.926294 45.690626,0 0,13.257884 -45.690626,13.257884 -45.690626,0 z"
+     id="path8-9-2" />
+  <circle
+     style="fill:#000000;stroke-width:0.264583"
+     id="path2"
+     cx="24.032"
+     cy="35.823162"
+     r="9.6759996" />
+  <circle
+     style="fill:#000000;stroke-width:0.264583"
+     id="path2-5"
+     cx="52.641998"
+     cy="35.823162"
+     r="9.6759996" />
+  </g>
+  <g transform="translate(87.627790, 0)">
+    <!-- Symmetric LEGO minifig head.
+     ViewBox: 0 0 76.674316 90.251594  (same as original)
+     Center x: 38.337158
+
+     Symmetry axes used throughout:
+       head/nub  x: cx ± 19.0  → [19.337, 57.337]
+       body      x: cx ± 37.0  → [ 1.337, 75.337]
+       neck      x: cx ± 16.5  → [21.837, 54.837]
+       eyes      x: cx ± 14.305 at cy = 41.644, r = 9.676 (6.451 × 1.5)
+       smile     x: cx ± 18.0  → [20.337, 56.337], U-band y=70..82/75.5
+-->
+
+<defs
+     id="defs1" />
+  <!-- Head outline: nub on top, face body, narrow neck at bottom.
+       Path is clockwise from nub top-left.
+       Every right-side coordinate mirrors its left-side counterpart
+       around cx = 38.337158. -->
+  <path
+     style="fill:#f9ba61;stroke-width:0.264583"
+     d="m 24.517273,0.14302202 h 29.52319 L 54.197441,9.5 c 10,0.5 21.296537,8.77912 21.296537,12.77912 C 76.156978,36.27912 76,65 75.337,79 c 0,4.5 -7.546484,4.843022 -17.046484,4.843022 v 6.252 L 19.168374,90.252 V 84 C 9.6683743,84 2.2788679,80.988352 2.2788679,76.488352 c -0.663,-14 -0.819978,-38.953409 -0.156978,-52.953409 0,-4 12.3953831,-13.691921 22.3953831,-14.191921 z"
+     id="path9-2" />
+  <path
+     style="fill:#151100;stroke-width:0"
+     d="m 15.610417,51.064592 c 0,28.926294 45.690626,28.926294 45.690626,0 0,13.257884 -45.690626,13.257884 -45.690626,0 z"
+     id="path8-9-2" />
+  <circle
+     style="fill:#000000;stroke-width:0.264583"
+     id="path2"
+     cx="24.032"
+     cy="35.823162"
+     r="9.6759996" />
+  <circle
+     style="fill:#000000;stroke-width:0.264583"
+     id="path2-5"
+     cx="52.641998"
+     cy="35.823162"
+     r="9.6759996" />
+  </g>
+  <g transform="translate(175.255579, 0)">
+    <!-- Symmetric LEGO minifig head.
+     ViewBox: 0 0 76.674316 90.251594  (same as original)
+     Center x: 38.337158
+
+     Symmetry axes used throughout:
+       head/nub  x: cx ± 19.0  → [19.337, 57.337]
+       body      x: cx ± 37.0  → [ 1.337, 75.337]
+       neck      x: cx ± 16.5  → [21.837, 54.837]
+       eyes      x: cx ± 14.305 at cy = 41.644, r = 9.676 (6.451 × 1.5)
+       smile     x: cx ± 18.0  → [20.337, 56.337], U-band y=70..82/75.5
+-->
+
+<defs
+     id="defs1" />
+  <!-- Head outline: nub on top, face body, narrow neck at bottom.
+       Path is clockwise from nub top-left.
+       Every right-side coordinate mirrors its left-side counterpart
+       around cx = 38.337158. -->
+  <path
+     style="fill:#f2cd37;stroke-width:0.264583"
+     d="m 24.517273,0.14302202 h 29.52319 L 54.197441,9.5 c 10,0.5 21.296537,8.77912 21.296537,12.77912 C 76.156978,36.27912 76,65 75.337,79 c 0,4.5 -7.546484,4.843022 -17.046484,4.843022 v 6.252 L 19.168374,90.252 V 84 C 9.6683743,84 2.2788679,80.988352 2.2788679,76.488352 c -0.663,-14 -0.819978,-38.953409 -0.156978,-52.953409 0,-4 12.3953831,-13.691921 22.3953831,-14.191921 z"
+     id="path9-2" />
+  <path
+     style="fill:#151100;stroke-width:0"
+     d="m 15.610417,51.064592 c 0,28.926294 45.690626,28.926294 45.690626,0 0,13.257884 -45.690626,13.257884 -45.690626,0 z"
+     id="path8-9-2" />
+  <circle
+     style="fill:#000000;stroke-width:0.264583"
+     id="path2"
+     cx="24.032"
+     cy="35.823162"
+     r="9.6759996" />
+  <circle
+     style="fill:#000000;stroke-width:0.264583"
+     id="path2-5"
+     cx="52.641998"
+     cy="35.823162"
+     r="9.6759996" />
+  </g>
+  <g transform="translate(262.883369, 0)">
+    <!-- Symmetric LEGO minifig head.
+     ViewBox: 0 0 76.674316 90.251594  (same as original)
+     Center x: 38.337158
+
+     Symmetry axes used throughout:
+       head/nub  x: cx ± 19.0  → [19.337, 57.337]
+       body      x: cx ± 37.0  → [ 1.337, 75.337]
+       neck      x: cx ± 16.5  → [21.837, 54.837]
+       eyes      x: cx ± 14.305 at cy = 41.644, r = 9.676 (6.451 × 1.5)
+       smile     x: cx ± 18.0  → [20.337, 56.337], U-band y=70..82/75.5
+-->
+
+<defs
+     id="defs1" />
+  <!-- Head outline: nub on top, face body, narrow neck at bottom.
+       Path is clockwise from nub top-left.
+       Every right-side coordinate mirrors its left-side counterpart
+       around cx = 38.337158. -->
+  <path
+     style="fill:#73dca1;stroke-width:0.264583"
+     d="m 24.517273,0.14302202 h 29.52319 L 54.197441,9.5 c 10,0.5 21.296537,8.77912 21.296537,12.77912 C 76.156978,36.27912 76,65 75.337,79 c 0,4.5 -7.546484,4.843022 -17.046484,4.843022 v 6.252 L 19.168374,90.252 V 84 C 9.6683743,84 2.2788679,80.988352 2.2788679,76.488352 c -0.663,-14 -0.819978,-38.953409 -0.156978,-52.953409 0,-4 12.3953831,-13.691921 22.3953831,-14.191921 z"
+     id="path9-2" />
+  <path
+     style="fill:#151100;stroke-width:0"
+     d="m 15.610417,51.064592 c 0,28.926294 45.690626,28.926294 45.690626,0 0,13.257884 -45.690626,13.257884 -45.690626,0 z"
+     id="path8-9-2" />
+  <circle
+     style="fill:#000000;stroke-width:0.264583"
+     id="path2"
+     cx="24.032"
+     cy="35.823162"
+     r="9.6759996" />
+  <circle
+     style="fill:#000000;stroke-width:0.264583"
+     id="path2-5"
+     cx="52.641998"
+     cy="35.823162"
+     r="9.6759996" />
+  </g>
+</svg>

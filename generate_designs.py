@@ -188,6 +188,14 @@ def main():
         ('minifig-colorful.svg',    minifig_colorful_svg(tones)),
         ('minifig-rainbow.svg',     minifig_rainbow_svg(colors.RAINBOW_COLORS)),
     ]
+
+    # Horizontal rainbow: 7 frames, each a sliding window of 4 colors
+    rb = colors.RAINBOW_COLORS
+    n_rb = len(rb)
+    for i in range(n_rb):
+        window = [rb[(i + j) % n_rb] for j in range(4)]
+        stem = 'horizontal-rainbow' if i == 0 else f'horizontal-rainbow-rot{i}'
+        designs.append((f'{stem}.svg', horizontal_svg(window)))
     for name, content in designs:
         dst = os.path.join(design_dir, name)
         with open(dst, 'w') as fh:

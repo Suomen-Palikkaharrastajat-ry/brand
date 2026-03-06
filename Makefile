@@ -29,6 +29,13 @@ DESIGN_HZ_R2    = $(DESIGN_DIR)/horizontal-rot2.svg
 DESIGN_HZ_R3    = $(DESIGN_DIR)/horizontal-rot3.svg
 DESIGN_COLORFUL = $(DESIGN_DIR)/minifig-colorful.svg
 DESIGN_RAINBOW  = $(DESIGN_DIR)/minifig-rainbow.svg
+DESIGN_HZ_RB    = $(DESIGN_DIR)/horizontal-rainbow.svg
+DESIGN_HZ_RB_R1 = $(DESIGN_DIR)/horizontal-rainbow-rot1.svg
+DESIGN_HZ_RB_R2 = $(DESIGN_DIR)/horizontal-rainbow-rot2.svg
+DESIGN_HZ_RB_R3 = $(DESIGN_DIR)/horizontal-rainbow-rot3.svg
+DESIGN_HZ_RB_R4 = $(DESIGN_DIR)/horizontal-rainbow-rot4.svg
+DESIGN_HZ_RB_R5 = $(DESIGN_DIR)/horizontal-rainbow-rot5.svg
+DESIGN_HZ_RB_R6 = $(DESIGN_DIR)/horizontal-rainbow-rot6.svg
 
 # ── Generated brick SVGs ────────────────────────────────────────────────────────
 SQ_SVG       = $(SQ_DIR)/square.svg
@@ -49,12 +56,21 @@ HZ_FULL_DARK_R2_SVG = $(HZ_DIR)/horizontal-full-dark-rot2.svg
 HZ_FULL_DARK_R3_SVG = $(HZ_DIR)/horizontal-full-dark-rot3.svg
 COLORFUL_SVG = $(SQ_DIR)/minifig-colorful.svg
 RAINBOW_SVG  = $(SQ_DIR)/minifig-rainbow.svg
+HZ_RB_SVG    = $(HZ_DIR)/horizontal-rainbow.svg
+HZ_RB_R1_SVG = $(HZ_DIR)/horizontal-rainbow-rot1.svg
+HZ_RB_R2_SVG = $(HZ_DIR)/horizontal-rainbow-rot2.svg
+HZ_RB_R3_SVG = $(HZ_DIR)/horizontal-rainbow-rot3.svg
+HZ_RB_R4_SVG = $(HZ_DIR)/horizontal-rainbow-rot4.svg
+HZ_RB_R5_SVG = $(HZ_DIR)/horizontal-rainbow-rot5.svg
+HZ_RB_R6_SVG = $(HZ_DIR)/horizontal-rainbow-rot6.svg
 
 ALL_SVGS = $(SQ_SVG) $(SQ_LN_SVG) $(SQ_N_SVG) $(SQ_DN_SVG) \
            $(HZ_SVG) $(HZ_R1_SVG) $(HZ_R2_SVG) $(HZ_R3_SVG) \
            $(HZ_FULL_SVG) $(HZ_FULL_R1_SVG) $(HZ_FULL_R2_SVG) $(HZ_FULL_R3_SVG) \
            $(HZ_FULL_DARK_SVG) $(HZ_FULL_DARK_R1_SVG) $(HZ_FULL_DARK_R2_SVG) $(HZ_FULL_DARK_R3_SVG) \
-           $(COLORFUL_SVG) $(RAINBOW_SVG)
+           $(COLORFUL_SVG) $(RAINBOW_SVG) \
+           $(HZ_RB_SVG) $(HZ_RB_R1_SVG) $(HZ_RB_R2_SVG) $(HZ_RB_R3_SVG) \
+           $(HZ_RB_R4_SVG) $(HZ_RB_R5_SVG) $(HZ_RB_R6_SVG)
 
 # ── Generated raster outputs ────────────────────────────────────────────────────
 SQ_PNG_OUT    = $(SQ_PNG)/square.png
@@ -102,6 +118,18 @@ COLORFUL_PNG  = $(SQ_PNG)/minifig-colorful.png
 COLORFUL_WEBP = $(SQ_PNG)/minifig-colorful.webp
 RAINBOW_PNG   = $(SQ_PNG)/minifig-rainbow.png
 RAINBOW_WEBP  = $(SQ_PNG)/minifig-rainbow.webp
+HZ_RB_PNG        = $(HZ_PNG)/horizontal-rainbow.png
+HZ_RB_WEBP       = $(HZ_PNG)/horizontal-rainbow.webp
+HZ_RB_R1_PNG     = $(HZ_PNG)/horizontal-rainbow-rot1.png
+HZ_RB_R2_PNG     = $(HZ_PNG)/horizontal-rainbow-rot2.png
+HZ_RB_R3_PNG     = $(HZ_PNG)/horizontal-rainbow-rot3.png
+HZ_RB_R4_PNG     = $(HZ_PNG)/horizontal-rainbow-rot4.png
+HZ_RB_R5_PNG     = $(HZ_PNG)/horizontal-rainbow-rot5.png
+HZ_RB_R6_PNG     = $(HZ_PNG)/horizontal-rainbow-rot6.png
+HZ_RB_ANIM_FRAMES = $(HZ_RB_PNG) $(HZ_RB_R1_PNG) $(HZ_RB_R2_PNG) $(HZ_RB_R3_PNG) \
+                    $(HZ_RB_R4_PNG) $(HZ_RB_R5_PNG) $(HZ_RB_R6_PNG)
+HZ_RB_ANIM_GIF   = $(HZ_PNG)/horizontal-rainbow-animated.gif
+HZ_RB_ANIM_WEBP  = $(HZ_PNG)/horizontal-rainbow-animated.webp
 
 ALL_PNGS = $(SQ_PNG_OUT) $(SQ_WEBP) \
            $(SQ_LN_PNG) $(SQ_LN_WEBP) \
@@ -122,7 +150,11 @@ ALL_PNGS = $(SQ_PNG_OUT) $(SQ_WEBP) \
            $(HZ_FULL_DARK_R1_PNG) $(HZ_FULL_DARK_R2_PNG) $(HZ_FULL_DARK_R3_PNG) \
            $(HZ_FULL_DARK_ANIM_GIF) $(HZ_FULL_DARK_ANIM_WEBP) \
            $(COLORFUL_PNG) $(COLORFUL_WEBP) \
-           $(RAINBOW_PNG) $(RAINBOW_WEBP)
+           $(RAINBOW_PNG) $(RAINBOW_WEBP) \
+           $(HZ_RB_PNG) $(HZ_RB_WEBP) \
+           $(HZ_RB_R1_PNG) $(HZ_RB_R2_PNG) $(HZ_RB_R3_PNG) \
+           $(HZ_RB_R4_PNG) $(HZ_RB_R5_PNG) $(HZ_RB_R6_PNG) \
+           $(HZ_RB_ANIM_GIF) $(HZ_RB_ANIM_WEBP)
 
 # ── Top-level targets ───────────────────────────────────────────────────────────
 # ── Favicon outputs ─────────────────────────────────────────────────────────────
@@ -152,7 +184,9 @@ brand: favicons $(BRAND_JSON) ## Generate machine-readable brand manifest (brand
 
 designs: $(DESIGN_SQ) $(DESIGN_SQ_LN) $(DESIGN_SQ_N) $(DESIGN_SQ_DN) \
          $(DESIGN_HZ) $(DESIGN_HZ_R1) $(DESIGN_HZ_R2) $(DESIGN_HZ_R3) \
-         $(DESIGN_COLORFUL) $(DESIGN_RAINBOW) ## Populate design/ from source.svg and colors.py
+         $(DESIGN_COLORFUL) $(DESIGN_RAINBOW) \
+         $(DESIGN_HZ_RB) $(DESIGN_HZ_RB_R1) $(DESIGN_HZ_RB_R2) $(DESIGN_HZ_RB_R3) \
+         $(DESIGN_HZ_RB_R4) $(DESIGN_HZ_RB_R5) $(DESIGN_HZ_RB_R6) ## Populate design/ from source.svg and colors.py
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
@@ -161,7 +195,9 @@ help: ## Show available targets
 clean: ## Remove all generated files (design/, logo outputs, and Python cache)
 	rm -f $(DESIGN_SQ) $(DESIGN_SQ_LN) $(DESIGN_SQ_N) $(DESIGN_SQ_DN) \
 	      $(DESIGN_HZ) $(DESIGN_HZ_R1) $(DESIGN_HZ_R2) $(DESIGN_HZ_R3) \
-	      $(DESIGN_COLORFUL) $(DESIGN_RAINBOW)
+	      $(DESIGN_COLORFUL) $(DESIGN_RAINBOW) \
+	      $(DESIGN_HZ_RB) $(DESIGN_HZ_RB_R1) $(DESIGN_HZ_RB_R2) $(DESIGN_HZ_RB_R3) \
+	      $(DESIGN_HZ_RB_R4) $(DESIGN_HZ_RB_R5) $(DESIGN_HZ_RB_R6)
 	rm -f $(ALL_SVGS) $(ALL_PNGS)
 	rm -f $(FAVICON_FILES)
 	rm -f $(BRAND_JSON)
@@ -186,7 +222,9 @@ $(DESIGN_DIR):
 # All designs generated by generate_designs.py from source.svg + colors.py
 $(DESIGN_SQ) $(DESIGN_SQ_LN) $(DESIGN_SQ_N) $(DESIGN_SQ_DN) \
 $(DESIGN_HZ) $(DESIGN_HZ_R1) $(DESIGN_HZ_R2) $(DESIGN_HZ_R3) \
-$(DESIGN_COLORFUL) $(DESIGN_RAINBOW): source.svg colors.py generate_designs.py | $(DESIGN_DIR)
+$(DESIGN_COLORFUL) $(DESIGN_RAINBOW) \
+$(DESIGN_HZ_RB) $(DESIGN_HZ_RB_R1) $(DESIGN_HZ_RB_R2) $(DESIGN_HZ_RB_R3) \
+$(DESIGN_HZ_RB_R4) $(DESIGN_HZ_RB_R5) $(DESIGN_HZ_RB_R6): source.svg colors.py generate_designs.py | $(DESIGN_DIR)
 	$(PYTHON) generate_designs.py
 
 # ── Square brick SVGs ────────────────────────────────────────────────────────────
@@ -252,6 +290,28 @@ $(HZ_FULL_DARK_R2_SVG): $(HZ_R2_SVG)
 $(HZ_FULL_DARK_R3_SVG): $(HZ_R3_SVG)
 	$(PYTHON) compose_logo.py $< $@ $(TXT_SIZE) '$(DARK_BG)'
 
+# ── Rainbow horizontal brick SVGs ────────────────────────────────────────────
+$(HZ_RB_SVG): $(DESIGN_HZ_RB) | $(HZ_DIR)
+	$(PYTHON) brick_blockify.py $< $@ $(HZ_PX) $(BLK_W) $(BLK_H) auto $(PAD)
+
+$(HZ_RB_R1_SVG): $(DESIGN_HZ_RB_R1) | $(HZ_DIR)
+	$(PYTHON) brick_blockify.py $< $@ $(HZ_PX) $(BLK_W) $(BLK_H) auto $(PAD)
+
+$(HZ_RB_R2_SVG): $(DESIGN_HZ_RB_R2) | $(HZ_DIR)
+	$(PYTHON) brick_blockify.py $< $@ $(HZ_PX) $(BLK_W) $(BLK_H) auto $(PAD)
+
+$(HZ_RB_R3_SVG): $(DESIGN_HZ_RB_R3) | $(HZ_DIR)
+	$(PYTHON) brick_blockify.py $< $@ $(HZ_PX) $(BLK_W) $(BLK_H) auto $(PAD)
+
+$(HZ_RB_R4_SVG): $(DESIGN_HZ_RB_R4) | $(HZ_DIR)
+	$(PYTHON) brick_blockify.py $< $@ $(HZ_PX) $(BLK_W) $(BLK_H) auto $(PAD)
+
+$(HZ_RB_R5_SVG): $(DESIGN_HZ_RB_R5) | $(HZ_DIR)
+	$(PYTHON) brick_blockify.py $< $@ $(HZ_PX) $(BLK_W) $(BLK_H) auto $(PAD)
+
+$(HZ_RB_R6_SVG): $(DESIGN_HZ_RB_R6) | $(HZ_DIR)
+	$(PYTHON) brick_blockify.py $< $@ $(HZ_PX) $(BLK_W) $(BLK_H) auto $(PAD)
+
 # ── Square PNG / WebP ───────────────────────────────────────────────────────────
 $(SQ_PNG):
 	mkdir -p $@
@@ -287,6 +347,12 @@ $(HZ_FULL_DARK_ANIM_GIF): $(HZ_FULL_DARK_ANIM_FRAMES) | $(HZ_PNG)
 
 $(HZ_FULL_DARK_ANIM_WEBP): $(HZ_FULL_DARK_ANIM_FRAMES) | $(HZ_PNG)
 	$(PYTHON) animate_logo.py $(HZ_FULL_DARK_ANIM_FRAMES) $@ $(ANIM_MS)
+
+$(HZ_RB_ANIM_GIF): $(HZ_RB_ANIM_FRAMES) | $(HZ_PNG)
+	$(PYTHON) animate_logo.py $(HZ_RB_ANIM_FRAMES) $@ $(ANIM_MS)
+
+$(HZ_RB_ANIM_WEBP): $(HZ_RB_ANIM_FRAMES) | $(HZ_PNG)
+	$(PYTHON) animate_logo.py $(HZ_RB_ANIM_FRAMES) $@ $(ANIM_MS)
 
 # ── Horizontal PNG / WebP ───────────────────────────────────────────────────────
 $(HZ_PNG):
