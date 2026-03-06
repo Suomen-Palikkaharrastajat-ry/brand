@@ -108,13 +108,13 @@
       "files": {
         "variableTTF": {
           "file": "fonts/Outfit-VariableFont_wght.ttf",
-          "url": "https://logo.suomenpalikkayhteiso.fi/fonts/Outfit-VariableFont_wght.ttf"
+          "url": "https://logo.palikkaharrastajat.fi/fonts/Outfit-VariableFont_wght.ttf"
         }
       },
       "license": "OFL-1.1",
       "licenseFile": {
         "file": "fonts/OFL.txt",
-        "url": "https://logo.suomenpalikkayhteiso.fi/fonts/OFL.txt"
+        "url": "https://logo.palikkaharrastajat.fi/fonts/OFL.txt"
       }
     }
   },
@@ -132,15 +132,15 @@
           "theme": "light",
           "svg": {
             "file": "logo/square/svg/square.svg",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/svg/square.svg"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/svg/square.svg"
           },
           "png": {
             "file": "logo/square/png/square.png",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/png/square.png"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/png/square.png"
           },
           "webp": {
             "file": "logo/square/png/square.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/png/square.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/png/square.webp"
           }
         },
         {
@@ -151,15 +151,15 @@
           "theme": "light",
           "svg": {
             "file": "logo/square/svg/square-light-nougat.svg",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/svg/square-light-nougat.svg"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/svg/square-light-nougat.svg"
           },
           "png": {
             "file": "logo/square/png/square-light-nougat.png",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/png/square-light-nougat.png"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/png/square-light-nougat.png"
           },
           "webp": {
             "file": "logo/square/png/square-light-nougat.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/png/square-light-nougat.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/png/square-light-nougat.webp"
           }
         },
         {
@@ -170,15 +170,15 @@
           "theme": "light",
           "svg": {
             "file": "logo/square/svg/square-nougat.svg",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/svg/square-nougat.svg"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/svg/square-nougat.svg"
           },
           "png": {
             "file": "logo/square/png/square-nougat.png",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/png/square-nougat.png"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/png/square-nougat.png"
           },
           "webp": {
             "file": "logo/square/png/square-nougat.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/png/square-nougat.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/png/square-nougat.webp"
           }
         },
         {
@@ -189,15 +189,15 @@
           "theme": "light",
           "svg": {
             "file": "logo/square/svg/square-dark-nougat.svg",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/svg/square-dark-nougat.svg"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/svg/square-dark-nougat.svg"
           },
           "png": {
             "file": "logo/square/png/square-dark-nougat.png",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/png/square-dark-nougat.png"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/png/square-dark-nougat.png"
           },
           "webp": {
             "file": "logo/square/png/square-dark-nougat.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/png/square-dark-nougat.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/png/square-dark-nougat.webp"
           }
         },
         {
@@ -213,11 +213,11 @@
           ],
           "gif": {
             "file": "logo/square/png/square-animated.gif",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/png/square-animated.gif"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/png/square-animated.gif"
           },
           "webp": {
             "file": "logo/square/png/square-animated.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/png/square-animated.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/png/square-animated.webp"
           }
         },
         {
@@ -227,15 +227,15 @@
           "theme": "light",
           "svg": {
             "file": "logo/square/svg/minifig-colorful.svg",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/svg/minifig-colorful.svg"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/svg/minifig-colorful.svg"
           },
           "png": {
             "file": "logo/square/png/minifig-colorful.png",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/png/minifig-colorful.png"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/png/minifig-colorful.png"
           },
           "webp": {
             "file": "logo/square/png/minifig-colorful.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/png/minifig-colorful.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/png/minifig-colorful.webp"
           }
         },
         {
@@ -245,15 +245,15 @@
           "theme": "light",
           "svg": {
             "file": "logo/square/svg/minifig-rainbow.svg",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/svg/minifig-rainbow.svg"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/svg/minifig-rainbow.svg"
           },
           "png": {
             "file": "logo/square/png/minifig-rainbow.png",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/png/minifig-rainbow.png"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/png/minifig-rainbow.png"
           },
           "webp": {
             "file": "logo/square/png/minifig-rainbow.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/square/png/minifig-rainbow.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/square/png/minifig-rainbow.webp"
           }
         }
       ]
@@ -270,15 +270,15 @@
           "theme": "light",
           "svg": {
             "file": "logo/horizontal/svg/horizontal.svg",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/svg/horizontal.svg"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/svg/horizontal.svg"
           },
           "png": {
             "file": "logo/horizontal/png/horizontal.png",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal.png"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal.png"
           },
           "webp": {
             "file": "logo/horizontal/png/horizontal.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal.webp"
           }
         },
         {
@@ -289,15 +289,15 @@
           "theme": "light",
           "svg": {
             "file": "logo/horizontal/svg/horizontal-full.svg",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/svg/horizontal-full.svg"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/svg/horizontal-full.svg"
           },
           "png": {
             "file": "logo/horizontal/png/horizontal-full.png",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-full.png"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-full.png"
           },
           "webp": {
             "file": "logo/horizontal/png/horizontal-full.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-full.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-full.webp"
           }
         },
         {
@@ -308,15 +308,15 @@
           "theme": "dark",
           "svg": {
             "file": "logo/horizontal/svg/horizontal-full-dark.svg",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/svg/horizontal-full-dark.svg"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/svg/horizontal-full-dark.svg"
           },
           "png": {
             "file": "logo/horizontal/png/horizontal-full-dark.png",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-full-dark.png"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-full-dark.png"
           },
           "webp": {
             "file": "logo/horizontal/png/horizontal-full-dark.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-full-dark.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-full-dark.webp"
           }
         },
         {
@@ -328,11 +328,11 @@
           "frameDurationMs": 10000,
           "gif": {
             "file": "logo/horizontal/png/horizontal-animated.gif",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-animated.gif"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-animated.gif"
           },
           "webp": {
             "file": "logo/horizontal/png/horizontal-animated.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-animated.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-animated.webp"
           }
         },
         {
@@ -344,11 +344,11 @@
           "frameDurationMs": 10000,
           "gif": {
             "file": "logo/horizontal/png/horizontal-full-animated.gif",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-full-animated.gif"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-full-animated.gif"
           },
           "webp": {
             "file": "logo/horizontal/png/horizontal-full-animated.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-full-animated.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-full-animated.webp"
           }
         },
         {
@@ -360,11 +360,11 @@
           "frameDurationMs": 10000,
           "gif": {
             "file": "logo/horizontal/png/horizontal-full-dark-animated.gif",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-full-dark-animated.gif"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-full-dark-animated.gif"
           },
           "webp": {
             "file": "logo/horizontal/png/horizontal-full-dark-animated.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-full-dark-animated.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-full-dark-animated.webp"
           }
         },
         {
@@ -375,15 +375,15 @@
           "theme": "light",
           "svg": {
             "file": "logo/horizontal/svg/horizontal-rainbow.svg",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/svg/horizontal-rainbow.svg"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/svg/horizontal-rainbow.svg"
           },
           "png": {
             "file": "logo/horizontal/png/horizontal-rainbow.png",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-rainbow.png"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-rainbow.png"
           },
           "webp": {
             "file": "logo/horizontal/png/horizontal-rainbow.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-rainbow.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-rainbow.webp"
           }
         },
         {
@@ -405,11 +405,11 @@
           ],
           "gif": {
             "file": "logo/horizontal/png/horizontal-rainbow-animated.gif",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-rainbow-animated.gif"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-rainbow-animated.gif"
           },
           "webp": {
             "file": "logo/horizontal/png/horizontal-rainbow-animated.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-rainbow-animated.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-rainbow-animated.webp"
           }
         },
         {
@@ -420,15 +420,15 @@
           "theme": "light",
           "svg": {
             "file": "logo/horizontal/svg/horizontal-rainbow-full.svg",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/svg/horizontal-rainbow-full.svg"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/svg/horizontal-rainbow-full.svg"
           },
           "png": {
             "file": "logo/horizontal/png/horizontal-rainbow-full.png",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-rainbow-full.png"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-rainbow-full.png"
           },
           "webp": {
             "file": "logo/horizontal/png/horizontal-rainbow-full.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-rainbow-full.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-rainbow-full.webp"
           }
         },
         {
@@ -441,11 +441,11 @@
           "frameDurationMs": 10000,
           "gif": {
             "file": "logo/horizontal/png/horizontal-rainbow-full-animated.gif",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-rainbow-full-animated.gif"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-rainbow-full-animated.gif"
           },
           "webp": {
             "file": "logo/horizontal/png/horizontal-rainbow-full-animated.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-rainbow-full-animated.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-rainbow-full-animated.webp"
           }
         },
         {
@@ -456,15 +456,15 @@
           "theme": "dark",
           "svg": {
             "file": "logo/horizontal/svg/horizontal-rainbow-full-dark.svg",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/svg/horizontal-rainbow-full-dark.svg"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/svg/horizontal-rainbow-full-dark.svg"
           },
           "png": {
             "file": "logo/horizontal/png/horizontal-rainbow-full-dark.png",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-rainbow-full-dark.png"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-rainbow-full-dark.png"
           },
           "webp": {
             "file": "logo/horizontal/png/horizontal-rainbow-full-dark.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-rainbow-full-dark.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-rainbow-full-dark.webp"
           }
         },
         {
@@ -477,11 +477,11 @@
           "frameDurationMs": 10000,
           "gif": {
             "file": "logo/horizontal/png/horizontal-rainbow-full-dark-animated.gif",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-rainbow-full-dark-animated.gif"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-rainbow-full-dark-animated.gif"
           },
           "webp": {
             "file": "logo/horizontal/png/horizontal-rainbow-full-dark-animated.webp",
-            "url": "https://logo.suomenpalikkayhteiso.fi/logo/horizontal/png/horizontal-rainbow-full-dark-animated.webp"
+            "url": "https://logo.palikkaharrastajat.fi/logo/horizontal/png/horizontal-rainbow-full-dark-animated.webp"
           }
         }
       ]
@@ -490,39 +490,39 @@
   "favicons": {
     "ico": {
       "file": "favicon/favicon.ico",
-      "url": "https://logo.suomenpalikkayhteiso.fi/favicon/favicon.ico"
+      "url": "https://logo.palikkaharrastajat.fi/favicon/favicon.ico"
     },
     "png": [
       {
         "file": "favicon/favicon-16.png",
-        "url": "https://logo.suomenpalikkayhteiso.fi/favicon/favicon-16.png",
+        "url": "https://logo.palikkaharrastajat.fi/favicon/favicon-16.png",
         "size": 16
       },
       {
         "file": "favicon/favicon-32.png",
-        "url": "https://logo.suomenpalikkayhteiso.fi/favicon/favicon-32.png",
+        "url": "https://logo.palikkaharrastajat.fi/favicon/favicon-32.png",
         "size": 32
       },
       {
         "file": "favicon/favicon-48.png",
-        "url": "https://logo.suomenpalikkayhteiso.fi/favicon/favicon-48.png",
+        "url": "https://logo.palikkaharrastajat.fi/favicon/favicon-48.png",
         "size": 48
       }
     ],
     "appleTouchIcon": {
       "file": "favicon/apple-touch-icon.png",
-      "url": "https://logo.suomenpalikkayhteiso.fi/favicon/apple-touch-icon.png",
+      "url": "https://logo.palikkaharrastajat.fi/favicon/apple-touch-icon.png",
       "size": 180
     },
     "webAppIcons": [
       {
         "file": "favicon/icon-192.png",
-        "url": "https://logo.suomenpalikkayhteiso.fi/favicon/icon-192.png",
+        "url": "https://logo.palikkaharrastajat.fi/favicon/icon-192.png",
         "size": 192
       },
       {
         "file": "favicon/icon-512.png",
-        "url": "https://logo.suomenpalikkayhteiso.fi/favicon/icon-512.png",
+        "url": "https://logo.palikkaharrastajat.fi/favicon/icon-512.png",
         "size": 512
       }
     ]

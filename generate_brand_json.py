@@ -16,7 +16,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 import colors
 
-BASE_URL = "https://logo.suomenpalikkayhteiso.fi"
+BASE_URL = "https://logo.palikkaharrastajat.fi"
 
 
 def _asset(path):
