@@ -1,82 +1,198 @@
 #!/usr/bin/env python3
 """
-Generate design SVGs for the LEGO minifig head logo mark.
+Generate design SVGs for the logo build pipeline from source.svg + colors.py.
 
-Reads brand colors from colors.py and writes source SVG files to design/.
-These are processed by brick_blockify.py to produce the final brick-art logos.
+Writes:
+  design/square.svg              – source.svg recolored with SKIN_TONES[0] (yellow)
+  design/square-light-nougat.svg – source.svg recolored with SKIN_TONES[1]
+  design/square-nougat.svg       – source.svg recolored with SKIN_TONES[2]
+  design/square-dark-nougat.svg  – source.svg recolored with SKIN_TONES[3]
+  design/horizontal.svg          – 4 heads side-by-side with SKIN_TONES (rotation 0)
+  design/horizontal-rot1.svg    – same, rotated 1 step left
+  design/horizontal-rot2.svg    – same, rotated 2 steps left
+  design/horizontal-rot3.svg    – same, rotated 3 steps left
+  design/minifig-colorful.svg    – single head with horizontal skin-tone bands
+  design/minifig-rainbow.svg     – single head with horizontal pastel rainbow bands
 
-Re-run whenever colors.py changes:  python3 generate_designs.py
-Or via make:                         make designs
+Re-run whenever source.svg or colors.py changes:  python3 generate_designs.py
+Or via make:                                     make designs
 """
 
 import os
+import re
 import sys
+import xml.etree.ElementTree as ET
 
 sys.path.insert(0, os.path.dirname(__file__))
 import colors
 
+# Face fill color used in source.svg (Inkscape yellow — replaced with skin tones)
+HEAD_SVG_FACE_COLOR = '#f8c70b'
 
-def minifig_svg(face_color, feature_color, highlight_color):
+# Horizontal layout: gap between heads expressed as brick units.
+# gap in SVG units = _GAP_BRICKS * (head_w / _SQ_PX), giving exactly _GAP_BRICKS
+# pixels after brick_blockify rasterization.  Keep HZ_PX = n*_SQ_PX + (n-1)*_GAP_BRICKS.
+_SQ_PX = 14      # pixels per head (matches Makefile SQ_PX)
+_GAP_BRICKS = 2  # gap bricks between heads (Makefile HZ_PX = 4*14 + 3*2 = 62)
+
+ROOT = os.path.dirname(os.path.abspath(__file__))
+HEAD_SVG_PATH = os.path.join(ROOT, 'source.svg')
+
+
+# ── SVG helpers ─────────────────────────────────────────────────────────────────
+
+def _svg_viewbox(svg_content):
+    """Return (vb_x, vb_y, vb_w, vb_h) from the SVG viewBox attribute."""
+    m = re.search(r'viewBox="([^"]+)"', svg_content)
+    if not m:
+        raise ValueError('No viewBox found in SVG')
+    return tuple(map(float, m.group(1).split()))
+
+
+def _svg_inner_content(svg_content):
+    """Strip XML declaration and outer <svg> wrapper, returning just the inner elements."""
+    content = re.sub(r'<\?xml[^?]*\?>\s*', '', svg_content)
+    content = re.sub(r'<!--[^-]*-->\s*', '', content)          # strip comments
+    content = re.sub(r'<svg\b[^>]*>\s*', '', content, count=1, flags=re.DOTALL)
+    content = re.sub(r'\s*</svg>\s*$', '', content, flags=re.DOTALL)
+    return content.strip()
+
+
+def _recolor_head(svg_content, face_color):
+    """Replace the face fill color in source.svg content with face_color."""
+    return svg_content.replace(HEAD_SVG_FACE_COLOR, face_color.lower())
+
+
+# ── Design generators ───────────────────────────────────────────────────────────
+
+def square_svg(face_color):
+    """Generate design/square.svg: source.svg recolored with face_color."""
+    with open(HEAD_SVG_PATH) as f:
+        content = f.read()
+    return _recolor_head(content, face_color)
+
+
+def horizontal_svg(skin_tones):
     """
-    Generate a 200×200 SVG of a LEGO minifig head.
+    Generate horizontal SVG: len(skin_tones) heads side-by-side.
 
-    Designed for rasterization at 20–30 pixels wide via brick_blockify.py.
-    Each SVG unit maps to roughly 0.1–0.15 output pixels, so features must
-    be at least ~10 SVG units wide/tall to survive nearest-neighbour downscaling.
-
-    Layout (200×200 canvas):
-      y   0-22   stud on top (50px wide, centred)
-      y  22-190  head body (rounded rect, 180px wide)
-      y  68-82   eyebrows (two rects, 48px × 14px each)
-      y  81-135  eyes (ellipses, rx=22 ry=27 → ~44×54px each)
-      y  92-106  eye highlights (ellipses, rx=10 ry=10 → 20px each)
-      y 148-175  smile arc (quadratic bezier, stroke-width=16)
+    Each head is a recolored copy of source.svg. A gap of _GAP_BRICKS bricks
+    separates the heads so they align cleanly at HZ_PX pixel width.
     """
-    return f'''<?xml version="1.0" encoding="UTF-8"?>
-<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-  <!-- Stud on top -->
-  <rect x="75" y="0" width="50" height="22" fill="{face_color}"/>
-  <!-- Head body -->
-  <rect x="10" y="22" width="180" height="168" rx="20" fill="{face_color}"/>
-  <!-- Left eyebrow -->
-  <rect x="28" y="68" width="48" height="14" fill="{feature_color}"/>
-  <!-- Right eyebrow -->
-  <rect x="124" y="68" width="48" height="14" fill="{feature_color}"/>
-  <!-- Left eye (black oval) -->
-  <ellipse cx="65" cy="108" rx="22" ry="27" fill="{feature_color}"/>
-  <!-- Right eye (black oval) -->
-  <ellipse cx="135" cy="108" rx="22" ry="27" fill="{feature_color}"/>
-  <!-- Left eye highlight -->
-  <ellipse cx="74" cy="96" rx="10" ry="10" fill="{highlight_color}"/>
-  <!-- Right eye highlight -->
-  <ellipse cx="144" cy="96" rx="10" ry="10" fill="{highlight_color}"/>
-  <!-- Smile (quadratic bezier arc) -->
-  <path d="M 60,148 Q 100,175 140,148"
-        stroke="{feature_color}" stroke-width="16"
-        fill="none" stroke-linecap="round"/>
-</svg>
-'''
+    with open(HEAD_SVG_PATH) as f:
+        sq_content = f.read()
+
+    _, _, vb_w, vb_h = _svg_viewbox(sq_content)
+    inner = _svg_inner_content(sq_content)
+    n = len(skin_tones)
+    gap = _GAP_BRICKS * (vb_w / _SQ_PX)
+    total_w = n * vb_w + (n - 1) * gap
+
+    heads = ''
+    for i, tone in enumerate(skin_tones):
+        x = i * (vb_w + gap)
+        colored = _recolor_head(inner, tone)
+        heads += f'  <g transform="translate({x:.6f}, 0)">\n    {colored}\n  </g>\n'
+
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        f'<svg width="{total_w:.6f}" height="{vb_h:.6f}"'
+        f' viewBox="0 0 {total_w:.6f} {vb_h:.6f}"\n'
+        f'     xmlns="http://www.w3.org/2000/svg">\n'
+        f'{heads}'
+        '</svg>\n'
+    )
+
+
+def _minifig_banded_svg(band_colors):
+    """
+    Face divided into equal horizontal bands, one per color in band_colors.
+
+    A clipPath from the face path clips the bands to the head shape.
+    Dark features (eyes, smile) from source.svg are rendered on top.
+    """
+    ET.register_namespace('', 'http://www.w3.org/2000/svg')
+    ns = 'http://www.w3.org/2000/svg'
+
+    with open(HEAD_SVG_PATH) as f:
+        sq_content = f.read()
+
+    _, _, vb_w, vb_h = _svg_viewbox(sq_content)
+
+    tree = ET.parse(HEAD_SVG_PATH)
+    root = tree.getroot()
+
+    face_path_elem = None
+    for elem in root.iter(f'{{{ns}}}path'):
+        if HEAD_SVG_FACE_COLOR in elem.get('style', ''):
+            face_path_elem = elem
+            break
+    face_d = face_path_elem.get('d', '') if face_path_elem is not None else ''
+
+    n = len(band_colors)
+    band_h = vb_h / n
+    bands = ''
+    for i, color in enumerate(band_colors):
+        y = i * band_h
+        h = band_h if i < n - 1 else vb_h - i * band_h
+        bands += f'    <rect x="0" y="{y:.4f}" width="{vb_w:.4f}" height="{h:.4f}" fill="{color}"/>\n'
+
+    inner_parts = []
+    for elem in root:
+        tag = elem.tag.split('}')[-1] if '}' in elem.tag else elem.tag
+        if tag == 'defs' or elem is face_path_elem:
+            continue
+        inner_parts.append(ET.tostring(elem, encoding='unicode'))
+    features = '\n  '.join(inner_parts)
+
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        f'<svg width="{vb_w:.6f}" height="{vb_h:.6f}"'
+        f' viewBox="0 0 {vb_w:.6f} {vb_h:.6f}"\n'
+        f'     xmlns="http://www.w3.org/2000/svg">\n'
+        f'  <defs>\n'
+        f'    <clipPath id="face-clip"><path d="{face_d}"/></clipPath>\n'
+        f'  </defs>\n'
+        f'  <g clip-path="url(#face-clip)">\n'
+        f'{bands}'
+        f'  </g>\n'
+        f'  {features}\n'
+        '</svg>\n'
+    )
+
+
+def minifig_colorful_svg(skin_tones):
+    """Colorful variant: source.svg face divided into horizontal skin-tone bands."""
+    return _minifig_banded_svg(skin_tones)
+
+
+def minifig_rainbow_svg(rainbow_colors):
+    """Rainbow variant: source.svg face divided into horizontal rainbow bands."""
+    return _minifig_banded_svg(rainbow_colors)
 
 
 def main():
-    design_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'design')
+    design_dir = os.path.join(ROOT, 'design')
     os.makedirs(design_dir, exist_ok=True)
 
-    face  = colors.FACE_COLOR       # LEGO Yellow
-    feat  = colors.FEATURE_COLOR    # LEGO Black
-    hi    = colors.HIGHLIGHT_COLOR  # LEGO White
-
-    variants = [
-        ('minifig-yellow.svg', face, feat, hi),    # classic yellow head
-        ('minifig-black.svg',  feat, hi,   feat),  # inverted: white features on black
-        ('minifig-white.svg',  hi,   feat,  hi),   # inverted: black features on white
+    tones = colors.SKIN_TONES
+    designs = [
+        ('square.svg',              square_svg(tones[0])),
+        ('square-light-nougat.svg', square_svg(tones[1])),
+        ('square-nougat.svg',       square_svg(tones[2])),
+        ('square-dark-nougat.svg',  square_svg(tones[3])),
+        ('horizontal.svg',          horizontal_svg(tones)),
+        ('horizontal-rot1.svg',     horizontal_svg(tones[1:] + tones[:1])),
+        ('horizontal-rot2.svg',     horizontal_svg(tones[2:] + tones[:2])),
+        ('horizontal-rot3.svg',     horizontal_svg(tones[3:] + tones[:3])),
+        ('minifig-colorful.svg',    minifig_colorful_svg(tones)),
+        ('minifig-rainbow.svg',     minifig_rainbow_svg(colors.RAINBOW_COLORS)),
     ]
-
-    for filename, f_color, ft_color, h_color in variants:
-        path = os.path.join(design_dir, filename)
-        with open(path, 'w') as fh:
-            fh.write(minifig_svg(f_color, ft_color, h_color))
-        print(f'Wrote {path}')
+    for name, content in designs:
+        dst = os.path.join(design_dir, name)
+        with open(dst, 'w') as fh:
+            fh.write(content)
+        print(f'Wrote {dst}')
 
 
 if __name__ == '__main__':

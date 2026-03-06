@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suomen Palikkaharrastajat ry – Brändiopas</title>
+    <title>Suomen Palikkaharrastajat ry – Logo ja värit</title>
     <style>
         @font-face {
             font-family: 'Outfit';
@@ -206,7 +206,7 @@
 
 <header>
     <h1>Suomen Palikkaharrastajat ry</h1>
-    <p>Brändiopas</p>
+    <p>Logo ja värit</p>
 </header>
 
 <nav>
@@ -214,8 +214,8 @@
         <li><a href="#colors">Värit</a></li>
         <li><a href="#typography">Typografia</a></li>
         <li><a href="#logos-square">Neliölogot</a></li>
-        <li><a href="#logos-full">Logot alaotsikolla</a></li>
-        <li><a href="#download">Lataa</a></li>
+        <li><a href="#logos-horizontal">Vaakalogot</a></li>
+        <li><a href="#favicons">Faviconit</a></li>
     </ul>
 </nav>
 
@@ -223,32 +223,53 @@
 
     <!-- ── Colors ── -->
     <section id="colors">
-        <h2>Brändivärit</h2>
-        <p>
-            Kaikki värit ovat aitoja LEGO®-värejä Rebrickable-palvelussa määriteltynä
-            (colors.csv). Väripalettia muuttamalla väriarvoilla tiedostossa
-            <code>colors.py</code> ja ajamalla <code>make</code> kaikki logot
-            päivittyvät automaattisesti.
-        </p>
+        <h2>Värit</h2>
 
         <div class="color-palette">
             <div class="color-swatch">
                 <div class="color-box" style="background: #F2CD37;"></div>
                 <div class="color-name">Keltainen</div>
                 <div class="color-hex">#F2CD37</div>
-                <div class="color-meta">Rebrickable #14 · LEGO Yellow</div>
+                <div class="color-meta">LEGO Yellow</div>
             </div>
             <div class="color-swatch">
                 <div class="color-box" style="background: #05131D;"></div>
                 <div class="color-name">Musta</div>
                 <div class="color-hex">#05131D</div>
-                <div class="color-meta">Rebrickable #0 · LEGO Black</div>
+                <div class="color-meta">LEGO Black</div>
             </div>
             <div class="color-swatch">
                 <div class="color-box" style="background: #FFFFFF;"></div>
                 <div class="color-name">Valkoinen</div>
                 <div class="color-hex">#FFFFFF</div>
-                <div class="color-meta">Rebrickable #15 · LEGO White</div>
+                <div class="color-meta">LEGO White</div>
+            </div>
+        </div>
+
+        <h3>Ihonsävyt (vaakalogo ja värikäs logo)</h3>
+        <p>
+            Neljä virallista LEGO®-ihonsävyä edustavat erilaisia ihonsävyjä.
+        </p>
+        <div class="color-palette">
+            <div class="color-swatch">
+                <div class="color-box" style="background: #F2CD37;"></div>
+                <div class="color-name">Yellow</div>
+                <div class="color-hex">#F2CD37</div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-box" style="background: #F6D7B3;"></div>
+                <div class="color-name">Light Nougat</div>
+                <div class="color-hex">#F6D7B3</div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-box" style="background: #CC8E69;"></div>
+                <div class="color-name">Nougat</div>
+                <div class="color-hex">#CC8E69</div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-box" style="background: #AD6140;"></div>
+                <div class="color-name">Dark Nougat</div>
+                <div class="color-hex">#AD6140</div>
             </div>
         </div>
     </section>
@@ -282,134 +303,236 @@
         <p>
             Tunnuskuva on LEGO-minihahmon pää rakennuspalikoista koottuna.
             Neliömuoto sopii sosiaalisen median profiileihin ja sovelluskuvakkeisiin.
-            Rakennettu automaattisesti <code>brick_blockify.py</code>-algoritmilla
-            14&thinsp;px leveästä piikseligrafiikasta.
         </p>
 
         <div class="logo-grid">
+            <!-- Square – Yellow -->
             <div class="logo-card">
                 <div class="logo-preview light">
-                    <img src="logo/square/png/minifig-yellow.png" alt="Keltainen minifig-pää, vaalea tausta">
+                    <img src="logo/square/png/square.png" alt="Neliölogo – keltainen">
                 </div>
                 <div class="logo-info">
-                    <div class="logo-name">Keltainen <span class="badge">Suositeltu</span></div>
-                    <a href="logo/square/svg/minifig-yellow.svg" download class="download-btn">SVG</a>
-                    <a href="logo/square/png/minifig-yellow.png" download class="download-btn">PNG</a>
-                    <a href="logo/square/png/minifig-yellow.webp" download class="download-btn">WebP</a>
+                    <div class="logo-name">Neliölogo – Yellow <span class="badge">Suositeltu</span></div>
+                    <a href="logo/square/svg/square.svg" download class="download-btn">SVG</a>
+                    <a href="logo/square/png/square.png" download class="download-btn">PNG</a>
+                    <a href="logo/square/png/square.webp" download class="download-btn">WebP</a>
                 </div>
             </div>
 
+            <!-- Square – Light Nougat -->
             <div class="logo-card">
                 <div class="logo-preview light">
-                    <img src="logo/square/png/minifig-black.png" alt="Musta minifig-pää, vaalea tausta">
+                    <img src="logo/square/png/square-light-nougat.png" alt="Neliölogo – Light Nougat">
                 </div>
                 <div class="logo-info">
-                    <div class="logo-name">Musta (vaalea tausta)</div>
-                    <a href="logo/square/svg/minifig-black.svg" download class="download-btn">SVG</a>
-                    <a href="logo/square/png/minifig-black.png" download class="download-btn">PNG</a>
-                    <a href="logo/square/png/minifig-black.webp" download class="download-btn">WebP</a>
+                    <div class="logo-name">Neliölogo – Light Nougat</div>
+                    <a href="logo/square/svg/square-light-nougat.svg" download class="download-btn">SVG</a>
+                    <a href="logo/square/png/square-light-nougat.png" download class="download-btn">PNG</a>
+                    <a href="logo/square/png/square-light-nougat.webp" download class="download-btn">WebP</a>
                 </div>
             </div>
 
+            <!-- Square – Nougat -->
+            <div class="logo-card">
+                <div class="logo-preview light">
+                    <img src="logo/square/png/square-nougat.png" alt="Neliölogo – Nougat">
+                </div>
+                <div class="logo-info">
+                    <div class="logo-name">Neliölogo – Nougat</div>
+                    <a href="logo/square/svg/square-nougat.svg" download class="download-btn">SVG</a>
+                    <a href="logo/square/png/square-nougat.png" download class="download-btn">PNG</a>
+                    <a href="logo/square/png/square-nougat.webp" download class="download-btn">WebP</a>
+                </div>
+            </div>
+
+            <!-- Square – Dark Nougat -->
+            <div class="logo-card">
+                <div class="logo-preview light">
+                    <img src="logo/square/png/square-dark-nougat.png" alt="Neliölogo – Dark Nougat">
+                </div>
+                <div class="logo-info">
+                    <div class="logo-name">Neliölogo – Dark Nougat</div>
+                    <a href="logo/square/svg/square-dark-nougat.svg" download class="download-btn">SVG</a>
+                    <a href="logo/square/png/square-dark-nougat.png" download class="download-btn">PNG</a>
+                    <a href="logo/square/png/square-dark-nougat.webp" download class="download-btn">WebP</a>
+                </div>
+            </div>
+
+            <!-- Animated skin-tone logo -->
+            <div class="logo-card">
+                <div class="logo-preview light">
+                    <img src="logo/square/png/square-animated.webp" alt="Animoitu neliölogo – vaihtuvat ihonsävyt">
+                </div>
+                <div class="logo-info">
+                    <div class="logo-name">Animoitu – ihonsävyt</div>
+                    <a href="logo/square/png/square-animated.gif" download class="download-btn">GIF</a>
+                    <a href="logo/square/png/square-animated.webp" download class="download-btn">WebP</a>
+                </div>
+            </div>
+
+            <!-- Colorful skin-tone logo (static) -->
+            <div class="logo-card">
+                <div class="logo-preview light">
+                    <img src="logo/square/png/minifig-colorful.png" alt="Värikäs neliölogo – ihonsävyt">
+                </div>
+                <div class="logo-info">
+                    <div class="logo-name">Värikäs – ihonsävyt</div>
+                    <a href="logo/square/svg/minifig-colorful.svg" download class="download-btn">SVG</a>
+                    <a href="logo/square/png/minifig-colorful.png" download class="download-btn">PNG</a>
+                    <a href="logo/square/png/minifig-colorful.webp" download class="download-btn">WebP</a>
+                </div>
+            </div>
+
+            <!-- Rainbow variant -->
+            <div class="logo-card">
+                <div class="logo-preview light">
+                    <img src="logo/square/png/minifig-rainbow.png" alt="Sateenkaarivärinen neliölogo">
+                </div>
+                <div class="logo-info">
+                    <div class="logo-name">Sateenkaari</div>
+                    <a href="logo/square/svg/minifig-rainbow.svg" download class="download-btn">SVG</a>
+                    <a href="logo/square/png/minifig-rainbow.png" download class="download-btn">PNG</a>
+                    <a href="logo/square/png/minifig-rainbow.webp" download class="download-btn">WebP</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ── Horizontal logos ── -->
+    <section id="logos-horizontal">
+        <h2>Vaakalogot</h2>
+        <p>
+            Neljä minihahmon päätä vierekkäin rakennuspalikoista koottuna.
+            Vaakaversio tekstillä sopii esitteisiin, nettisivuille ja muihin
+            konteksteihin, joissa yhdistyksen nimi halutaan näyttää logon yhteydessä.
+        </p>
+
+        <div class="logo-grid">
+            <!-- Horizontal without subtitle -->
+            <div class="logo-card">
+                <div class="logo-preview light">
+                    <img src="logo/horizontal/png/horizontal.png" alt="Vaakalogo – neljä päätä">
+                </div>
+                <div class="logo-info">
+                    <div class="logo-name">Vaakalogo</div>
+                    <a href="logo/horizontal/svg/horizontal.svg" download class="download-btn">SVG</a>
+                    <a href="logo/horizontal/png/horizontal.png" download class="download-btn">PNG</a>
+                    <a href="logo/horizontal/png/horizontal.webp" download class="download-btn">WebP</a>
+                </div>
+            </div>
+
+            <!-- Horizontal with subtitle -->
+            <div class="logo-card">
+                <div class="logo-preview light">
+                    <img src="logo/horizontal/png/horizontal-full.png" alt="Vaakalogo alaotsikolla">
+                </div>
+                <div class="logo-info">
+                    <div class="logo-name">Vaakalogo alaotsikolla <span class="badge">Suositeltu</span></div>
+                    <a href="logo/horizontal/svg/horizontal-full.svg" download class="download-btn">SVG</a>
+                    <a href="logo/horizontal/png/horizontal-full.png" download class="download-btn">PNG</a>
+                    <a href="logo/horizontal/png/horizontal-full.webp" download class="download-btn">WebP</a>
+                </div>
+            </div>
+
+            <!-- Animated horizontal without subtitle -->
+            <div class="logo-card">
+                <div class="logo-preview light">
+                    <img src="logo/horizontal/png/horizontal-animated.webp" alt="Animoitu vaakalogo – vaihtuvat ihonsävyt">
+                </div>
+                <div class="logo-info">
+                    <div class="logo-name">Animoitu vaakalogo</div>
+                    <a href="logo/horizontal/png/horizontal-animated.gif" download class="download-btn">GIF</a>
+                    <a href="logo/horizontal/png/horizontal-animated.webp" download class="download-btn">WebP</a>
+                </div>
+            </div>
+
+            <!-- Animated horizontal with subtitle -->
+            <div class="logo-card">
+                <div class="logo-preview light">
+                    <img src="logo/horizontal/png/horizontal-full-animated.webp" alt="Animoitu vaakalogo alaotsikolla">
+                </div>
+                <div class="logo-info">
+                    <div class="logo-name">Animoitu vaakalogo alaotsikolla</div>
+                    <a href="logo/horizontal/png/horizontal-full-animated.gif" download class="download-btn">GIF</a>
+                    <a href="logo/horizontal/png/horizontal-full-animated.webp" download class="download-btn">WebP</a>
+                </div>
+            </div>
+
+            <!-- Dark theme horizontal with subtitle (static) -->
             <div class="logo-card">
                 <div class="logo-preview dark">
-                    <img src="logo/square/png/minifig-white.png" alt="Valkoinen minifig-pää, tumma tausta">
+                    <img src="logo/horizontal/png/horizontal-full-dark.png" alt="Vaakalogo alaotsikolla – tumma teema">
                 </div>
                 <div class="logo-info">
-                    <div class="logo-name">Valkoinen (tumma tausta)</div>
-                    <a href="logo/square/svg/minifig-white.svg" download class="download-btn">SVG</a>
-                    <a href="logo/square/png/minifig-white.png" download class="download-btn">PNG</a>
-                    <a href="logo/square/png/minifig-white.webp" download class="download-btn">WebP</a>
+                    <div class="logo-name">Vaakalogo alaotsikolla – tumma</div>
+                    <a href="logo/horizontal/svg/horizontal-full-dark.svg" download class="download-btn">SVG</a>
+                    <a href="logo/horizontal/png/horizontal-full-dark.png" download class="download-btn">PNG</a>
+                    <a href="logo/horizontal/png/horizontal-full-dark.webp" download class="download-btn">WebP</a>
+                </div>
+            </div>
+
+            <!-- Animated dark theme horizontal with subtitle -->
+            <div class="logo-card">
+                <div class="logo-preview dark">
+                    <img src="logo/horizontal/png/horizontal-full-dark-animated.webp" alt="Animoitu vaakalogo alaotsikolla – tumma teema">
+                </div>
+                <div class="logo-info">
+                    <div class="logo-name">Animoitu vaakalogo alaotsikolla – tumma</div>
+                    <a href="logo/horizontal/png/horizontal-full-dark-animated.gif" download class="download-btn">GIF</a>
+                    <a href="logo/horizontal/png/horizontal-full-dark-animated.webp" download class="download-btn">WebP</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ── Full logos ── -->
-    <section id="logos-full">
-        <h2>Logot alaotsikolla</h2>
+    <!-- ── Favicons ── -->
+    <section id="favicons">
+        <h2>Faviconit</h2>
         <p>
-            Tunnuskuvan alla teksti "Suomen Palikkaharrastajat ry".
-            Soveltuu esitteisiin, nettisivuille ja muihin konteksteihin,
-            joissa yhdistyksen nimi halutaan näyttää logon yhteydessä.
+            Faviconit generoidaan keltaisesta neliölogosta. Sisältää ICO-tiedoston sekä
+            PNG-versiot eri kokoina selainta, iOS-kotinäyttöä ja PWA-manifestia varten.
         </p>
-
         <div class="logo-grid">
             <div class="logo-card">
-                <div class="logo-preview light">
-                    <img src="logo/horizontal/png/minifig-yellow-full.png" alt="Keltainen logo alaotsikolla, vaalea tausta">
+                <div class="logo-preview light" style="gap: 1rem; flex-wrap: wrap;">
+                    <img src="favicon/favicon-48.png" alt="Favicon 48px" style="max-height: 48px;">
+                    <img src="favicon/favicon-32.png" alt="Favicon 32px" style="max-height: 32px;">
+                    <img src="favicon/favicon-16.png" alt="Favicon 16px" style="max-height: 16px;">
                 </div>
                 <div class="logo-info">
-                    <div class="logo-name">Keltainen <span class="badge">Suositeltu</span></div>
-                    <a href="logo/horizontal/svg/minifig-yellow-full.svg" download class="download-btn">SVG</a>
-                    <a href="logo/horizontal/png/minifig-yellow-full.png" download class="download-btn">PNG</a>
-                    <a href="logo/horizontal/png/minifig-yellow-full.webp" download class="download-btn">WebP</a>
+                    <div class="logo-name">favicon.ico <span class="badge">16 · 32 · 48 px</span></div>
+                    <a href="favicon/favicon.ico" download class="download-btn">ICO</a>
+                    <a href="favicon/favicon-32.png" download class="download-btn">PNG 32</a>
+                    <a href="favicon/favicon-48.png" download class="download-btn">PNG 48</a>
                 </div>
             </div>
-
             <div class="logo-card">
                 <div class="logo-preview light">
-                    <img src="logo/horizontal/png/minifig-black-full.png" alt="Musta logo alaotsikolla, vaalea tausta">
+                    <img src="favicon/apple-touch-icon.png" alt="Apple Touch Icon 180px" style="max-height: 120px;">
                 </div>
                 <div class="logo-info">
-                    <div class="logo-name">Musta (vaalea tausta)</div>
-                    <a href="logo/horizontal/svg/minifig-black-full.svg" download class="download-btn">SVG</a>
-                    <a href="logo/horizontal/png/minifig-black-full.png" download class="download-btn">PNG</a>
-                    <a href="logo/horizontal/png/minifig-black-full.webp" download class="download-btn">WebP</a>
+                    <div class="logo-name">Apple Touch Icon <span class="badge">180 px</span></div>
+                    <a href="favicon/apple-touch-icon.png" download class="download-btn">PNG</a>
                 </div>
             </div>
-
             <div class="logo-card">
-                <div class="logo-preview dark">
-                    <img src="logo/horizontal/png/minifig-white-full.png" alt="Valkoinen logo alaotsikolla, tumma tausta">
+                <div class="logo-preview light">
+                    <img src="favicon/icon-192.png" alt="PWA Icon 192px" style="max-height: 120px;">
                 </div>
                 <div class="logo-info">
-                    <div class="logo-name">Valkoinen (tumma tausta)</div>
-                    <a href="logo/horizontal/svg/minifig-white-full.svg" download class="download-btn">SVG</a>
-                    <a href="logo/horizontal/png/minifig-white-full.png" download class="download-btn">PNG</a>
-                    <a href="logo/horizontal/png/minifig-white-full.webp" download class="download-btn">WebP</a>
+                    <div class="logo-name">PWA-kuvake <span class="badge">192 · 512 px</span></div>
+                    <a href="favicon/icon-192.png" download class="download-btn">PNG 192</a>
+                    <a href="favicon/icon-512.png" download class="download-btn">PNG 512</a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- ── Download ── -->
-    <section id="download">
-        <h2>Lataa materiaalit</h2>
-        <p>Kaikki tiedostot generoidaan automaattisesti <code>make</code>-komennolla.</p>
-
-        <h3>Tuotetut tiedostot</h3>
-        <ul style="margin-left: 1.5rem; line-height: 2.2;">
-            <li><strong>3 neliölogoa</strong> – keltainen, musta, valkoinen (SVG + PNG + WebP, 800&thinsp;px)</li>
-            <li><strong>3 logoa alaotsikolla</strong> – sama kolmikko alaotsikon kanssa (SVG + PNG + WebP)</li>
-            <li><strong>Outfit-fontti</strong> – muuttuva fontti (SIL Open Font License)</li>
-        </ul>
-
-        <h3>Värien muuttaminen</h3>
-        <p>
-            Muokkaa tiedostoa <code>colors.py</code> ja aja <code>make</code>.
-            Kaikki logot päivittyvät automaattisesti uusilla väreillä.
-            Rebrickable-värikoodit: <a href="https://rebrickable.com/colors/" style="color:#05131D;">rebrickable.com/colors</a>
-        </p>
-
-        <h3>Build</h3>
-        <pre style="margin-top:0.5rem;background:#f4f4f4;padding:1rem;border-radius:6px;font-size:0.9rem;">make          # build all SVG + PNG/WebP
-make logos    # SVG only
-make designs  # regenerate design SVGs from colors.py
-make clean    # remove all generated files</pre>
-
-        <div style="margin-top: 2rem;">
-            <a href="https://github.com/Suomen-Palikkayhteiso-ry/brand" class="download-btn"
-               style="font-size: 1rem; padding: 0.6rem 1.75rem;">
-                Katso GitHubissa
-            </a>
         </div>
     </section>
 
 </div>
 
 <footer>
-    <p>&copy; 2026 Suomen Palikkaharrastajat ry | Brändiopas</p>
+    <p>&copy; 2026 Suomen Palikkaharrastajat ry | Logo ja värit</p>
     <p>Fontit: Outfit (SIL Open Font License) · Logot: CC BY 4.0</p>
 </footer>
 

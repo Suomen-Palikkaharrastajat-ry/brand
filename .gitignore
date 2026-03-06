@@ -1,49 +1,9 @@
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Linux
-*~
-.directory
-
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
-# Editors
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# Temporary files
-*.tmp
-*.bak
-*.log
-
-# Build artifacts
-*.png.backup
-*.svg.backup
-
-# Devenv
-.devenv*
-devenv.local.nix
-devenv.local.yaml
-
-# direnv
-.direnv
-
-# pre-commit
-.pre-commit-config.yaml
-
-# Python cache
+# Python
 __pycache__/
 *.pyc
-*.pyo
 
-# Root-level test preview exports (generated manually, not part of build)
-/horizontal.png
-/square.png
+# Devenv / direnv
+.devenv*
+.direnv
+devenv.local.nix
+devenv.local.yaml

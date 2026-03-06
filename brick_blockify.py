@@ -3,24 +3,63 @@
 Post-process SVG logos to make them blocky/pixelated like stacked bricks.
 """
 
+import os
 import sys
 from PIL import Image, ImageDraw
 import cairosvg
 import io
 
 
+def _mode_filter(img, kernel=3):
+    """Replace each opaque pixel with the most frequent (r,g,b) in its k×k neighbourhood.
+
+    Anti-aliased edge pixels produced by cairosvg have unique blended colours that
+    appear only once.  Their neighbours are dominated by the real solid-region colour,
+    so the mode filter snaps them correctly without needing a pre-defined palette.
+    Works correctly even when many different colours are present (e.g. horizontal logo).
+    """
+    img = img.convert('RGBA')
+    pixels = img.load()
+    w, h = img.size
+    out = img.copy()
+    out_px = out.load()
+    half = kernel // 2
+    for y in range(h):
+        for x in range(w):
+            if pixels[x, y][3] < 128:
+                continue
+            counts = {}
+            for dy in range(-half, half + 1):
+                for dx in range(-half, half + 1):
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < w and 0 <= ny < h:
+                        r, g, b, a = pixels[nx, ny]
+                        if a >= 128:
+                            c = (r, g, b)
+                            counts[c] = counts.get(c, 0) + 1
+            if counts:
+                dominant = max(counts, key=counts.__getitem__)
+                out_px[x, y] = dominant + (pixels[x, y][3],)
+    return out
+
+
 def svg_to_image(svg_path, width=200):
-    """Convert SVG to PIL Image without anti-aliasing."""
+    """Convert SVG to PIL Image with crisp, anti-aliasing-free colours.
+
+    Renders at 4× resolution, applies a 3×3 mode filter to replace every
+    anti-aliased edge pixel with the dominant real colour in its neighbourhood,
+    then downscales with nearest-neighbour so no new blended colours appear.
+    """
     with open(svg_path, 'rb') as f:
         svg_data = f.read()
-    
-    # Convert SVG to PNG at higher resolution first
+
     png_data = cairosvg.svg2png(bytestring=svg_data, output_width=width * 4)
-    img = Image.open(io.BytesIO(png_data))
-    
-    # Downscale using nearest neighbor (no anti-aliasing)
-    img = img.resize((width, int(width * img.height / img.width)), Image.NEAREST)
-    
+    img4x = Image.open(io.BytesIO(png_data)).convert('RGBA')
+
+    # Remove anti-aliasing artefacts before downsampling
+    img4x = _mode_filter(img4x, kernel=3)
+
+    img = img4x.resize((width, int(width * img4x.height / img4x.width)), Image.NEAREST)
     return img
 
 
@@ -376,10 +415,10 @@ def image_to_brick_svg(img, block_width=24, block_height=20, min_alpha=128, bric
     return '\n'.join(svg_parts)
 
 
-def blockify_svg(input_svg, output_svg, pixel_width=20, block_width=24, block_height=20, brick_type="auto"):
+def blockify_svg(input_svg, output_svg, pixel_width=20, block_width=24, block_height=20, brick_type="auto", padding=0):
     """
     Main function to convert SVG to blocky brick style.
-    
+
     Args:
         input_svg: Path to input SVG file
         output_svg: Path to output SVG file
@@ -387,13 +426,40 @@ def blockify_svg(input_svg, output_svg, pixel_width=20, block_width=24, block_he
         block_width: Width of 2x2 brick in output (default 24, will be halved for 1x1)
         block_height: Height of bricks (default 20, which is 5/6 of 24 for proper ratio)
         brick_type: "auto" (adaptive), "1x1", or "2x2" brick type
+        padding: transparent stud columns added on each side (default 0)
     """
     print(f"Converting {input_svg} to blocky brick style ({brick_type} bricks, side view)...")
     print(f"  Rasterizing to {pixel_width} pixels wide")
     print(f"  2x2 brick size: {block_width}×{block_height}px, 1x1 brick size: {block_width//2}×{block_height}px")
-    
-    # Convert SVG to low-res image
-    img = svg_to_image(input_svg, width=pixel_width)
+
+    # Support both SVG and raster (PNG/JPG) inputs
+    ext = os.path.splitext(input_svg)[1].lower()
+    if ext in ('.png', '.jpg', '.jpeg', '.bmp', '.gif', '.webp'):
+        raw = Image.open(input_svg).convert('RGBA')
+        new_h = max(1, round(pixel_width * raw.height / raw.width))
+        img = raw.resize((pixel_width, new_h), Image.NEAREST)
+    else:
+        img = svg_to_image(input_svg, width=pixel_width)
+
+    # Correct image height for brick aspect ratio.
+    # Each pixel column is rendered at h_pitch px wide and each pixel row at
+    # v_pitch px tall.  Without correction a square design produces a
+    # vertically stretched output (v_pitch > h_pitch with default parameters).
+    _stud_h     = max(2, int(block_height * 0.15))
+    _body_h     = block_height - _stud_h
+    _inner_stud = max(2, int(_body_h * 0.15))
+    _v_pitch    = _body_h - _inner_stud   # vertical spacing between brick rows
+    _h_pitch    = block_width // 2         # horizontal spacing between brick columns
+    corrected_h = max(1, round(img.height * _h_pitch / _v_pitch))
+    if corrected_h != img.height:
+        img = img.resize((img.width, corrected_h), Image.NEAREST)
+
+    # Add transparent padding columns on each side
+    if padding > 0:
+        padded = Image.new('RGBA', (img.width + 2 * padding, img.height), (0, 0, 0, 0))
+        padded.paste(img, (padding, 0))
+        img = padded
+
     print(f"  Image size: {img.size}")
     
     # Convert to brick-style SVG
@@ -433,5 +499,6 @@ if __name__ == '__main__':
     block_width = int(sys.argv[4]) if len(sys.argv) > 4 else 24
     block_height = int(sys.argv[5]) if len(sys.argv) > 5 else 20
     brick_type = sys.argv[6] if len(sys.argv) > 6 else "auto"
-    
-    blockify_svg(input_svg, output_svg, pixel_width, block_width, block_height, brick_type)
+    padding = int(sys.argv[7]) if len(sys.argv) > 7 else 0
+
+    blockify_svg(input_svg, output_svg, pixel_width, block_width, block_height, brick_type, padding)
