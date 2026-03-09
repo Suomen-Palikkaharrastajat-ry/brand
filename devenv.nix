@@ -22,13 +22,13 @@ in {
   profiles.shell.module = {
     languages.elm.enable = true;
 
-    # logoDrv.nativeBuildInputs / buildInputs carry GHC (with all project deps
-    # pre-registered in a unified package-db) plus the modifier build tools.
-    # In older nixpkgs these were accessed via logoDrv.env.*; newer nixpkgs
-    # exposes them directly on the derivation.
+    # logoDrv.nativeBuildInputs carries GHC (with all project deps pre-registered
+    # in a unified package-db) plus the modifier build tools.
+    # buildInputs is intentionally excluded: logo.cabal has no C/system deps,
+    # so buildInputs is empty and including it produces null entries in CI
+    # (clean checkout evaluates cabal2nix differently from a dirty working tree).
     packages =
       logoDrv.nativeBuildInputs
-      ++ logoDrv.buildInputs
       ++ [
         pkgs.claude-code
         # External raster/image tools (called via System.Process)
