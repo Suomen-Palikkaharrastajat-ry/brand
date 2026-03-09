@@ -34,9 +34,13 @@ executable logo-gen
 test-suite logo-gen-tests
   type: exitcode-stdio-1.0
   main-is: TestSuite.hs
+  other-modules:
+    Brand.ColorsSpec, Brand.ElmGenSpec, Brand.JsonSpec,
+    Logo.BlockifySpec, Logo.DesignsSpec
   hs-source-dirs: tests
   ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
   default-language: Haskell2010
   build-depends:
-    base >=4.7 && <5, text, logo-gen,
-    tasty, tasty-hunit, tasty-quickcheck
+    base >=4.7 && <5, text, bytestring, aeson, logo-gen,
+    tasty, tasty-hunit, tasty-quickcheck,
+    temporary, process

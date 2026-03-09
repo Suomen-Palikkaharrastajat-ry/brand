@@ -57,11 +57,11 @@ svgInnerContent t =
 
 -- | Replace headSvgFaceColor with given hex in raw SVG text.
 recolorFace :: Hex -> Text -> Text
-recolorFace (Hex newColor) t = T.replace headSvgFaceColor (T.toLower newColor) t
+recolorFace (Hex newColor) = T.replace headSvgFaceColor (T.toLower newColor)
 
 -- | Generate square SVG: source.svg recolored with faceColor.
 squareSvg :: Hex -> Text -> Text
-squareSvg faceColor srcContent = recolorFace faceColor srcContent
+squareSvg = recolorFace
 
 -- | Generate horizontal SVG: n heads side-by-side.
 horizontalSvg :: [Hex] -> Text -> Text
@@ -130,8 +130,7 @@ mkName n = Name n Nothing Nothing
 
 -- | Look up an attribute by local name (ignoring namespace).
 attrVal :: Text -> Map.Map Name Text -> Text
-attrVal localName attrs =
-    Map.findWithDefault "" (mkName localName) attrs
+attrVal localName = Map.findWithDefault "" (mkName localName)
 
 -- | Extract the 'd' attribute of the face path element using xml-conduit.
 extractFacePathD :: Text -> Text
@@ -229,7 +228,7 @@ generateAllDesigns designDir = do
         nRb = length rb
 
     -- Square variants (4)
-    write "square.svg" $ squareSvg (tones !! 0) srcContent
+    write "square.svg" $ squareSvg (head tones) srcContent
     write "square-light-nougat.svg" $ squareSvg (tones !! 1) srcContent
     write "square-nougat.svg" $ squareSvg (tones !! 2) srcContent
     write "square-dark-nougat.svg" $ squareSvg (tones !! 3) srcContent

@@ -1,0 +1,17 @@
+{
+  "type": "module",
+  "scripts": {
+    "postinstall": "elm-tooling install",
+    "dev": "elm-pages dev",
+    "build": "elm-pages build"
+  },
+  "devDependencies": {
+    "elm-pages": "3.1.5",
+    "elm-tooling": "^1.15.0",
+    "elm-codegen": "0.6.1",
+    "elm-optimize-level-2": "^0.3.5",
+    "elm-review": "^2.13.1",
+    "@tailwindcss/vite": "^4.0.0",
+    "vite": "^6.0.0"
+  }
+}

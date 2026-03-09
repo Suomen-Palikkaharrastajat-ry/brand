@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Brand.JsonSpec (tests) where
 
 import Brand.Colors (associationName)

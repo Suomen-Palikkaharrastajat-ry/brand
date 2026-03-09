@@ -6,6 +6,10 @@ let
       allowUnfree = true;
     };
   };
+
+  elm-pages = pkgs.callPackage ./elm-pages.nix {
+    lamdera = pkgs.elmPackages.lamdera;
+  };
 in {
   profiles.shell.module = {
     languages.haskell = {
@@ -13,6 +17,7 @@ in {
       package = pkgs.haskell.packages.ghc96.ghc;
       stack.enable = true;
     };
+    languages.elm.enable = true;
     packages = [
       pkgs.claude-code
       # Haskell tooling (from stable channel for reproducibility)
@@ -28,12 +33,23 @@ in {
       pkgs.imagemagick   # fallback for animated WebP (convert)
       pkgs.git
       pkgs.treefmt
-      # tmp
-      (pkgs.python3.withPackages(ps: [ ps.cairosvg ]))
+      # Python helper scripts (svg_rasterize.py, svg_to_png.py)
+      (pkgs.python3.withPackages (ps: [ ps.cairosvg ]))
+      # Elm tooling
+      pkgs.nodejs
+      pkgs.elmPackages.elm-format
+      pkgs.elmPackages.elm-review
+      pkgs.elmPackages.elm-test
+      pkgs.elmPackages.elm-json
+      pkgs.elmPackages.lamdera
+      elm-pages
+      # Other CLI tools
+      pkgs.entr
     ];
     enterShell = ''
       git --version
       cabal --version
+      elm-pages --version
     '';
   };
 }

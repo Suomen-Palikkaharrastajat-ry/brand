@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Logo.DesignsSpec (tests) where
 
 import Brand.Colors (Hex(..), headSvgFaceColor)

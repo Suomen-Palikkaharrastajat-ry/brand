@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Brand.ColorsSpec (tests) where
 
 import Brand.Colors
@@ -51,4 +52,4 @@ assertValidHex t = do
     assertBool ("should be 3 or 6 hex digits: " ++ T.unpack t) $
         T.length body `elem` [3, 6]
     assertBool ("all chars should be hex digits: " ++ T.unpack t) $
-        T.all (\c -> isHexDigit (toUpper c)) body
+        T.all (isHexDigit . toUpper) body

@@ -1,5 +1,7 @@
 module Main where
 
+import Brand.Colors (darkBg)
+import Brand.ElmGen (generateBrandModule)
 import Brand.Json (generateBrandJson)
 import Control.Monad (forM_)
 import Logo.Animate (assembleGif, assembleWebp)
@@ -9,7 +11,7 @@ import Logo.Designs (generateAllDesigns)
 import Logo.Favicons (generateFavicons)
 import Logo.Raster (exportPng, exportWebp)
 import System.Directory (createDirectoryIfMissing)
-import Brand.Colors (darkBg)
+import qualified Data.Text.IO as TIO
 
 -- ── Build parameters ────────────────────────────────────────────────────────
 sqPx, hzPx, blkW, blkH, pad, txtSize, animMs :: Int
@@ -131,6 +133,13 @@ main = do
     -- 8. Brand manifest
     putStrLn "==> brand.json"
     generateBrandJson
+
+    -- 9. Elm codegen (Brand.Generated)
+    putStrLn "==> elm codegen (Brand.Generated)"
+    let elmBrandSrc = "src/Brand"
+    createDirectoryIfMissing True elmBrandSrc
+    TIO.writeFile (elmBrandSrc <> "/Generated.elm") generateBrandModule
+    putStrLn "Wrote src/Brand/Generated.elm"
 
     putStrLn "Done."
 

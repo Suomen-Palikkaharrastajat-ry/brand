@@ -1,4 +1,3 @@
-{-# LANGUAGE TupleSections #-}
 module Logo.Blockify (blockifySvg, aspectCorrectionFactor) where
 
 import Codec.Picture

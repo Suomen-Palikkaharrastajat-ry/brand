@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #05131D;
+  --color-brand-yellow: #F2CD37;
+  --font-family-sans: "Outfit", system-ui, sans-serif;
+}
+
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/Outfit-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+}

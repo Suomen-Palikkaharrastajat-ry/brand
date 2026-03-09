@@ -22,6 +22,6 @@ tests = testGroup "Logo.Blockify"
     , testCase "padding adds 2*pad columns" $ do
         -- With pad=1, a 14-wide image becomes 16-wide
         let imgW = 14 :: Int
-            padded = imgW + 2 * 1
+            padded = imgW + 2
         padded @?= 16
     ]
