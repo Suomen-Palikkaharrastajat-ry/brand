@@ -218,10 +218,10 @@ formatDouble decimals x =
 -- ── Pipeline entry point ────────────────────────────────────────────────────
 
 -- | Generate all 19 design SVGs into the given directory.
-generateAllDesigns :: FilePath -> IO ()
-generateAllDesigns designDir = do
+generateAllDesigns :: FilePath -> FilePath -> IO ()
+generateAllDesigns sourceSvg designDir = do
     createDirectoryIfMissing True designDir
-    srcContent <- readFileUtf8 "source.svg"
+    srcContent <- readFileUtf8 sourceSvg
 
     let tones = map (\(_, _, h) -> h) skinTones
         rb = map (\(_, _, h, _) -> h) rainbowColors

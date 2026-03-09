@@ -7,11 +7,11 @@ build-type:    Simple
 library
   exposed-modules:
     Brand.Colors, Brand.Json, Brand.ElmGen,
-    Logo.Designs, Logo.Blockify, Logo.Compose,
+    Logo.Config, Logo.Designs, Logo.Blockify, Logo.Compose,
     Logo.Animate, Logo.Raster, Logo.Favicons
   hs-source-dirs: src
   ghc-options: -Wall
-  default-language: Haskell2010
+  default-language: GHC2021
   build-depends:
     base >=4.7 && <5, text, bytestring, base64-bytestring,
     directory, filepath, process, xml-conduit, xml-types,
@@ -19,17 +19,11 @@ library
 
 executable logo-gen
   main-is: Main.hs
-  other-modules:
-    Brand.Colors, Brand.Json, Brand.ElmGen,
-    Logo.Designs, Logo.Blockify, Logo.Compose,
-    Logo.Animate, Logo.Raster, Logo.Favicons
-  hs-source-dirs: src
+  hs-source-dirs: app
   ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
-  default-language: Haskell2010
+  default-language: GHC2021
   build-depends:
-    base >=4.7 && <5, text, bytestring, base64-bytestring,
-    directory, filepath, process, xml-conduit, xml-types,
-    aeson, aeson-pretty, JuicyPixels, containers, vector
+    base >=4.7 && <5, logo-gen, text, directory
 
 test-suite logo-gen-tests
   type: exitcode-stdio-1.0
@@ -39,7 +33,7 @@ test-suite logo-gen-tests
     Logo.BlockifySpec, Logo.DesignsSpec
   hs-source-dirs: tests
   ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
-  default-language: Haskell2010
+  default-language: GHC2021
   build-depends:
     base >=4.7 && <5, text, bytestring, aeson, logo-gen,
     tasty, tasty-hunit, tasty-quickcheck,

@@ -1,0 +1,5 @@
+packages: .
+
+-- All Haskell dependencies are provided by ghcWithPackages in devenv.nix.
+-- Always build with --offline (enforced by the Makefile) so cabal resolves
+-- against the Nix package-db and never reaches Hackage.

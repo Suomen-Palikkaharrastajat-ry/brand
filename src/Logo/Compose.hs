@@ -18,9 +18,6 @@ _GAP = 24
 _BOTTOM_PAD :: Int
 _BOTTOM_PAD = 20
 
-_FONT_PATH :: FilePath
-_FONT_PATH = "fonts/Outfit-VariableFont_wght.ttf"
-
 -- | Parse width and height from SVG text.
 -- Returns (width, height) as integers (truncated from the SVG float values).
 parseSvgDimensions :: Text -> (Int, Int)
@@ -41,6 +38,8 @@ parseSvgDimensions t =
 -- Background is always transparent. Nothing = dark text, Just _ = light text.
 composeLogo
     :: FilePath
+    -- ^ Outfit font path (e.g. @fonts/Outfit-VariableFont_wght.ttf@)
+    -> FilePath
     -- ^ input brick SVG
     -> FilePath
     -- ^ output full SVG
@@ -49,9 +48,9 @@ composeLogo
     -> Maybe Hex
     -- ^ Nothing = light bg (dark text), Just _ = dark bg (light text)
     -> IO ()
-composeLogo inSvg outSvg txtSize mbBg = do
+composeLogo fontPath inSvg outSvg txtSize mbBg = do
     srcText <- TIO.readFile inSvg
-    fontBytes <- BS.readFile _FONT_PATH
+    fontBytes <- BS.readFile fontPath
     let (brickW, brickH) = parseSvgDimensions srcText
         canvasW = brickW
         canvasH = brickH + _GAP + txtSize + _BOTTOM_PAD

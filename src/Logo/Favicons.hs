@@ -5,15 +5,9 @@ import System.Directory (createDirectoryIfMissing)
 import System.Process (callProcess)
 import Control.Monad (forM_)
 
-squareSvgPath :: FilePath
-squareSvgPath = "logo/square/svg/square.svg"
-
-faviconDir :: FilePath
-faviconDir = "favicon"
-
 -- | Generate all favicon assets from the square logo SVG.
-generateFavicons :: IO ()
-generateFavicons = do
+generateFavicons :: FilePath -> FilePath -> IO ()
+generateFavicons squareSvgPath faviconDir = do
     createDirectoryIfMissing True faviconDir
 
     forM_ sizes $ \(sz, name) ->

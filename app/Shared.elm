@@ -106,7 +106,7 @@ viewNavbar toMsg =
                 [ Html.img
                     [ Attr.src "/logo/horizontal/svg/horizontal-full-dark.svg"
                     , Attr.alt "Suomen Palikkaharrastajat ry"
-                    , Attr.class "h-8"
+                    , Attr.class "h-14"
                     ]
                     []
                 ]

@@ -1,15 +1,15 @@
 module Logo.Blockify (blockifySvg, aspectCorrectionFactor) where
 
 import Codec.Picture
-import Data.List (intercalate, sort)
+import Data.List (intercalate, maximumBy, sort)
 import Data.Maybe (fromMaybe, isJust, isNothing)
+import Data.Ord (comparing)
 import Data.Word (Word8)
+import qualified Data.ByteString as BS
 import qualified Data.Map.Strict as Map
 import System.Directory (createDirectoryIfMissing)
 import System.FilePath (takeDirectory)
 import System.Process (createProcess, proc, std_out, StdStream (..), waitForProcess)
-import qualified Data.ByteString as BS
-import qualified Data.ByteString.Char8 as BC
 import Text.Printf (printf)
 
 type RGB = (Word8, Word8, Word8)
@@ -17,32 +17,55 @@ type Pos = (Int, Int) -- (col, row)
 
 -- ── Rendering ────────────────────────────────────────────────────────────────────
 
--- | Rasterize SVG using cairosvg + PIL NEAREST (via scripts/svg_rasterize.py).
--- The Python script renders at 4× width, applies the 3×3 mode filter, then
--- downscales to target width with PIL NEAREST (centre-of-pixel mapping).
--- Returns the downscaled RGBA image ready for aspect correction.
+-- | Rasterize SVG using rsvg-convert at 4× target width, apply a 3×3 mode
+-- filter in Haskell (removes anti-aliasing artefacts), then downscale to
+-- target width with centre-of-pixel NEAREST mapping (matches PIL NEAREST).
 rasterize :: FilePath -> Int -> IO (Image PixelRGBA8)
 rasterize svgPath targetW = do
     (_, Just hout, _, ph) <-
         createProcess
-            (proc "python3" ["scripts/svg_rasterize.py", svgPath, show targetW])
+            (proc "rsvg-convert" ["-w", show (targetW * 4), "-f", "png", svgPath])
                 { std_out = CreatePipe }
     raw <- BS.hGetContents hout
     _ <- waitForProcess ph
-    -- Parse header: "width\nheight\n" followed by raw RGBA bytes
-    let (wLine, rest1) = BC.break (== '\n') raw
-        (hLine, rest2) = BC.break (== '\n') (BS.tail rest1)
-        rawPixels      = BS.tail rest2
-        w              = read (BC.unpack wLine) :: Int
-        h              = read (BC.unpack hLine) :: Int
-        img            = generateImage (\x y ->
-                            let off = (y * w + x) * 4
-                                r   = BS.index rawPixels off
-                                g   = BS.index rawPixels (off + 1)
-                                b   = BS.index rawPixels (off + 2)
-                                a   = BS.index rawPixels (off + 3)
-                             in PixelRGBA8 r g b a) w h
-    return img
+    case decodePng raw of
+        Left err -> error $ "rasterize: PNG decode failed for " ++ svgPath ++ ": " ++ err
+        Right dynImg ->
+            let img4x    = convertRGBA8 dynImg
+                filtered = modeFilter img4x
+                targetH  = max 1 $ round
+                    ( fromIntegral targetW
+                    * fromIntegral (imageHeight filtered)
+                    / fromIntegral (imageWidth  filtered) :: Double )
+             in return $ scaleNearest filtered targetW targetH
+
+-- | 3×3 mode filter: replace each opaque pixel's colour with the most
+-- common colour in its 3×3 neighbourhood (matching scripts/svg_rasterize.py).
+modeFilter :: Image PixelRGBA8 -> Image PixelRGBA8
+modeFilter img = generateImage sample w h
+  where
+    w = imageWidth img
+    h = imageHeight img
+    sample x y =
+        let PixelRGBA8 r g b a = pixelAt img x y
+         in if a < 128
+                then PixelRGBA8 r g b a
+                else let (dr, dg, db) = dominantColor x y
+                      in PixelRGBA8 dr dg db a
+    dominantColor x y =
+        let neighbors =
+                [ (r', g', b')
+                | dy <- [-1, 0, 1 :: Int]
+                , dx <- [-1, 0, 1 :: Int]
+                , let nx = x + dx; ny = y + dy
+                , nx >= 0, nx < w, ny >= 0, ny < h
+                , let PixelRGBA8 r' g' b' a' = pixelAt img nx ny
+                , a' >= 128
+                ]
+            counts = Map.fromListWith (+) [(c, 1 :: Int) | c <- neighbors]
+         in case Map.toList counts of
+                []  -> let PixelRGBA8 r0 g0 b0 _ = pixelAt img x y in (r0, g0, b0)
+                xs  -> fst $ maximumBy (comparing snd) xs
 
 -- | Nearest-neighbour scale (matches PIL NEAREST).
 -- PIL uses centre-of-pixel formula: src = floor((out + 0.5) * src_size / new_size)
