@@ -98,21 +98,22 @@ viewNavbar toMsg =
     Html.nav
         [ Attr.class "bg-brand sticky top-0 z-50 shadow-md" ]
         [ Html.div
-            [ Attr.class "max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-6" ]
+            [ Attr.class "max-w-5xl mx-auto px-4 py-2 sm:py-3 flex flex-wrap items-center gap-x-4 gap-y-1" ]
             [ Html.a
                 [ Attr.href "/"
-                , Attr.class "flex-shrink-0"
+                , Attr.class "flex-shrink-0 mr-auto"
                 ]
                 [ Html.img
                     [ Attr.src "/logo/horizontal/svg/horizontal-full-dark.svg"
                     , Attr.alt "Suomen Palikkaharrastajat ry"
-                    , Attr.class "h-14"
+                    , Attr.class "h-10 sm:h-14"
                     ]
                     []
                 ]
             , Html.ul
-                [ Attr.class "flex flex-wrap gap-1 list-none m-0 p-0" ]
+                [ Attr.class "flex flex-wrap gap-0.5 list-none m-0 p-0" ]
                 [ navLink "/komponentit" "Komponentit"
+                , navLink "/responsiivisuus" "Responsiivisuus"
                 , navLink "/saavutettavuus" "Saavutettavuus"
                 ]
             ]
@@ -124,7 +125,7 @@ navLink href label =
     Html.li []
         [ Html.a
             [ Attr.href href
-            , Attr.class "text-white/80 hover:text-brand-yellow font-medium px-3 py-1 rounded transition-colors"
+            , Attr.class "text-white/80 hover:text-brand-yellow font-medium px-2 sm:px-3 py-1 rounded transition-colors text-sm"
             ]
             [ Html.text label ]
         ]

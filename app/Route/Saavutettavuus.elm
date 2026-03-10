@@ -72,8 +72,8 @@ view : App Data ActionData RouteParams -> Shared.Model -> View (PagesMsg Msg)
 view _ _ =
     { title = "Saavutettavuus — " ++ SiteMeta.organizationName
     , body =
-        [ Html.div [ Attr.class "max-w-5xl mx-auto px-4 py-12 space-y-16" ]
-            [ Html.h1 [ Attr.class "text-3xl font-bold text-brand" ] [ Html.text "Saavutettavuus" ]
+        [ Html.div [ Attr.class "max-w-5xl mx-auto px-4 py-8 sm:py-12 space-y-12 sm:space-y-16" ]
+            [ Html.h1 [ Attr.class "text-2xl sm:text-3xl font-bold text-brand" ] [ Html.text "Saavutettavuus" ]
             , Alert.view
                 { alertType = Alert.Info
                 , title = Just "WCAG 2.1 AA — tavoitetaso"

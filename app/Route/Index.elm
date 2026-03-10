@@ -75,7 +75,7 @@ view : App Data ActionData RouteParams -> Shared.Model -> View (PagesMsg Msg)
 view _ _ =
     { title = SiteMeta.siteTitle
     , body =
-        [ Html.div [ Attr.class "max-w-5xl mx-auto px-4 py-12 space-y-20" ]
+        [ Html.div [ Attr.class "max-w-5xl mx-auto px-4 py-8 sm:py-12 space-y-14 sm:space-y-20" ]
             [ viewPageHeader
             , viewLogotSection
             , viewVaritSection
@@ -92,9 +92,9 @@ view _ _ =
 viewPageHeader : Html msg
 viewPageHeader =
     Html.div [ Attr.class "space-y-2" ]
-        [ Html.h1 [ Attr.class "text-3xl font-bold text-brand" ]
+        [ Html.h1 [ Attr.class "text-2xl sm:text-3xl font-bold text-brand" ]
             [ Html.text "Suomen Palikkaharrastajat ry" ]
-        , Html.p [ Attr.class "text-gray-500" ]
+        , Html.p [ Attr.class "text-sm sm:text-base text-gray-500" ]
             [ Html.text "Logot, värit ja typografia. Koneluettava versio: "
             , Html.a
                 [ Attr.href "/design-guide/index.jsonld"
@@ -141,9 +141,9 @@ anchorItem href label =
 
 viewLogotSection : Html msg
 viewLogotSection =
-    Html.section [ Attr.id "logot", Attr.class "scroll-mt-28 space-y-10" ]
+    Html.section [ Attr.id "logot", Attr.class "scroll-mt-28 space-y-8 sm:space-y-10" ]
         [ Html.div [ Attr.class "flex items-baseline justify-between flex-wrap gap-4" ]
-            [ Html.h2 [ Attr.class "text-2xl font-bold text-brand" ] [ Html.text "Logot" ]
+            [ Html.h2 [ Attr.class "text-xl sm:text-2xl font-bold text-brand" ] [ Html.text "Logot" ]
             , Html.a
                 [ Attr.href "/design-guide/logos.jsonld"
                 , Attr.class "text-xs font-mono text-gray-400 hover:text-brand transition-colors"
@@ -198,9 +198,9 @@ viewHorizontalLogos =
 
 viewVaritSection : Html msg
 viewVaritSection =
-    Html.section [ Attr.id "varit", Attr.class "scroll-mt-28 space-y-10" ]
+    Html.section [ Attr.id "varit", Attr.class "scroll-mt-28 space-y-8 sm:space-y-10" ]
         [ Html.div [ Attr.class "flex items-baseline justify-between flex-wrap gap-4" ]
-            [ Html.h2 [ Attr.class "text-2xl font-bold text-brand" ] [ Html.text "Värit" ]
+            [ Html.h2 [ Attr.class "text-xl sm:text-2xl font-bold text-brand" ] [ Html.text "Värit" ]
             , Html.a
                 [ Attr.href "/design-guide/colors.jsonld"
                 , Attr.class "text-xs font-mono text-gray-400 hover:text-brand transition-colors"
@@ -322,9 +322,9 @@ th label =
 
 viewTypografiaSection : Html msg
 viewTypografiaSection =
-    Html.section [ Attr.id "typografia", Attr.class "scroll-mt-28 space-y-10" ]
+    Html.section [ Attr.id "typografia", Attr.class "scroll-mt-28 space-y-8 sm:space-y-10" ]
         [ Html.div [ Attr.class "flex items-baseline justify-between flex-wrap gap-4" ]
-            [ Html.h2 [ Attr.class "text-2xl font-bold text-brand" ] [ Html.text "Typografia" ]
+            [ Html.h2 [ Attr.class "text-xl sm:text-2xl font-bold text-brand" ] [ Html.text "Typografia" ]
             , Html.a
                 [ Attr.href "/design-guide/typography.jsonld"
                 , Attr.class "text-xs font-mono text-gray-400 hover:text-brand transition-colors"
@@ -339,7 +339,7 @@ viewTypografiaSection =
 
 viewFontCard : Html msg
 viewFontCard =
-    Html.div [ Attr.class "bg-white border border-gray-200 rounded-xl p-6 space-y-3" ]
+    Html.div [ Attr.class "bg-white border border-gray-200 rounded-xl p-4 sm:p-6 space-y-3" ]
         [ Html.div [ Attr.class "flex items-start justify-between flex-wrap gap-4" ]
             [ Html.div []
                 [ Html.p [ Attr.class "text-2xl font-bold text-brand" ] [ Html.text "Outfit" ]
@@ -421,7 +421,7 @@ viewWeightSpecimens =
                     Html.div
                         [ Attr.class "flex items-baseline gap-4 border-l-4 border-brand-yellow pl-4 py-2 bg-white rounded-r" ]
                         [ Html.span
-                            [ Attr.class "text-xs text-gray-400 w-28 flex-shrink-0 font-mono" ]
+                            [ Attr.class "text-xs text-gray-400 w-20 sm:w-28 flex-shrink-0 font-mono" ]
                             [ Html.text (String.fromInt weight ++ " · " ++ label) ]
                         , Html.span
                             [ Attr.style "font-weight" (String.fromInt weight)
