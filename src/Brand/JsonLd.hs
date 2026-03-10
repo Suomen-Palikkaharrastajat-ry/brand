@@ -48,14 +48,15 @@ generateJsonLd :: IO ()
 generateJsonLd = do
     let dir = "design-guide"
     createDirectoryIfMissing True dir
-    writeSection (dir <> "/context.jsonld")    buildContext
-    writeSection (dir <> "/index.jsonld")      buildIndex
-    writeSection (dir <> "/colors.jsonld")     buildColorsLd
-    writeSection (dir <> "/typography.jsonld") buildTypographyLd
-    writeSection (dir <> "/spacing.jsonld")    buildSpacingLd
-    writeSection (dir <> "/motion.jsonld")     buildMotionLd
-    writeSection (dir <> "/logos.jsonld")      buildLogosLd
-    writeSection (dir <> "/components.jsonld") buildComponentsLd
+    writeSection (dir <> "/context.jsonld")        buildContext
+    writeSection (dir <> "/index.jsonld")          buildIndex
+    writeSection (dir <> "/colors.jsonld")         buildColorsLd
+    writeSection (dir <> "/typography.jsonld")     buildTypographyLd
+    writeSection (dir <> "/spacing.jsonld")        buildSpacingLd
+    writeSection (dir <> "/motion.jsonld")         buildMotionLd
+    writeSection (dir <> "/logos.jsonld")          buildLogosLd
+    writeSection (dir <> "/components.jsonld")     buildComponentsLd
+    writeSection (dir <> "/responsiveness.jsonld") buildResponsivenessLd
 
 -- ── @context ─────────────────────────────────────────────────────────────────
 --
@@ -89,15 +90,17 @@ buildContext =
             , "props"        .= A.object ["@id" .= ("vocab:props" :: Text), "@container" .= ("@set" :: Text)]
             , "tokenDeps"    .= A.object ["@id" .= ("vocab:tokenDependencies" :: Text), "@container" .= ("@set" :: Text)]
             -- Named types
-            , "DesignGuide"        .= ("schema:CreativeWork" :: Text)
-            , "ColorToken"         .= ("vocab:ColorToken" :: Text)
-            , "SemanticColorToken" .= ("vocab:SemanticColorToken" :: Text)
-            , "TypographyStyle"    .= ("vocab:TypographyStyle" :: Text)
-            , "SpacingToken"       .= ("vocab:SpacingToken" :: Text)
-            , "MotionToken"        .= ("vocab:MotionToken" :: Text)
-            , "EasingToken"        .= ("vocab:EasingToken" :: Text)
-            , "LogoVariant"        .= ("vocab:LogoVariant" :: Text)
-            , "ComponentSpec"      .= ("vocab:ComponentSpec" :: Text)
+            , "DesignGuide"          .= ("schema:CreativeWork" :: Text)
+            , "ColorToken"           .= ("vocab:ColorToken" :: Text)
+            , "SemanticColorToken"   .= ("vocab:SemanticColorToken" :: Text)
+            , "TypographyStyle"      .= ("vocab:TypographyStyle" :: Text)
+            , "SpacingToken"         .= ("vocab:SpacingToken" :: Text)
+            , "MotionToken"          .= ("vocab:MotionToken" :: Text)
+            , "EasingToken"          .= ("vocab:EasingToken" :: Text)
+            , "LogoVariant"          .= ("vocab:LogoVariant" :: Text)
+            , "ComponentSpec"        .= ("vocab:ComponentSpec" :: Text)
+            , "BreakpointToken"      .= ("vocab:BreakpointToken" :: Text)
+            , "ResponsiveGridToken"  .= ("vocab:ResponsiveGridToken" :: Text)
             ]
         ]
 
@@ -110,17 +113,18 @@ buildIndex =
         , "@type"       .= ("DesignGuide" :: Text)
         , "@id"         .= dgUrl "index.jsonld"
         , "name"        .= associationName
-        , "description" .= ("Machine-readable design guide for Suomen Palikkaharrastajat ry. W3C Design Tokens conventions. Generated — do not edit by hand." :: Text)
-        , "version"     .= ("1.0.0" :: Text)
+        , "description" .= ("Machine-readable design guide for Suomen Palikkaharrastajat ry. Conforms to W3C Design Tokens 2025.10. Generated — do not edit by hand." :: Text)
+        , "version"     .= ("2025.10" :: Text)
         , "url"         .= baseUrl
         , "seeAlso"     .= (baseUrl <> "/design-guide.json")
         , "sections"    .= A.toJSON
-            [ section "colors.jsonld"     "Värit"      "Colour tokens with WCAG contrast data"
-            , section "typography.jsonld" "Typografia" "Type scale and font information"
-            , section "spacing.jsonld"    "Välistys"   "Spacing scale and layout constants"
-            , section "motion.jsonld"     "Animaatiot" "Duration and easing tokens"
-            , section "logos.jsonld"      "Logot"      "Logo variants with usage rules"
-            , section "components.jsonld" "Komponentit" "Elm UI component catalogue"
+            [ section "colors.jsonld"         "Värit"            "Colour tokens with WCAG contrast data"
+            , section "typography.jsonld"     "Typografia"       "Type scale and font information"
+            , section "spacing.jsonld"        "Välistys"         "Spacing scale and layout constants"
+            , section "motion.jsonld"         "Animaatiot"       "Duration and easing tokens"
+            , section "logos.jsonld"          "Logot"            "Logo variants with usage rules"
+            , section "components.jsonld"     "Komponentit"      "Elm UI component catalogue"
+            , section "responsiveness.jsonld" "Responsiivisuus"  "Breakpoints, grids and mobile-first rules"
             ]
         ]
   where
@@ -244,8 +248,7 @@ buildSpacingLd =
                 , "name"         .= name
                 , "tokenType"    .= ("dimension" :: Text)
                 , "multiplier"   .= mult
-                , "value"        .= px
-                , "unit"         .= ("px" :: Text)
+                , "value"        .= A.object ["value" .= px, "unit" .= ("px" :: Text)]
                 , "rem"          .= rem_
                 , "tailwindClass" .= tw
                 , "description"  .= desc
@@ -254,12 +257,24 @@ buildSpacingLd =
             ]
         , "layout" .= A.object
             [ "contentWidth" .= A.object
-                [ "value" .= contentWidthPx, "unit" .= ("px" :: Text)
+                [ "value" .= A.object ["value" .= contentWidthPx, "unit" .= ("px" :: Text)]
                 , "tailwindClass" .= contentWidthTailwind
                 ]
             , "pageWrapper"  .= A.object ["tailwindClass" .= pageWrapperClass]
-            , "breakpoints"  .= A.object [AK.fromText bp .= A.object ["px" .= bpx] | (bp, bpx) <- breakpoints]
-            , "borderRadius" .= A.object [AK.fromText n .= A.object ["value" .= v, "tailwindClass" .= tw] | (n, v, tw) <- borderRadii]
+            , "breakpoints"  .= A.object
+                [ AK.fromText bp .= A.object
+                    [ "value" .= A.object ["value" .= bpx, "unit" .= ("px" :: Text)]
+                    , "tokenType" .= ("dimension" :: Text)
+                    ]
+                | (bp, bpx) <- breakpoints
+                ]
+            , "borderRadius" .= A.object
+                [ AK.fromText n .= A.object
+                    [ "value" .= A.object ["value" .= v, "unit" .= ("px" :: Text)]
+                    , "tailwindClass" .= tw
+                    ]
+                | (n, v, tw) <- borderRadii
+                ]
             ]
         ]
 
@@ -291,10 +306,12 @@ buildMotionLd =
                         , "@id"         .= tokenId "motion" ("easing-" <> name)
                         , "name"        .= ("easing." <> name)
                         , "tokenType"   .= ("cubicBezier" :: Text)
-                        , "value"       .= val
+                        , "value"       .= A.toJSON [p1x, p1y, p2x, p2y]
+                        , "cssValue"    .= ( "cubic-bezier(" <> T.pack (show p1x) <> ", " <> T.pack (show p1y)
+                                             <> ", " <> T.pack (show p2x) <> ", " <> T.pack (show p2y) <> ")" )
                         , "description" .= desc
                         ]
-                   | (name, val, desc) <- motionEasingData
+                   | (name, p1x, p1y, p2x, p2y, desc) <- motionEasingData
                    ]
                 )
         , "usageRules" .= A.toJSON motionUsageRules
@@ -407,4 +424,57 @@ buildComponentsLd =
         , ("Tabs",        "Component.Tabs",         "Tab navigation strip (stateless — caller provides active index).",            ["tabs: List String", "activeIndex: Int", "onTabClick: Int -> msg"], [])
         , ("Timeline",    "Component.Timeline",     "Vertical timeline for changelogs.",                                           ["items: List { date, title, children }"], ["colors.semantic.border.default"])
         , ("Toast",       "Component.Toast",        "Notification toast. Variants: Default, Success, Warning, Danger.",            ["title: String", "body: String", "variant: Variant", "onClose: Maybe msg"], [])
+        ]
+
+-- ── Responsiveness ────────────────────────────────────────────────────────────
+
+buildResponsivenessLd :: A.Value
+buildResponsivenessLd =
+    A.object
+        [ "@context"    .= ctxUrl
+        , "@type"       .= ("vocab:ResponsivenessSection" :: Text)
+        , "@id"         .= dgUrl "responsiveness.jsonld"
+        , "name"        .= ("Responsiivisuus" :: Text)
+        , "description" .= ("Breakpoints, grid patterns and mobile-first layout rules. All values follow W3C Design Tokens 2025.10 dimension format." :: Text)
+        , "seeAlso"     .= (baseUrl <> "/design-guide.json")
+        , "tokens"      .=
+            A.toJSON
+                (  [ A.object
+                        [ "@type"       .= ("BreakpointToken" :: Text)
+                        , "@id"         .= tokenId "responsiveness" ("bp-" <> bp)
+                        , "name"        .= ("breakpoint." <> bp)
+                        , "tokenType"   .= ("dimension" :: Text)
+                        , "value"       .= A.object ["value" .= bpx, "unit" .= ("px" :: Text)]
+                        , "description" .= (bp <> " breakpoint — screens ≥" <> T.pack (show bpx) <> "px")
+                        ]
+                   | (bp, bpx) <- breakpoints
+                   ]
+                ++ [ A.object
+                        [ "@type"       .= ("ResponsiveGridToken" :: Text)
+                        , "@id"         .= tokenId "responsiveness" ("grid-" <> name)
+                        , "name"        .= ("grid." <> name)
+                        , "description" .= desc
+                        , "columns"     .= A.object
+                            [ "mobile" .= mobile, "sm" .= sm_, "md" .= md_, "lg" .= lg_, "xl" .= xl_
+                            ]
+                        ]
+                   | (name, desc, mobile, sm_, md_, lg_, xl_) <- responsiveGrids
+                   ]
+                )
+        , "layout" .= A.object
+            [ "contentWidth" .= A.object
+                [ "value"        .= A.object ["value" .= contentWidthPx, "unit" .= ("px" :: Text)]
+                , "tailwindClass" .= contentWidthTailwind
+                , "description"  .= ("Maximum content column width. Apply max-w-5xl mx-auto px-4 to every page wrapper." :: Text)
+                ]
+            , "pagePaddingX" .= A.object
+                [ "value"        .= A.object ["value" .= pagePaddingXPx, "unit" .= ("px" :: Text)]
+                , "tailwindClass" .= pagePaddingXTailwind
+                ]
+            , "pageWrapper"  .= A.object
+                [ "tailwindClass" .= pageWrapperClass
+                , "description"   .= ("Compose of contentWidth + pagePaddingX: max-w-5xl mx-auto px-4." :: Text)
+                ]
+            ]
+        , "rules" .= A.toJSON responsiveRules
         ]

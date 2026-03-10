@@ -131,6 +131,16 @@ generateBrandModule = T.unlines $
     ++ concatMap renderMotionEasing motionEasingData
     ++
     [ "-- ---------------------------------------------------------------------------"
+    , "-- Breakpoints"
+    , "-- ---------------------------------------------------------------------------"
+    , ""
+    , "type alias Breakpoint ="
+    , "    { name : String, px : Int }"
+    , ""
+    , "breakpoints : List Breakpoint"
+    , renderBreakpointList breakpoints
+    , ""
+    , "-- ---------------------------------------------------------------------------"
     , "-- Legacy aliases (backward compatibility with Brand.Generated)"
     , "-- ---------------------------------------------------------------------------"
     , ""
@@ -253,12 +263,25 @@ renderMotionDuration (name, ms, _) =
     , ""
     ]
 
-renderMotionEasing :: (Text, Text, Text) -> [Text]
-renderMotionEasing (name, val, _) =
+renderMotionEasing :: EasingRow -> [Text]
+renderMotionEasing (name, p1x, p1y, p2x, p2y, _) =
     let helperName = "motionEasing" <> T.toUpper (T.take 1 name) <> T.drop 1 name
+        cssVal = "cubic-bezier(" <> showD p1x <> ", " <> showD p1y <> ", " <> showD p2x <> ", " <> showD p2y <> ")"
     in
     [ helperName <> " : String"
     , helperName <> " ="
-    , "    " <> q val
+    , "    " <> q cssVal
     , ""
     ]
+  where
+    showD d = T.pack (if d == fromIntegral (round d :: Int) then show (round d :: Int) else show d)
+
+renderBreakpointList :: [(Text, Int)] -> Text
+renderBreakpointList [] = "    []"
+renderBreakpointList items =
+    T.unlines $
+        ["    [ " <> renderBP (head items)]
+        ++ map (\i -> "    , " <> renderBP i) (tail items)
+        ++ ["    ]"]
+  where
+    renderBP (name, px) = "{ name = " <> q name <> ", px = " <> T.pack (show px) <> " }"

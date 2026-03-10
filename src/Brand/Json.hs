@@ -11,9 +11,51 @@ import qualified Data.ByteString.Lazy as BSL
 import Data.Text (Text)
 import qualified Data.Aeson.Key as AK
 import qualified Data.Text as T
+import Numeric (readHex)
 
 baseUrl :: Text
 baseUrl = "https://logo.palikkaharrastajat.fi"
+
+-- ---------------------------------------------------------------------------
+-- W3C Design Tokens 2025.10 value helpers
+-- ---------------------------------------------------------------------------
+
+-- | Parse a 2-char hex pair to a Double in [0,1].
+hexByte :: String -> Double
+hexByte s = case readHex s of
+    ((n, _) : _) -> fromIntegral (n :: Int) / 255.0
+    []            -> 0.0
+
+-- | Round to 4 decimal places.
+r4 :: Double -> Double
+r4 x = fromIntegral (round (x * 10000) :: Int) / 10000.0
+
+-- | Convert a "#RRGGBB" hex colour to a W3C Design Tokens 2025.10 color value.
+-- Produces: { "colorSpace": "srgb", "components": [r,g,b], "hex": "#..." }
+-- The "hex" field is the optional CSS hex fallback allowed by the spec.
+colorValue :: Text -> A.Value
+colorValue hex =
+    let stripped = T.unpack (T.dropWhile (== '#') hex)
+        rv = r4 $ hexByte (take 2 stripped)
+        gv = r4 $ hexByte (take 2 (drop 2 stripped))
+        bv = r4 $ hexByte (take 2 (drop 4 stripped))
+    in A.object
+        [ "colorSpace" .= ("srgb" :: Text)
+        , "components" .= A.toJSON [rv, gv, bv]
+        , "hex"        .= hex
+        ]
+
+-- | W3C dimension value: { "value": N, "unit": "px" }
+dimValue :: Int -> A.Value
+dimValue n = A.object ["value" .= n, "unit" .= ("px" :: Text)]
+
+-- | W3C duration value: { "value": N, "unit": "ms" }
+durValue :: Int -> A.Value
+durValue n = A.object ["value" .= n, "unit" .= ("ms" :: Text)]
+
+-- | W3C cubicBezier value: [p1x, p1y, p2x, p2y]
+easingValue :: Double -> Double -> Double -> Double -> A.Value
+easingValue p1x p1y p2x p2y = A.toJSON [p1x, p1y, p2x, p2y]
 
 asset :: Text -> A.Value
 asset path = A.object ["file" .= path, "url" .= (baseUrl <> "/" <> path)]
@@ -30,48 +72,63 @@ buildColors =
     A.object
         [ "brand" .= A.toJSON
             [ A.object
-                [ "hex" .= ("#05131D" :: Text)
-                , "id" .= ("lego-black" :: Text)
-                , "name" .= ("Black" :: Text)
+                [ "$value"       .= colorValue "#05131D"
+                , "$type"        .= ("color" :: Text)
+                , "id"           .= ("lego-black" :: Text)
+                , "name"         .= ("Black" :: Text)
                 , "$description" .= ("Primary brand color. Never hard-code this hex — use Brand.Colors in Haskell or Brand.Tokens in Elm." :: Text)
-                , "usage" .= (["features", "text", "dark background"] :: [Text])
-                , "wcag" .= A.object ["onWhite" .= (17.3 :: Double), "onWhiteRating" .= ("AAA" :: Text), "onYellow" .= (11.5 :: Double), "onYellowRating" .= ("AAA" :: Text)]
+                , "$extensions"  .= A.object
+                    [ "palikkaharrastajat.fi:usage" .= (["features", "text", "dark background"] :: [Text])
+                    , "palikkaharrastajat.fi:wcag"  .= A.object ["onWhite" .= (17.3 :: Double), "onWhiteRating" .= ("AAA" :: Text), "onYellow" .= (11.5 :: Double), "onYellowRating" .= ("AAA" :: Text)]
+                    ]
                 ]
             , A.object
-                [ "hex" .= ("#FFFFFF" :: Text)
-                , "id" .= ("lego-white" :: Text)
-                , "name" .= ("White" :: Text)
+                [ "$value"       .= colorValue "#FFFFFF"
+                , "$type"        .= ("color" :: Text)
+                , "id"           .= ("lego-white" :: Text)
+                , "name"         .= ("White" :: Text)
                 , "$description" .= ("Use for eye highlights and text on dark/brand-colored backgrounds." :: Text)
-                , "usage" .= (["eye highlights", "text on dark background"] :: [Text])
-                , "wcag" .= A.object ["onBrand" .= (17.3 :: Double), "onBrandRating" .= ("AAA" :: Text)]
+                , "$extensions"  .= A.object
+                    [ "palikkaharrastajat.fi:usage" .= (["eye highlights", "text on dark background"] :: [Text])
+                    , "palikkaharrastajat.fi:wcag"  .= A.object ["onBrand" .= (17.3 :: Double), "onBrandRating" .= ("AAA" :: Text)]
+                    ]
                 ]
             , A.object
-                [ "hex" .= ("#C91A09" :: Text)
-                , "id" .= ("red" :: Text)
-                , "name" .= ("Red" :: Text)
+                [ "$value"       .= colorValue "#C91A09"
+                , "$type"        .= ("color" :: Text)
+                , "id"           .= ("red" :: Text)
+                , "name"         .= ("Red" :: Text)
                 , "$description" .= ("Accent colour from the Blacktron series. Use for highlights, danger states, and emphasis." :: Text)
-                , "usage" .= (["accent", "danger", "highlights"] :: [Text])
-                , "wcag" .= A.object ["onWhite" .= (5.0 :: Double), "onWhiteRating" .= ("AA" :: Text), "onBlack" .= (4.2 :: Double), "onBlackRating" .= ("AA" :: Text)]
+                , "$extensions"  .= A.object
+                    [ "palikkaharrastajat.fi:usage" .= (["accent", "danger", "highlights"] :: [Text])
+                    , "palikkaharrastajat.fi:wcag"  .= A.object ["onWhite" .= (5.0 :: Double), "onWhiteRating" .= ("AA" :: Text), "onBlack" .= (4.2 :: Double), "onBlackRating" .= ("AA" :: Text)]
+                    ]
                 ]
             ]
         , "skinTones" .= A.toJSON
             [ A.object
-                [ "hex" .= hexText h, "id" .= sid, "name" .= sname
-                , "$description" .= sdesc, "description" .= sdesc
-                , "wcag" .= wcagObj sid
+                [ "$value"       .= colorValue (hexText h)
+                , "$type"        .= ("color" :: Text)
+                , "id"           .= sid
+                , "name"         .= sname
+                , "$description" .= sdesc
+                , "$extensions"  .= A.object ["palikkaharrastajat.fi:wcag" .= wcagObj sid]
                 ]
             | (sid, sname, h, sdesc) <- skinTonesWithDesc
             ]
         , "rainbow" .= A.toJSON
             [ A.object
-                [ "hex" .= hexText h, "name" .= rname
+                [ "$value"       .= colorValue (hexText h)
+                , "$type"        .= ("color" :: Text)
+                , "name"         .= rname
                 , "$description" .= ("Decorative use only. Do not use as text color on light backgrounds." :: Text)
-                , "description" .= rdesc, "decorativeOnly" .= True
+                , "$extensions"  .= A.object
+                    [ "palikkaharrastajat.fi:note"          .= rdesc
+                    , "palikkaharrastajat.fi:decorativeOnly" .= True
+                    ]
                 ]
             | (_, rname, h, rdesc) <- rainbowColors
             ]
-        , "text" .= A.object ["onLight" .= hexText subtitleOnLight, "onDark" .= hexText subtitleOnDark]
-        , "darkBackground" .= hexText darkBg
         , "semantic" .= buildSemanticColors
         ]
   where
@@ -113,7 +170,12 @@ buildSemanticColors =
     tok path =
         case [ (val, tw, desc) | (_, p, val, tw, desc) <- semanticColors, p == path ] of
             ((val, tw, desc) : _) ->
-                A.object ["$value" .= val, "$type" .= ("color" :: Text), "tailwind" .= tw, "$description" .= desc]
+                A.object
+                    [ "$value"      .= colorValue val
+                    , "$type"       .= ("color" :: Text)
+                    , "$description" .= desc
+                    , "$extensions" .= A.object ["palikkaharrastajat.fi:tailwindClass" .= tw]
+                    ]
             [] -> A.Null
 
 -- ---------------------------------------------------------------------------
@@ -134,10 +196,20 @@ buildTypography =
             ]
         , "scale" .= A.toJSON
             [ A.object
-                [ "name" .= name, "$type" .= ("typography" :: Text), "$description" .= desc
-                , "fontFamily" .= ("Outfit, system-ui, sans-serif" :: Text)
-                , "fontWeight" .= weight, "fontSizeRem" .= sizeRem, "fontSizePx" .= sizePx
-                , "lineHeight" .= lh, "letterSpacingEm" .= ls, "cssClass" .= cssClass
+                [ "name"         .= name
+                , "$type"        .= ("typography" :: Text)
+                , "$description" .= desc
+                , "$value"       .= A.object
+                    [ "fontFamily"    .= A.toJSON (["Outfit", "system-ui", "sans-serif"] :: [Text])
+                    , "fontSize"      .= A.object ["value" .= sizePx, "unit" .= ("px" :: Text)]
+                    , "fontWeight"    .= weight
+                    , "lineHeight"    .= lh
+                    , "letterSpacing" .= A.object ["value" .= ls, "unit" .= ("em" :: Text)]
+                    ]
+                , "$extensions"  .= A.object
+                    [ "palikkaharrastajat.fi:cssClass"   .= cssClass
+                    , "palikkaharrastajat.fi:fontSizeRem" .= sizeRem
+                    ]
                 ]
             | (name, weight, sizeRem, sizePx, lh, ls, cssClass, desc) <- typeScale
             ]
@@ -151,22 +223,69 @@ buildTypography =
 buildSpacing :: A.Value
 buildSpacing =
     A.object
-        [ "baseUnit" .= A.object ["$value" .= (4 :: Int), "$type" .= ("dimension" :: Text), "unit" .= ("px" :: Text), "$description" .= ("All spacing values are multiples of 4px." :: Text)]
+        [ "baseUnit" .= A.object
+            [ "$value"       .= dimValue 4
+            , "$type"        .= ("dimension" :: Text)
+            , "$description" .= ("All spacing values are multiples of 4px." :: Text)
+            ]
         , "scale" .= A.toJSON
             [ A.object
-                [ "name" .= name, "$type" .= ("dimension" :: Text)
-                , "multiplier" .= mult, "px" .= px, "rem" .= rem_
-                , "tailwindClass" .= tw, "$description" .= desc
+                [ "name"         .= name
+                , "$type"        .= ("dimension" :: Text)
+                , "$value"       .= dimValue px
+                , "$description" .= desc
+                , "$extensions"  .= A.object
+                    [ "palikkaharrastajat.fi:multiplier"    .= mult
+                    , "palikkaharrastajat.fi:rem"           .= rem_
+                    , "palikkaharrastajat.fi:tailwindClass" .= tw
+                    ]
                 ]
             | (name, mult, px, rem_, tw, desc) <- spacingScale
             ]
         , "layout" .= A.object
-            [ "contentWidth" .= A.object ["$value" .= contentWidthPx, "$type" .= ("dimension" :: Text), "unit" .= ("px" :: Text), "tailwindClass" .= contentWidthTailwind, "$description" .= ("Maximum content column width." :: Text)]
-            , "pagePaddingX" .= A.object ["$value" .= pagePaddingXPx, "$type" .= ("dimension" :: Text), "unit" .= ("px" :: Text), "tailwindClass" .= pagePaddingXTailwind]
-            , "pageWrapper" .= A.object ["tailwindClass" .= pageWrapperClass, "$description" .= ("Apply to every page-level container." :: Text)]
-            , "breakpoints" .= A.object [AK.fromText bp .= A.object ["px" .= bpx] | (bp, bpx) <- breakpoints]
-            , "borderRadius" .= A.object [AK.fromText name .= A.object ["$value" .= val, "tailwindClass" .= tw] | (name, val, tw) <- borderRadii]
+            [ "contentWidth" .= A.object
+                [ "$value"       .= dimValue contentWidthPx
+                , "$type"        .= ("dimension" :: Text)
+                , "$description" .= ("Maximum content column width." :: Text)
+                , "$extensions"  .= A.object ["palikkaharrastajat.fi:tailwindClass" .= contentWidthTailwind]
+                ]
+            , "pagePaddingX" .= A.object
+                [ "$value"      .= dimValue pagePaddingXPx
+                , "$type"       .= ("dimension" :: Text)
+                , "$extensions" .= A.object ["palikkaharrastajat.fi:tailwindClass" .= pagePaddingXTailwind]
+                ]
+            , "pageWrapper" .= A.object
+                [ "$description" .= ("Apply to every page-level container." :: Text)
+                , "$extensions"  .= A.object ["palikkaharrastajat.fi:tailwindClass" .= pageWrapperClass]
+                ]
+            , "breakpoints" .= A.object
+                [ AK.fromText bp .= A.object
+                    [ "$value"       .= dimValue bpx
+                    , "$type"        .= ("dimension" :: Text)
+                    , "$description" .= (bp <> " breakpoint — min-width " <> T.pack (show bpx) <> "px")
+                    ]
+                | (bp, bpx) <- breakpoints
+                ]
+            , "borderRadius" .= A.object
+                [ AK.fromText name .= A.object
+                    [ "$value"      .= (if px == 9999 then A.object ["value" .= (9999 :: Int), "unit" .= ("px" :: Text)] else dimValue px)
+                    , "$type"       .= ("dimension" :: Text)
+                    , "$extensions" .= A.object ["palikkaharrastajat.fi:tailwindClass" .= tw]
+                    ]
+                | (name, px, tw) <- borderRadii
+                ]
             ]
+        , "responsiveGrids" .= A.toJSON
+            [ A.object
+                [ "name"         .= name
+                , "$description" .= desc
+                , "columns"      .= A.object
+                    [ "mobile" .= mobile, "sm" .= sm_, "md" .= md_, "lg" .= lg_, "xl" .= xl_
+                    ]
+                ]
+            | (name, desc, mobile, sm_, md_, lg_, xl_) <- responsiveGrids
+            ]
+        , "responsiveRules" .= A.toJSON responsiveRules
         ]
 
 -- ---------------------------------------------------------------------------
@@ -178,12 +297,25 @@ buildMotion =
     A.object
         [ "$description" .= ("All animations must respect prefers-reduced-motion." :: Text)
         , "duration" .= A.object
-            [ AK.fromText name .= A.object ["$value" .= ms, "$type" .= ("duration" :: Text), "unit" .= ("ms" :: Text), "$description" .= desc]
+            [ AK.fromText name .= A.object
+                [ "$value"       .= durValue ms
+                , "$type"        .= ("duration" :: Text)
+                , "$description" .= desc
+                ]
             | (name, ms, desc) <- motionDurationData
             ]
         , "easing" .= A.object
-            [ AK.fromText name .= A.object ["$value" .= val, "$type" .= ("cubicBezier" :: Text), "$description" .= desc]
-            | (name, val, desc) <- motionEasingData
+            [ AK.fromText name .= A.object
+                [ "$value"       .= easingValue p1x p1y p2x p2y
+                , "$type"        .= ("cubicBezier" :: Text)
+                , "$description" .= desc
+                , "$extensions"  .= A.object
+                    [ "palikkaharrastajat.fi:cssValue" .=
+                        ( "cubic-bezier(" <> T.pack (show p1x) <> ", " <> T.pack (show p1y)
+                          <> ", " <> T.pack (show p2x) <> ", " <> T.pack (show p2y) <> ")" )
+                    ]
+                ]
+            | (name, p1x, p1y, p2x, p2y, desc) <- motionEasingData
             ]
         , "usageRules" .= A.toJSON motionUsageRules
         ]
@@ -350,8 +482,9 @@ buildComponents =
 buildDesignGuide :: A.Value
 buildDesignGuide =
     A.object
-        [ "$schema" .= ("https://json-schema.org/draft/2020-12/schema" :: Text)
-        , "$description" .= ("Machine-readable design guide for Suomen Palikkaharrastajat ry. Conforms to W3C Design Tokens conventions. Generated by cabal run logo-gen — do not edit by hand." :: Text)
+        [ "$schema"      .= ("https://json-schema.org/draft/2020-12/schema" :: Text)
+        , "version"      .= ("2025.10" :: Text)
+        , "$description" .= ("Machine-readable design guide for Suomen Palikkaharrastajat ry. Conforms to W3C Design Tokens 2025.10. Generated by cabal run logo-gen — do not edit by hand." :: Text)
         , "organization" .= A.object
             [ "name" .= associationName
             , "canonicalUrl" .= ("https://logo.palikkaharrastajat.fi" :: Text)

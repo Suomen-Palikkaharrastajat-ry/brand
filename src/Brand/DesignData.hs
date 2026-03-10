@@ -69,12 +69,16 @@ motionDurationData =
     , ("logoFrame", 10000, "Animated logo frame hold — do not modify without regenerating assets.")
     ]
 
--- | (name, cssValue, description)
-motionEasingData :: [(Text, Text, Text)]
+-- | (name, p1x, p1y, p2x, p2y, description)
+-- Values are the four control-point coordinates of a CSS cubic-bezier curve.
+-- The CSS equivalent is: cubic-bezier(p1x, p1y, p2x, p2y)
+type EasingRow = (Text, Double, Double, Double, Double, Text)
+
+motionEasingData :: [EasingRow]
 motionEasingData =
-    [ ("standard",   "cubic-bezier(0.4, 0, 0.2, 1)", "Default easing for elements that both enter and exit.")
-    , ("decelerate", "cubic-bezier(0, 0, 0.2, 1)",   "Elements entering the screen.")
-    , ("accelerate", "cubic-bezier(0.4, 0, 1, 1)",   "Elements leaving the screen.")
+    [ ("standard",   0.4, 0.0, 0.2, 1.0, "Default easing for elements that both enter and exit.")
+    , ("decelerate", 0.0, 0.0, 0.2, 1.0, "Elements entering the screen.")
+    , ("accelerate", 0.4, 0.0, 1.0, 1.0, "Elements leaving the screen.")
     ]
 
 motionUsageRules :: [Text]
@@ -133,10 +137,39 @@ breakpoints =
     , ("xl", 1280)
     ]
 
-borderRadii :: [(Text, Text, Text)]
+-- | (name, pxValue, tailwindClass)
+borderRadii :: [(Text, Int, Text)]
 borderRadii =
-    [ ("sm",   "4px",    "rounded")
-    , ("md",   "8px",    "rounded-lg")
-    , ("lg",   "12px",   "rounded-xl")
-    , ("full", "9999px", "rounded-full")
+    [ ("sm",   4,    "rounded")
+    , ("md",   8,    "rounded-lg")
+    , ("lg",   12,   "rounded-xl")
+    , ("full", 9999, "rounded-full")
+    ]
+
+-- ---------------------------------------------------------------------------
+-- Responsive layout
+-- ---------------------------------------------------------------------------
+
+-- | (name, description, mobileColumns, smColumns, mdColumns, lgColumns, xlColumns)
+-- Column counts in a CSS grid or Tailwind grid at each breakpoint.
+type ResponsiveGridRow = (Text, Text, Int, Int, Int, Int, Int)
+
+responsiveGrids :: [ResponsiveGridRow]
+responsiveGrids =
+    [ ("colorSwatches",      "Colour swatch grid",         1, 2, 2, 3, 4)
+    , ("logoCards",          "Logo card grid",              1, 2, 2, 3, 3)
+    , ("componentPreviews",  "Component preview cards",     1, 1, 2, 2, 3)
+    , ("statCards",          "Stats / metric cards",        1, 2, 2, 4, 4)
+    ]
+
+responsiveRules :: [Text]
+responsiveRules =
+    [ "Design mobile-first: write base styles for mobile, then override with sm:, md:, lg: prefixes."
+    , "All page content wraps at max-w-5xl (1024px) with px-4 (16px) horizontal padding on all screens."
+    , "Stack layouts vertically on mobile; switch to horizontal/grid at sm (640px) or md (768px)."
+    , "Tables wider than the viewport must use overflow-x-auto."
+    , "Never rely on hover-only interactions; provide touch-friendly tap targets (min 44x44px)."
+    , "Use the prefers-reduced-motion media query for all animations."
+    , "The Display type style is recommended for screens >= md (768px). Use Heading1 on smaller screens."
+    , "Minimum tap target size: 44x44px (WCAG 2.5.5 AAA). Use py-3 px-4 as a minimum for interactive elements."
     ]
