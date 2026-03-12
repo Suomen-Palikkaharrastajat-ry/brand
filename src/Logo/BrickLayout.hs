@@ -44,6 +44,7 @@ module Logo.BrickLayout
     , parseBrickLayout
     , writeBrickLayout
     , readBrickLayout
+    , parseHex
       -- * Layout manipulation
     , recolorLayout
     , composeLayouts

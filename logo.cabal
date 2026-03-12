@@ -45,7 +45,7 @@ executable blay-compose
   ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
   default-language: GHC2021
   build-depends:
-    base >=4.7 && <5, logo-gen
+    base >=4.7 && <5, logo-gen, text
 
 -- Assemble pre-rendered PNG frames into animated GIF / WebP.
 executable blay-animate

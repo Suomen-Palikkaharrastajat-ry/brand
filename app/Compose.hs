@@ -17,12 +17,14 @@
 -- Without @--tile@ a single @--input@ is copied/recoloured to @--output@.
 module Main where
 
-import Data.Char (digitToInt, isHexDigit)
-import Data.Word (Word8)
+import Control.Monad (when)
+import Data.List (intercalate)
+import qualified Data.Text as T
 import Logo.BrickLayout
     ( BrickLayout (..)
     , RGB
     , composeLayouts
+    , parseHex
     , recolorLayout
     , readBrickLayout
     , writeBrickLayout
@@ -72,7 +74,7 @@ main = do
 
 runCompose :: ComposeArgs -> FilePath -> IO ()
 runCompose ca out = do
-    myWhen (null (caInputs ca)) $ die "at least one --input is required"
+    when (null (caInputs ca)) $ die "at least one --input is required"
     bls <- mapM loadInput (caInputs ca)
     result <- assemble ca bls
     writeBrickLayout out result
@@ -83,11 +85,11 @@ assemble ca bls = do
     tiled <- case bls of
         []   -> die "no inputs" >> return undefined
         [bl] -> do
-            myWhen (caTile ca) $
+            when (caTile ca) $
                 hPutStrLn stderr "blay-compose: warning: --tile has no effect with a single input"
             return bl
         _    -> do
-            myWhen (not (caTile ca)) $ die "multiple --input files require --tile"
+            when (not (caTile ca)) $ die "multiple --input files require --tile"
             return $ composeLayouts (caGapStuds ca) bls
     let withTop = maybe tiled  (\p -> tiled   { blPadTop    = p }) (caPadTop    ca)
         withBot = maybe withTop (\p -> withTop { blPadBottom = p }) (caPadBottom ca)
@@ -124,34 +126,20 @@ parseInputSpec s =
     in case reverse parts of
         [path'] ->
             Right InputSpec { isPath = path', isRecolor = Nothing }
-        (to : from : pathParts)
-            | length to == 6, all isHexDigit to
-            , length from == 6, all isHexDigit from ->
-                case (parseHex6 from, parseHex6 to) of
-                    (Just f, Just t) ->
-                        Right InputSpec
-                            { isPath    = myIntercalate ":" (reverse pathParts)
-                            , isRecolor = Just (f, t)
-                            }
-                    _ -> Left $ "invalid hex in --input: " ++ s
+        (to : from : pathParts) ->
+            case (parseHex (T.pack from), parseHex (T.pack to)) of
+                (Just f, Just t) ->
+                    Right InputSpec
+                        { isPath    = intercalate ":" (reverse pathParts)
+                        , isRecolor = Just (f, t)
+                        }
+                _ -> Left $ "bad --input (expected FILE or FILE:RRGGBB:RRGGBB): " ++ s
         _ -> Left $ "bad --input (expected FILE or FILE:RRGGBB:RRGGBB): " ++ s
 
 mySplitOn :: Char -> String -> [String]
 mySplitOn c str = case break (== c) str of
     (w, [])       -> [w]
     (w, _ : rest) -> w : mySplitOn c rest
-
-myIntercalate :: String -> [String] -> String
-myIntercalate _   []     = []
-myIntercalate _   [x]    = x
-myIntercalate sep (x:xs) = x ++ sep ++ myIntercalate sep xs
-
-parseHex6 :: String -> Maybe RGB
-parseHex6 h
-    | length h == 6, all isHexDigit h =
-        let hv a b = fromIntegral (digitToInt a * 16 + digitToInt b) :: Word8
-        in  Just (hv (head h) (h!!1), hv (h!!2) (h!!3), hv (h!!4) (h!!5))
-    | otherwise = Nothing
 
 readInt :: String -> String -> Either String Int
 readInt flag s = case reads s of
@@ -160,10 +148,6 @@ readInt flag s = case reads s of
 
 die :: String -> IO a
 die msg = hPutStrLn stderr ("blay-compose: " ++ msg) >> exitFailure
-
-myWhen :: Bool -> IO () -> IO ()
-myWhen True  a = a
-myWhen False _ = return ()
 
 usage :: String
 usage = unlines
