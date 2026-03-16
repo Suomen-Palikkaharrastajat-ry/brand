@@ -258,7 +258,7 @@ bwVariants : List LogoVariant
 bwVariants =
     [ { id = "square-bw-basic"
       , description = "B&W square — neutral expression"
-      , theme = "light"
+      , theme = "yellow"
       , animated = False
       , withText = False
       , svgUrl = Just "/logo/square/svg/square-bw-basic.svg"
@@ -268,7 +268,7 @@ bwVariants =
       }
     , { id = "square-bw-smile"
       , description = "B&W square — smiling expression"
-      , theme = "light"
+      , theme = "yellow"
       , animated = False
       , withText = False
       , svgUrl = Just "/logo/square/svg/square-bw-smile.svg"
@@ -278,7 +278,7 @@ bwVariants =
       }
     , { id = "square-bw-blink"
       , description = "B&W square — blinking expression"
-      , theme = "light"
+      , theme = "yellow"
       , animated = False
       , withText = False
       , svgUrl = Just "/logo/square/svg/square-bw-blink.svg"
@@ -288,7 +288,7 @@ bwVariants =
       }
     , { id = "square-bw-laugh"
       , description = "B&W square — laughing expression"
-      , theme = "light"
+      , theme = "yellow"
       , animated = False
       , withText = False
       , svgUrl = Just "/logo/square/svg/square-bw-laugh.svg"
