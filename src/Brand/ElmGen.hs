@@ -64,6 +64,7 @@ generateBrandModule = T.unlines $
     , "    { id : String, name : String, hex : String }"
     , ""
     , "skinTones : List SkinTone"
+    , "skinTones ="
     , renderSkinToneList skinTones
     , ""
     , "-- ---------------------------------------------------------------------------"
@@ -74,6 +75,7 @@ generateBrandModule = T.unlines $
     , "    { id : String, name : String, hex : String, description : String }"
     , ""
     , "rainbowColors : List RainbowColor"
+    , "rainbowColors ="
     , renderRainbowList rainbowColors
     , ""
     , "-- ---------------------------------------------------------------------------"
@@ -100,6 +102,7 @@ generateBrandModule = T.unlines $
     , "    }"
     , ""
     , "typeScale : List TypeStyle"
+    , "typeScale ="
     , renderTypeScaleList typeScale
     ]
     ++ concatMap renderTypeHelper typeScale ++
@@ -116,6 +119,7 @@ generateBrandModule = T.unlines $
     , "    { name : String, px : Int, rem : Float, tailwindClass : String, description : String }"
     , ""
     , "spacingScale : List SpacingStep"
+    , "spacingScale ="
     , renderSpacingList spacingScale
     , ""
     , "pageWrapper : String"
@@ -138,6 +142,7 @@ generateBrandModule = T.unlines $
     , "    { name : String, px : Int }"
     , ""
     , "breakpoints : List Breakpoint"
+    , "breakpoints ="
     , renderBreakpointList breakpoints
     , ""
     , "-- ---------------------------------------------------------------------------"

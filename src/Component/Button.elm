@@ -18,14 +18,68 @@ type Size
     | Large
 
 
-view : { label : String, variant : Variant, size : Size, onClick : msg } -> Html msg
+view : { label : String, variant : Variant, size : Size, onClick : msg, disabled : Bool, loading : Bool } -> Html msg
 view config =
+    let
+        isInactive =
+            config.disabled || config.loading
+
+        baseAttrs =
+            [ Attr.class
+                (buttonClasses config.variant config.size
+                    ++ (if isInactive then
+                            " cursor-not-allowed opacity-50"
+
+                        else
+                            ""
+                       )
+                )
+            , Attr.type_ "button"
+            , Attr.disabled isInactive
+            ]
+
+        loadingAttrs =
+            if config.loading then
+                [ Attr.attribute "aria-busy" "true"
+                , Attr.attribute "aria-label" config.label
+                ]
+
+            else
+                []
+
+        clickAttrs =
+            if isInactive then
+                []
+
+            else
+                [ Events.onClick config.onClick ]
+
+        content =
+            if config.loading then
+                Html.div [ Attr.class "flex items-center gap-1" ]
+                    [ Html.span
+                        [ Attr.class "w-1.5 h-1.5 rounded-full bg-current animate-bounce"
+                        , Attr.style "animation-delay" "0ms"
+                        ]
+                        []
+                    , Html.span
+                        [ Attr.class "w-1.5 h-1.5 rounded-full bg-current animate-bounce"
+                        , Attr.style "animation-delay" "150ms"
+                        ]
+                        []
+                    , Html.span
+                        [ Attr.class "w-1.5 h-1.5 rounded-full bg-current animate-bounce"
+                        , Attr.style "animation-delay" "300ms"
+                        ]
+                        []
+                    ]
+
+            else
+                Html.text config.label
+    in
     Html.button
-        [ Attr.class (buttonClasses config.variant config.size)
-        , Attr.type_ "button"
-        , Events.onClick config.onClick
-        ]
-        [ Html.text config.label ]
+        (baseAttrs ++ loadingAttrs ++ clickAttrs)
+        [ content ]
 
 
 viewLink : { label : String, variant : Variant, size : Size, href : String } -> Html msg

@@ -1,27 +1,32 @@
 module Route.Responsiivisuus exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
+import Brand.Tokens as Tokens
 import Component.Alert as Alert
 import Component.SectionHeader as SectionHeader
+import Effect exposing (Effect)
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
 import Html exposing (Html)
 import Html.Attributes as Attr
+import Html.Events as Events
 import Pages.Url
 import PagesMsg exposing (PagesMsg)
-import RouteBuilder exposing (App, StaticPayload)
+import RouteBuilder exposing (App)
+import Set exposing (Set)
 import Shared
 import SiteMeta
+import UrlPath exposing (UrlPath)
 import View exposing (View)
 
 
 type alias Model =
-    {}
+    { playingEasings : Set String }
 
 
-type alias Msg =
-    ()
+type Msg
+    = ToggleEasing String
 
 
 type alias RouteParams =
@@ -36,13 +41,18 @@ type alias ActionData =
     {}
 
 
-route : RouteBuilder.StatelessRoute RouteParams Data ActionData
+route : RouteBuilder.StatefulRoute RouteParams Data ActionData Model Msg
 route =
     RouteBuilder.single
         { head = head
         , data = data
         }
-        |> RouteBuilder.buildNoState { view = view }
+        |> RouteBuilder.buildWithLocalState
+            { view = view
+            , init = init
+            , update = update
+            , subscriptions = subscriptions
+            }
 
 
 data : BackendTask FatalError Data
@@ -68,8 +78,29 @@ head _ =
         |> Seo.website
 
 
-view : App Data ActionData RouteParams -> Shared.Model -> View (PagesMsg Msg)
-view _ _ =
+init : App Data ActionData RouteParams -> Shared.Model -> ( Model, Effect Msg )
+init _ _ =
+    ( { playingEasings = Set.empty }, Effect.none )
+
+
+update : App Data ActionData RouteParams -> Shared.Model -> Msg -> Model -> ( Model, Effect Msg )
+update _ _ msg model =
+    case msg of
+        ToggleEasing name ->
+            if Set.member name model.playingEasings then
+                ( { model | playingEasings = Set.remove name model.playingEasings }, Effect.none )
+
+            else
+                ( { model | playingEasings = Set.insert name model.playingEasings }, Effect.none )
+
+
+subscriptions : RouteParams -> UrlPath -> Shared.Model -> Model -> Sub Msg
+subscriptions _ _ _ _ =
+    Sub.none
+
+
+view : App Data ActionData RouteParams -> Shared.Model -> Model -> View (PagesMsg Msg)
+view _ _ model =
     { title = "Responsiivisuus — " ++ SiteMeta.organizationName
     , body =
         [ Html.div [ Attr.class "max-w-5xl mx-auto px-4 py-8 sm:py-12 space-y-12 sm:space-y-16" ]
@@ -80,7 +111,7 @@ view _ _ =
             , viewGridSection
             , viewTypographySection
             , viewTouchSection
-            , viewMotionSection
+            , viewMotionSection model
             ]
         ]
     }
@@ -123,6 +154,7 @@ viewMobileFirstSection =
             , body =
                 [ Html.text "Jokainen komponentti toimii ensin yhden sarakkeen mobiilinäkymässä. Ruudukot ja rinnakkaiset asettelut lisätään vasta isommille näytöille."
                 ]
+            , onDismiss = Nothing
             }
         , Html.div [ Attr.class "space-y-3" ]
             (List.map viewRuleCard
@@ -445,8 +477,8 @@ viewTouchExample title isGood paddingLabel btnClass btnText =
 -- ── Motion ────────────────────────────────────────────────────────────────────
 
 
-viewMotionSection : Html msg
-viewMotionSection =
+viewMotionSection : Model -> Html (PagesMsg Msg)
+viewMotionSection model =
     Html.section [ Attr.class "space-y-6" ]
         [ SectionHeader.view
             { title = "Liike ja prefers-reduced-motion"
@@ -472,6 +504,68 @@ viewMotionSection =
                   )
                 ]
             )
+        , Html.div [ Attr.class "space-y-4" ]
+            [ Html.p [ Attr.class "text-xs font-semibold text-gray-500 uppercase tracking-wider" ] [ Html.text "Easing-tokenit — klikkaa toistaaksesi" ]
+            , viewEasingDemo model { name = "standard", label = "Standard", easingValue = Tokens.motionEasingStandard, description = "Yleiskäyttöinen siirtymä — elementit, jotka liikkuvat ruudun sisällä." }
+            , viewEasingDemo model { name = "decelerate", label = "Decelerate", easingValue = Tokens.motionEasingDecelerate, description = "Elementit, jotka tulevat näkymään — hidastuvat lopussa." }
+            , viewEasingDemo model { name = "accelerate", label = "Accelerate", easingValue = Tokens.motionEasingAccelerate, description = "Elementit, jotka poistuvat näkymästä — kiihtyvät loppua kohti." }
+            ]
+        ]
+
+
+viewEasingDemo :
+    Model
+    -> { name : String, label : String, easingValue : String, description : String }
+    -> Html (PagesMsg Msg)
+viewEasingDemo model { name, label, easingValue, description } =
+    let
+        isPlaying =
+            Set.member name model.playingEasings
+    in
+    Html.div
+        [ Attr.class "border border-gray-200 rounded-xl p-4 space-y-3 cursor-pointer hover:border-gray-300 transition-colors"
+        , Events.onClick (PagesMsg.fromMsg (ToggleEasing name))
+        ]
+        [ Html.div [ Attr.class "flex items-center justify-between" ]
+            [ Html.p [ Attr.class "text-sm font-semibold text-brand" ] [ Html.text label ]
+            , Html.span [ Attr.class "text-xs text-gray-400" ]
+                [ Html.text
+                    (if isPlaying then
+                        "Nollaa ↺"
+
+                     else
+                        "Toista ▶"
+                    )
+                ]
+            ]
+        , Html.div
+            [ Attr.class "relative w-full h-6 bg-gray-100 rounded overflow-hidden" ]
+            [ Html.div
+                [ Attr.style "position" "absolute"
+                , Attr.style "top" "4px"
+                , Attr.style "width" "16px"
+                , Attr.style "height" "16px"
+                , Attr.style "background" "#1A1A2E"
+                , Attr.style "border-radius" "50%"
+                , Attr.style "transition"
+                    (if isPlaying then
+                        "left 1000ms " ++ easingValue
+
+                     else
+                        "none"
+                    )
+                , Attr.style "left"
+                    (if isPlaying then
+                        "calc(100% - 16px)"
+
+                     else
+                        "0px"
+                    )
+                ]
+                []
+            ]
+        , Html.code [ Attr.class "block text-xs font-mono text-gray-500" ] [ Html.text easingValue ]
+        , Html.p [ Attr.class "text-xs text-gray-400" ] [ Html.text description ]
         ]
 
 

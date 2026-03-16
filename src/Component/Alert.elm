@@ -1,5 +1,6 @@
 module Component.Alert exposing (AlertType(..), view)
 
+import Component.CloseButton as CloseButton
 import Html exposing (Html)
 import Html.Attributes as Attr
 
@@ -11,31 +12,55 @@ type AlertType
     | Error
 
 
-view : { alertType : AlertType, title : Maybe String, body : List (Html msg) } -> Html msg
+view : { alertType : AlertType, title : Maybe String, body : List (Html msg), onDismiss : Maybe msg } -> Html msg
 view config =
     Html.div
-        [ Attr.class (containerClasses config.alertType) ]
-        [ Html.div [ Attr.class "flex" ]
-            [ Html.div [ Attr.class "flex-shrink-0 text-lg leading-6" ]
-                [ Html.text (icon config.alertType) ]
-            , Html.div [ Attr.class "ml-3" ]
-                (List.filterMap identity
-                    [ Maybe.map
-                        (\t ->
-                            Html.p
-                                [ Attr.class ("font-semibold " ++ titleClass config.alertType) ]
-                                [ Html.text t ]
-                        )
-                        config.title
-                    , Just
-                        (Html.div
-                            [ Attr.class ("text-sm " ++ bodyClass config.alertType) ]
-                            config.body
+        (List.filterMap identity
+            [ Just (Attr.class (containerClasses config.alertType ++ dismissClass config.onDismiss))
+            , Maybe.map (\_ -> Attr.attribute "role" "alert") config.onDismiss
+            ]
+        )
+        (List.filterMap identity
+            [ Just
+                (Html.div [ Attr.class "flex" ]
+                    [ Html.div [ Attr.class "flex-shrink-0 text-lg leading-6" ]
+                        [ Html.text (icon config.alertType) ]
+                    , Html.div [ Attr.class "ml-3" ]
+                        (List.filterMap identity
+                            [ Maybe.map
+                                (\t ->
+                                    Html.p
+                                        [ Attr.class ("font-semibold " ++ titleClass config.alertType) ]
+                                        [ Html.text t ]
+                                )
+                                config.title
+                            , Just
+                                (Html.div
+                                    [ Attr.class ("text-sm " ++ bodyClass config.alertType) ]
+                                    config.body
+                                )
+                            ]
                         )
                     ]
                 )
+            , Maybe.map
+                (\msg ->
+                    Html.div [ Attr.class "absolute top-2 right-2" ]
+                        [ CloseButton.view { onClick = msg, label = "Sulje ilmoitus" } ]
+                )
+                config.onDismiss
             ]
-        ]
+        )
+
+
+dismissClass : Maybe msg -> String
+dismissClass onDismiss =
+    case onDismiss of
+        Just _ ->
+            " relative"
+
+        Nothing ->
+            ""
 
 
 containerClasses : AlertType -> String

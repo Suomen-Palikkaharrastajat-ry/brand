@@ -84,12 +84,14 @@ view _ _ =
                     , Html.code [ Attr.class "font-mono text-xs" ] [ Html.text "colors.brand[*].wcag" ]
                     , Html.text ")."
                     ]
+                , onDismiss = Nothing
                 }
             , viewContrastSection
             , viewColorBlindSection
             , viewMotionSection
             , viewLogoAltSection
             , viewFocusSection
+            , viewAccessibleNamingSection
             ]
         ]
     }
@@ -249,6 +251,138 @@ viewFocusSection =
             ]
         ]
 
+
+
+-- ---------------------------------------------------------------------------
+-- Accessible naming
+-- ---------------------------------------------------------------------------
+
+
+viewAccessibleNamingSection : Html msg
+viewAccessibleNamingSection =
+    Html.section [ Attr.class "space-y-6" ]
+        [ SectionHeader.view
+            { title = "Saavutettava nimeäminen"
+            , description = Just "Ohjeet aria-label-, aria-haspopup-, aria-expanded-, aria-controls- ja aria-labelledby-attribuuttien käyttöön komponenttikirjaston kanssa."
+            }
+        , Html.div [ Attr.class "space-y-6" ]
+            [ -- CloseButton / aria-label
+              Html.div [ Attr.class "space-y-3" ]
+                [ Html.p [ Attr.class "font-semibold text-sm text-brand" ] [ Html.text "aria-label — CloseButton ja Spinner" ]
+                , Html.p [ Attr.class "text-sm text-gray-600" ]
+                    [ Html.text "Komponentit, jotka eivät sisällä näkyvää tekstiä (kuten × tai pyörivä kehä), tarvitsevat aina "
+                    , Html.code [ Attr.class "font-mono text-xs bg-gray-100 px-1 rounded" ] [ Html.text "aria-label" ]
+                    , Html.text "-attribuutin. Komponenttikirjastossa tämä välitetään "
+                    , Html.code [ Attr.class "font-mono text-xs bg-gray-100 px-1 rounded" ] [ Html.text "label : String" ]
+                    , Html.text " -kentällä — ei "
+                    , Html.code [ Attr.class "font-mono text-xs bg-gray-100 px-1 rounded" ] [ Html.text "Html msg" ]
+                    , Html.text " -tyyppisenä, koska ruudunlukijat jättävät muotoillun HTML-sisällön huomiotta tai lukevat sen väärin."
+                    ]
+                , viewCodeComparison
+                    "Vältä — ei aria-labelia"
+                    """-- Ruudunlukija lukee vain \"×\", ei tiedä mitä suljetaan
+Html.button [] [ Html.text \"×\" ]"""
+                    "Oikein — selkeä label"
+                    """-- Ruudunlukija lukee \"Sulje ilmoitus\"
+CloseButton.view
+    { onClick = DismissAlert
+    , label   = \"Sulje ilmoitus\"  -- aria-label
+    }
+
+-- Spinner: label on sr-only -elementissä
+Spinner.view
+    { size  = Spinner.Medium
+    , label = \"Ladataan...\"  -- aria-label
+    }"""
+                ]
+
+            -- Dropdown / aria-haspopup + aria-expanded
+            , Html.div [ Attr.class "space-y-3" ]
+                [ Html.p [ Attr.class "font-semibold text-sm text-brand" ] [ Html.text "aria-haspopup ja aria-expanded — Dropdown" ]
+                , Html.p [ Attr.class "text-sm text-gray-600" ]
+                    [ Html.text "Ruudunlukija tarvitsee tiedon siitä, että painike avaa valikon ("
+                    , Html.code [ Attr.class "font-mono text-xs bg-gray-100 px-1 rounded" ] [ Html.text "aria-haspopup=\"menu\"" ]
+                    , Html.text ") ja siitä, onko valikko auki ("
+                    , Html.code [ Attr.class "font-mono text-xs bg-gray-100 px-1 rounded" ] [ Html.text "aria-expanded" ]
+                    , Html.text "). Dropdown-komponentti asettaa nämä automaattisesti "
+                    , Html.code [ Attr.class "font-mono text-xs bg-gray-100 px-1 rounded" ] [ Html.text "isOpen" ]
+                    , Html.text "-tilan perusteella."
+                    ]
+                , viewCodeBlock
+                    """Dropdown.view
+    { trigger  = Html.text \"Toiminnot\"
+    , items    = [ Dropdown.viewItem { label = \"Muokkaa\", href = \"/muokkaa\" } ]
+    , isOpen   = model.dropdownOpen   -- aria-expanded päivittyy automaattisesti
+    , onToggle = ToggleDropdown
+    , onClose  = CloseDropdown        -- laukaisee myös Escape-näppäin
+    }
+-- Renderöityy:
+--   <button aria-haspopup=\"menu\" aria-expanded=\"true\">Toiminnot ▾</button>
+--   <div role=\"menu\">
+--     <a role=\"menuitem\" href=\"/muokkaa\">Muokkaa</a>
+--   </div>"""
+                ]
+
+            -- Tabs / aria-controls + aria-labelledby
+            , Html.div [ Attr.class "space-y-3" ]
+                [ Html.p [ Attr.class "font-semibold text-sm text-brand" ] [ Html.text "aria-controls ja aria-labelledby — Tabs" ]
+                , Html.p [ Attr.class "text-sm text-gray-600" ]
+                    [ Html.text "Välilehtipanelit linkitetään välilehtipainikkeisiin "
+                    , Html.code [ Attr.class "font-mono text-xs bg-gray-100 px-1 rounded" ] [ Html.text "aria-controls" ]
+                    , Html.text " (painike → paneeli) ja "
+                    , Html.code [ Attr.class "font-mono text-xs bg-gray-100 px-1 rounded" ] [ Html.text "aria-labelledby" ]
+                    , Html.text " (paneeli → painike) -attribuuteilla. Tabs-komponentti generoi "
+                    , Html.code [ Attr.class "font-mono text-xs bg-gray-100 px-1 rounded" ] [ Html.text "id" ]
+                    , Html.text "-arvot indeksin perusteella."
+                    ]
+                , viewCodeBlock
+                    """-- Tabs.view tuottaa automaattisesti:
+--   <div role=\"tablist\">
+--     <button role=\"tab\" id=\"tab-0\" aria-controls=\"panel-0\" aria-selected=\"true\">
+--       Esikatselu
+--     </button>
+--   </div>
+--   <div role=\"tabpanel\" id=\"panel-0\" aria-labelledby=\"tab-0\">
+--     ...sisältö...
+--   </div>
+--
+-- Nuolinäppäimet (← →) vaihtavat aktiivista välilehteä.
+Tabs.view
+    { tabs        = [ \"Esikatselu\", \"Koodi\" ]
+    , activeIndex = model.activeTab
+    , onTabClick  = SetTab
+    , panels      = [ previewPanel, codePanel ]
+    }"""
+                ]
+
+            -- Why String not Html msg
+            , viewRuleCard "Miksi label on String eikä Html msg?"
+                "Avustava teknologia (ruudunlukijat) lukee aria-label-attribuutin, joka on pelkkä merkkijono. Jos välittäisit Html msg -sisällön, HTML-rakenne renderöityisi näkymään mutta aria-label pysyisi tyhjänä tai puuttuisi kokonaan — ruudunlukija ei voisi lukea sitä. Rajoittamalla label-kenttä String-tyypiksi komponenttikirjasto varmistaa, että saavutettava nimi on aina läsnä."
+            ]
+        ]
+
+
+viewCodeBlock : String -> Html msg
+viewCodeBlock src =
+    Html.div [ Attr.class "overflow-x-auto" ]
+        [ Html.pre
+            [ Attr.class "bg-gray-900 text-gray-100 rounded-lg p-4 text-xs leading-relaxed overflow-x-auto" ]
+            [ Html.code [] [ Html.text src ] ]
+        ]
+
+
+viewCodeComparison : String -> String -> String -> String -> Html msg
+viewCodeComparison badLabel badSrc goodLabel goodSrc =
+    Html.div [ Attr.class "grid grid-cols-1 sm:grid-cols-2 gap-3" ]
+        [ Html.div [ Attr.class "space-y-1" ]
+            [ Html.p [ Attr.class "text-xs font-semibold text-red-600" ] [ Html.text ("✗ " ++ badLabel) ]
+            , viewCodeBlock badSrc
+            ]
+        , Html.div [ Attr.class "space-y-1" ]
+            [ Html.p [ Attr.class "text-xs font-semibold text-green-600" ] [ Html.text ("✓ " ++ goodLabel) ]
+            , viewCodeBlock goodSrc
+            ]
+        ]
 
 
 -- ---------------------------------------------------------------------------

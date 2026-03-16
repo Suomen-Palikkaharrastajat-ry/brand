@@ -3,6 +3,7 @@ module Component.Tabs exposing (view)
 import Html exposing (Html)
 import Html.Attributes as Attr
 import Html.Events as Events
+import Json.Decode
 
 
 view :
@@ -15,7 +16,34 @@ view :
 view config =
     Html.div []
         [ Html.div
-            [ Attr.class "flex border-b border-gray-200" ]
+            [ Attr.class "flex border-b border-gray-200"
+            , Attr.attribute "role" "tablist"
+            , Events.on "keydown"
+                (Json.Decode.field "key" Json.Decode.string
+                    |> Json.Decode.andThen
+                        (\key ->
+                            let
+                                count =
+                                    List.length config.tabs
+                            in
+                            case key of
+                                "ArrowRight" ->
+                                    Json.Decode.succeed
+                                        (config.onTabClick
+                                            ((config.activeIndex + 1) |> modBy count)
+                                        )
+
+                                "ArrowLeft" ->
+                                    Json.Decode.succeed
+                                        (config.onTabClick
+                                            ((config.activeIndex - 1 + count) |> modBy count)
+                                        )
+
+                                _ ->
+                                    Json.Decode.fail "not an arrow key"
+                        )
+                )
+            ]
             (List.indexedMap (viewTab config) config.tabs)
         , Html.div []
             (List.indexedMap (viewPanel config.activeIndex) config.panels)
@@ -33,6 +61,8 @@ viewTab config idx label =
         , Events.onClick (config.onTabClick idx)
         , Attr.type_ "button"
         , Attr.attribute "role" "tab"
+        , Attr.id ("tab-" ++ String.fromInt idx)
+        , Attr.attribute "aria-controls" ("panel-" ++ String.fromInt idx)
         , Attr.attribute "aria-selected"
             (if idx == config.activeIndex then
                 "true"
@@ -48,6 +78,8 @@ viewPanel : Int -> Int -> Html msg -> Html msg
 viewPanel activeIndex idx panel =
     Html.div
         [ Attr.attribute "role" "tabpanel"
+        , Attr.id ("panel-" ++ String.fromInt idx)
+        , Attr.attribute "aria-labelledby" ("tab-" ++ String.fromInt idx)
         , Attr.class
             (if idx == activeIndex then
                 "block"

@@ -1,4 +1,4 @@
-module Component.Badge exposing (Color(..), view)
+module Component.Badge exposing (Color(..), Size(..), view)
 
 import Html exposing (Html)
 import Html.Attributes as Attr
@@ -14,17 +14,38 @@ type Color
     | Indigo
 
 
-view : { label : String, color : Color } -> Html msg
+type Size
+    = Small
+    | Medium
+    | Large
+
+
+view : { label : String, color : Color, size : Size } -> Html msg
 view config =
     Html.span
-        [ Attr.class (badgeClasses config.color) ]
+        [ Attr.class (badgeClasses config.color config.size) ]
         [ Html.text config.label ]
 
 
-badgeClasses : Color -> String
-badgeClasses color =
-    "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium "
+badgeClasses : Color -> Size -> String
+badgeClasses color size =
+    "inline-flex items-center rounded-full font-medium "
+        ++ sizeClasses size
+        ++ " "
         ++ colorClasses color
+
+
+sizeClasses : Size -> String
+sizeClasses size =
+    case size of
+        Small ->
+            "px-1.5 py-px text-xs"
+
+        Medium ->
+            "px-2.5 py-0.5 text-xs"
+
+        Large ->
+            "px-3 py-1 text-sm"
 
 
 colorClasses : Color -> String

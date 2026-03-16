@@ -9,7 +9,7 @@ view : { onClick : msg, label : String } -> Html msg
 view config =
     Html.button
         [ Attr.type_ "button"
-        , Attr.class "inline-flex items-center justify-center w-6 h-6 rounded text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand"
+        , Attr.class "inline-flex items-center justify-center w-11 h-11 rounded text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand"
         , Attr.attribute "aria-label" config.label
         , Events.onClick config.onClick
         ]
