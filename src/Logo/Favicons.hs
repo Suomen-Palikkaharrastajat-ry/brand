@@ -1,6 +1,6 @@
 module Logo.Favicons (generateFavicons) where
 
-import Logo.Raster (exportPngSquare)
+import Logo.Raster (exportPngSquareTrimmed)
 import System.Directory (createDirectoryIfMissing)
 import System.Process (callProcess)
 import Control.Monad (forM_)
@@ -14,7 +14,7 @@ generateFavicons squareSvgPath faviconDir = do
     createDirectoryIfMissing True faviconDir
 
     forM_ sizes $ \(sz, name) ->
-        exportPngSquare squareSvgPath (faviconDir ++ "/" ++ name ++ ".png") sz
+        exportPngSquareTrimmed squareSvgPath (faviconDir ++ "/" ++ name ++ ".png") sz
 
     -- Bundle 16, 32, 48, 64px PNGs into a multi-size favicon.ico
     callProcess

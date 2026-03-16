@@ -1,4 +1,4 @@
-module Logo.Raster (exportPng, exportPngSquare, exportWebp) where
+module Logo.Raster (exportPng, exportPngSquare, exportPngSquareTrimmed, exportWebp) where
 
 import Control.Exception (bracket)
 import System.Directory (doesDirectoryExist, listDirectory, makeAbsolute, removeFile)
@@ -25,6 +25,34 @@ exportPngSquare svgIn pngOut sizePx = do
     let sz = show sizePx
     callRsvg ["-w", sz, "-h", sz, "--keep-aspect-ratio",
               "--page-width", sz, "--page-height", sz] svgIn pngOut
+
+-- | Export SVG to a square PNG, trimming transparent padding first so the
+-- actual brick content fills as much of the target square as possible.
+-- Steps:
+--   1. Render at 8× the target size for accurate trim detection.
+--   2. Use ImageMagick to trim transparent edges, pad back to square,
+--      and scale to the target size.
+-- Only the content bounding box is used; transparent letterbox/pillarbox
+-- from pad-left/pad-right/pad-top/pad-bottom in the source layout is removed.
+exportPngSquareTrimmed :: FilePath -> FilePath -> Int -> IO ()
+exportPngSquareTrimmed svgIn pngOut sizePx = do
+    putStrLn $ "  raster (square, trimmed) " ++ svgIn ++ " -> " ++ pngOut
+    let sz      = show sizePx
+        renderSz = show (max 512 (sizePx * 8))
+        tmpRaw  = pngOut ++ ".raw.tmp.png"
+    callRsvg ["-w", renderSz, "-h", renderSz, "--keep-aspect-ratio",
+              "--page-width", renderSz, "--page-height", renderSz] svgIn tmpRaw
+    callProcess "convert"
+        [ tmpRaw
+        , "-trim", "+repage"
+        -- pad to square in case content w ≠ h
+        , "-gravity", "center"
+        , "-background", "transparent"
+        , "-extent", "%[fx:max(w,h)]x%[fx:max(w,h)]"
+        , "-resize", sz ++ "x" ++ sz
+        , pngOut
+        ]
+    removeFile tmpRaw
 
 -- | Export SVG to WebP at given width (via intermediate PNG and cwebp).
 exportWebp :: FilePath -> FilePath -> Int -> IO ()
