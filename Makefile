@@ -246,11 +246,32 @@ HZ_STEMS    := \
   horizontal-rainbow-rot3 horizontal-rainbow-rot4 \
   horizontal-rainbow-rot5 horizontal-rainbow-rot6 \
   horizontal-skintone horizontal-skintone-rot1 horizontal-skintone-rot2 \
-  horizontal-skintone-rot3 \
-  horizontal-bw
+  horizontal-skintone-rot3
 
 $(foreach s,$(_SQ_DERIVED),$(eval $(call render_square,$(s))))
 $(foreach s,$(HZ_STEMS),$(eval $(call render_horizontal,$(s))))
+
+# horizontal-bw gets a yellow background on raw + light-compose outputs so
+# white brick faces are visible; dark-compose keeps a transparent background.
+$(HZ_SVG)/horizontal-bw.svg $(HZ_PNG)/horizontal-bw.png $(HZ_PNG)/horizontal-bw.webp \
+$(HZ_SVG)/horizontal-bw-full.svg $(HZ_PNG)/horizontal-bw-full.png $(HZ_PNG)/horizontal-bw-full.webp \
+$(HZ_SVG)/horizontal-bw-full-dark.svg $(HZ_PNG)/horizontal-bw-full-dark.png $(HZ_PNG)/horizontal-bw-full-dark.webp &: layout/horizontal-bw.blay $(FONT_PATH) $(HS_SOURCES) | build
+	@mkdir -p $(HZ_SVG) $(HZ_PNG)
+	$(_RENDER) \
+	  --input layout/horizontal-bw.blay \
+	  --bg-color $(FACE_PH) \
+	  --svg-out  $(HZ_SVG)/horizontal-bw.svg \
+	  --png-out  $(HZ_PNG)/horizontal-bw.png \
+	  --webp-out $(HZ_PNG)/horizontal-bw.webp \
+	  --width $(RASTER_W) \
+	  $(_COMPOSE_FLAGS) \
+	  --compose-bg-color $(FACE_PH) \
+	  --compose-svg-out       $(HZ_SVG)/horizontal-bw-full.svg \
+	  --compose-png-out       $(HZ_PNG)/horizontal-bw-full.png \
+	  --compose-webp-out      $(HZ_PNG)/horizontal-bw-full.webp \
+	  --compose-dark-svg-out  $(HZ_SVG)/horizontal-bw-full-dark.svg \
+	  --compose-dark-png-out  $(HZ_PNG)/horizontal-bw-full-dark.png \
+	  --compose-dark-webp-out $(HZ_PNG)/horizontal-bw-full-dark.webp
 
 # Favicons — generated alongside the square-smile PNG (the primary neutral face)
 $(SQ_SVG)/square-smile.svg $(SQ_PNG)/square-smile.png $(SQ_PNG)/square-smile.webp favicon/favicon.ico &: layout/square-smile.blay $(HS_SOURCES) | build
@@ -267,7 +288,10 @@ ALL_SQ_OUTPUTS := $(foreach s,$(SQ_STEMS),$(SQ_SVG)/$(s).svg $(SQ_PNG)/$(s).png 
 ALL_HZ_OUTPUTS := $(foreach s,$(HZ_STEMS), \
   $(HZ_SVG)/$(s).svg $(HZ_PNG)/$(s).png $(HZ_PNG)/$(s).webp \
   $(HZ_SVG)/$(s)-full.svg $(HZ_PNG)/$(s)-full.png $(HZ_PNG)/$(s)-full.webp \
-  $(HZ_SVG)/$(s)-full-dark.svg $(HZ_PNG)/$(s)-full-dark.png $(HZ_PNG)/$(s)-full-dark.webp)
+  $(HZ_SVG)/$(s)-full-dark.svg $(HZ_PNG)/$(s)-full-dark.png $(HZ_PNG)/$(s)-full-dark.webp) \
+  $(HZ_SVG)/horizontal-bw.svg $(HZ_PNG)/horizontal-bw.png $(HZ_PNG)/horizontal-bw.webp \
+  $(HZ_SVG)/horizontal-bw-full.svg $(HZ_PNG)/horizontal-bw-full.png $(HZ_PNG)/horizontal-bw-full.webp \
+  $(HZ_SVG)/horizontal-bw-full-dark.svg $(HZ_PNG)/horizontal-bw-full-dark.png $(HZ_PNG)/horizontal-bw-full-dark.webp
 
 # ── blay-animate: PNG frames -> animated GIF + WebP ──────────────────────────
 

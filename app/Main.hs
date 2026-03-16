@@ -42,6 +42,9 @@ data RenderArgs = RenderArgs
     , raPngOut             :: Maybe FilePath
     , raWebpOut            :: Maybe FilePath
     , raWidth              :: Int
+    -- background fill (6-digit hex, no '#')
+    , raBgColor            :: Maybe String  -- raw SVG output
+    , raComposeBgColor     :: Maybe String  -- light compose SVG only (not dark)
     -- subtitle composition
     , raComposePadBottom   :: Maybe Int  -- override pad-bottom for compose SVG
     , raComposeFont        :: Maybe FilePath
@@ -66,6 +69,8 @@ defaultArgs = RenderArgs
     , raPngOut             = Nothing
     , raWebpOut            = Nothing
     , raWidth              = 800
+    , raBgColor            = Nothing
+    , raComposeBgColor     = Nothing
     , raComposePadBottom   = Nothing
     , raComposeFont        = Nothing
     , raComposeText        = ""
@@ -96,16 +101,37 @@ main = do
                         then die "--input is required"
                         else runRender ra
 
+-- | Inject a background <rect> immediately after the opening <svg ...> tag.
+-- The hex argument is a 6-digit colour without '#'.
+addBgRect :: String -> T.Text -> T.Text
+addBgRect hex t =
+    let bg   = T.pack $ "<rect width=\"100%\" height=\"100%\" fill=\"#" ++ hex ++ "\"/>"
+        svgT = T.pack "<svg"
+        gtT  = T.pack ">"
+        (pre, rest) = T.breakOn svgT t
+    in case T.stripPrefix svgT rest of
+        Nothing    -> t
+        Just after ->
+            let (attrs, content) = T.breakOn gtT after
+            in if T.null content
+                then t
+                else pre <> svgT <> attrs <> T.pack ">\n" <> bg <> T.drop 1 content
+
 runRender :: RenderArgs -> IO ()
 runRender ra = do
     putStrLn $ "==> blay-render: " ++ raInput ra
     bl <- readBrickLayout (raInput ra)
-    let svgText = T.pack (layoutToSvg bl)
-        -- For composition, optionally override pad-bottom (e.g. to 0 so the
-        -- subtitle sits closer to the logo mark regardless of the layout's
-        -- own pad-bottom value).
-        blForCompose  = maybe bl (\n -> bl { blPadBottom = n }) (raComposePadBottom ra)
-        svgTextForCompose = T.pack (layoutToSvg blForCompose)
+    let svgBase = T.pack (layoutToSvg bl)
+        -- Apply optional background fill to raw SVG outputs
+        svgText = maybe svgBase (flip addBgRect svgBase) (raBgColor ra)
+        -- For composition, optionally override pad-bottom
+        blForCompose      = maybe bl (\n -> bl { blPadBottom = n }) (raComposePadBottom ra)
+        svgBaseForCompose = T.pack (layoutToSvg blForCompose)
+        -- Light compose: may have its own bg fill; dark compose: never bg fill
+        svgTextForCompose     = maybe svgBaseForCompose
+                                      (flip addBgRect svgBaseForCompose)
+                                      (raComposeBgColor ra)
+        svgTextForComposeDark = svgBaseForCompose
 
     -- 1. Write raw brick SVG
     forM_ (raSvgOut ra) $ \p -> writeSvgText p svgText
@@ -142,7 +168,7 @@ runRender ra = do
 
         when darkNeeded $ do
             let col  = T.pack $ "#" ++ raComposeDarkColor ra
-                cSvg = composeLogoWith fontDataUri subtitleText col svgTextForCompose textSize
+                cSvg = composeLogoWith fontDataUri subtitleText col svgTextForComposeDark textSize
             renderComposeVariant ra cSvg
                 (raComposeDarkSvgOut ra) (raComposeDarkPngOut ra) (raComposeDarkWebpOut ra)
                 (raInput ra ++ ".dark.tmp.svg")
@@ -220,6 +246,8 @@ parseArgs (f : v : rest) ra = case f of
     "--compose-dark-png-out" -> parseArgs rest ra { raComposeDarkPngOut  = Just v }
     "--compose-webp-out"     -> parseArgs rest ra { raComposeWebpOut     = Just v }
     "--compose-dark-webp-out"-> parseArgs rest ra { raComposeDarkWebpOut = Just v }
+    "--bg-color"              -> parseArgs rest ra { raBgColor            = Just v }
+    "--compose-bg-color"     -> parseArgs rest ra { raComposeBgColor     = Just v }
     "--favicon-dir"          -> parseArgs rest ra { raFaviconDir         = Just v }
     _                        -> Left $ "unknown flag: " ++ f
 
@@ -259,6 +287,10 @@ usageText = unlines
     , "  --compose-dark-png-out FILE Dark composed PNG"
     , "  --compose-webp-out FILE     Light composed WebP"
     , "  --compose-dark-webp-out FILE Dark composed WebP"
+    , ""
+    , "Background fill:"
+    , "  --bg-color HEX          Background fill for raw SVG/PNG/WebP outputs"
+    , "  --compose-bg-color HEX  Background fill for light composed SVG/PNG/WebP (not dark)"
     , ""
     , "Favicons:"
     , "  --favicon-dir DIR       Generate favicons from brick SVG into DIR"
