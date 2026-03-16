@@ -346,13 +346,18 @@ recolorLayout old new bl =
 -- | Compose multiple 'BrickLayout' values side-by-side into a single layout,
 -- inserting @gapStuds@ transparent stud-columns between each adjacent pair.
 -- All layouts must share the same @blkW@, @blkH@, and row count.
--- The result has @blPadBottom = 0@; @blPadTop@ is taken from the first layout.
+-- Padding from individual source layouts is discarded: pad-left, pad-right,
+-- pad-top, and pad-bottom are all reset to 0.  The caller (e.g. blay-compose)
+-- can override them afterwards via @--pad-top@/@--pad-bottom@.
 composeLayouts :: Int -> [BrickLayout] -> BrickLayout
 composeLayouts _        []         = error "composeLayouts: empty list"
 composeLayouts _        [bl]       = bl
 composeLayouts gapStuds bls@(bl0 : _) =
     bl0
-        { blPadBottom = 0
+        { blPadTop    = 0
+        , blPadBottom = 0
+        , blPadLeft   = 0
+        , blPadRight  = 0
         , blRows      = map composeRow (transpose (map blRows bls))
         }
   where
