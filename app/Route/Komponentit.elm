@@ -1019,9 +1019,14 @@ viewTimeline model =
         "Timeline"
         "Pystysuora aikajana muutoslokeille ja versiohistorioille."
         (Timeline.view
-            [ Timeline.viewItem { date = "2026", title = "Brändiohjeistus julkaistu", children = [ Html.text "JSON-LD-pohjainen koneluettava ohjeistus." ] }
-            , Timeline.viewItem { date = "2025", title = "Haskell-pipeline uudistettu", children = [ Html.text "Puhdas Haskell-rasterointi." ] }
-            , Timeline.viewItem { date = "2024", title = "Logo suunniteltu", children = [ Html.text "Minihahmon tiilimosaiikkilogo." ] }
+            [ Timeline.viewItem { date = "2026", title = "Brändiohjeistus julkaistu", children = [ Html.text "JSON-LD-pohjainen koneluettava ohjeistus." ], icon = Nothing }
+            , Timeline.viewItem { date = "2025", title = "Haskell-pipeline uudistettu", children = [ Html.text "Puhdas Haskell-rasterointi." ], icon = Nothing }
+            , Timeline.viewItem { date = "2024", title = "Logo suunniteltu", children = [ Html.text "Minihahmon tiilimosaiikkilogo." ], icon = Nothing }
+            , Timeline.viewItem { date = "2026", title = "Tapahtuma", children = [ Html.text "Kuvake: tapahtuma (⊙)." ], icon = Just "⊙" }
+            , Timeline.viewItem { date = "2026", title = "Uutinen", children = [ Html.text "Kuvake: uutinen (◆)." ], icon = Just "◆" }
+            , Timeline.viewItem { date = "2026", title = "Huomio", children = [ Html.text "Kuvake: huutomerkki (!)." ], icon = Just "!" }
+            , Timeline.viewItem { date = "2026", title = "Tärkeä", children = [ Html.text "Kuvake: tähti (★)." ], icon = Just "★" }
+            , Timeline.viewItem { date = "2026", title = "Valmis", children = [ Html.text "Kuvake: valmis (✓)." ], icon = Just "✓" }
             ]
         )
         """import Component.Timeline as Timeline
@@ -1031,13 +1036,20 @@ Timeline.view
         { date     = "2026"
         , title    = "Versio 1.0"
         , children = [ Html.text "Ensimmäinen julkaisu." ]
+        , icon     = Nothing
+        }
+    , Timeline.viewItem
+        { date     = "2026"
+        , title    = "Tärkeä tapahtuma"
+        , children = [ Html.text "Kuvakkeella." ]
+        , icon     = Just "★"
         }
     ]"""
         (jsonLdSnippet "timeline"
             "Timeline"
             "Component.Timeline"
             "Vertical timeline for changelogs and version history."
-            [ "items: List { date: String, title: String, children: List (Html msg) }" ]
+            [ "items: List { date: String, title: String, children: List (Html msg), icon: Maybe String }" ]
             [ "colors.semantic.border.default" ]
         )
 
