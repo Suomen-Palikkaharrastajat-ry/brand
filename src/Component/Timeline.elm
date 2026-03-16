@@ -11,7 +11,7 @@ view items =
         items
 
 
-viewItem : { date : String, title : String, children : List (Html msg), icon : Maybe String, image : Maybe String } -> Html msg
+viewItem : { date : String, title : String, children : List (Html msg), icon : Maybe (Html msg), image : Maybe String } -> Html msg
 viewItem config =
     Html.li
         [ Attr.class "mb-10 ms-12" ]
@@ -22,7 +22,7 @@ viewItem config =
                     Html.span [ Attr.class "block h-4 w-4 rounded-full bg-brand" ] []
 
                 Just icon ->
-                    Html.span [ Attr.class "text-2xl font-bold text-brand leading-none select-none" ] [ Html.text icon ]
+                    Html.span [ Attr.class "text-brand" ] [ icon ]
             ]
         , Html.div [ Attr.class "flex items-start gap-4" ]
             [ Html.div [ Attr.class "flex-1 min-w-0" ]

@@ -23,6 +23,7 @@ import Component.Tag as Tag
 import Component.Tabs as Tabs
 import Component.Timeline as Timeline
 import Component.Toast as Toast
+import FeatherIcons
 import Component.Toggle as Toggle
 import Component.Tooltip as Tooltip
 import Dict exposing (Dict)
@@ -1023,12 +1024,12 @@ viewTimeline model =
             [ Timeline.viewItem { date = "2026", title = "Brändiohjeistus julkaistu", children = [ Html.text "JSON-LD-pohjainen koneluettava ohjeistus." ], icon = Nothing, image = Nothing }
             , Timeline.viewItem { date = "2025", title = "Haskell-pipeline uudistettu", children = [ Html.text "Puhdas Haskell-rasterointi." ], icon = Nothing, image = Nothing }
             , Timeline.viewItem { date = "2024", title = "Logo suunniteltu", children = [ Html.text "Minihahmon tiilimosaiikkilogo." ], icon = Nothing, image = Nothing }
-            , Timeline.viewItem { date = "2026", title = "Tapahtuma", children = [ Html.text "Kalenterikuvake tapahtumalle." ], icon = Just "📅", image = Nothing }
-            , Timeline.viewItem { date = "2026", title = "Uutinen", children = [ Html.text "Megafonikuvake uutiselle." ], icon = Just "📣", image = Nothing }
-            , Timeline.viewItem { date = "2026", title = "Tärkeä huomio", children = [ Html.text "Huutomerkkikuvake tärkeälle huomiolle." ], icon = Just "!", image = Nothing }
-            , Timeline.viewItem { date = "2026", title = "Tähtihetki", children = [ Html.text "Tähti erityiselle saavutukselle." ], icon = Just "★", image = Nothing }
-            , Timeline.viewItem { date = "2026", title = "Valmis", children = [ Html.text "Rasti valmistuneelle asialle." ], icon = Just "✓", image = Nothing }
-            , Timeline.viewItem { date = "2026", title = "Kuva oikealla", children = [ Html.text "Kohde, jossa kuva kelluu oikealla puolella." ], icon = Just "★", image = Just "/logo/square/png/square-basic.png" }
+            , Timeline.viewItem { date = "2026", title = "Tapahtuma", children = [ Html.text "Kalenterikuvake tapahtumalle." ], icon = Just (FeatherIcons.calendar |> FeatherIcons.withSize 22 |> FeatherIcons.toHtml []), image = Nothing }
+            , Timeline.viewItem { date = "2026", title = "Uutinen", children = [ Html.text "Megafonikuvake uutiselle." ], icon = Just (FeatherIcons.rss |> FeatherIcons.withSize 22 |> FeatherIcons.toHtml []), image = Nothing }
+            , Timeline.viewItem { date = "2026", title = "Tärkeä huomio", children = [ Html.text "Huutomerkkikuvake tärkeälle huomiolle." ], icon = Just (FeatherIcons.alertCircle |> FeatherIcons.withSize 22 |> FeatherIcons.toHtml []), image = Nothing }
+            , Timeline.viewItem { date = "2026", title = "Tähtihetki", children = [ Html.text "Tähtikuvake erityiselle saavutukselle." ], icon = Just (FeatherIcons.star |> FeatherIcons.withSize 22 |> FeatherIcons.toHtml []), image = Nothing }
+            , Timeline.viewItem { date = "2026", title = "Valmis", children = [ Html.text "Rasti valmistuneelle asialle." ], icon = Just (FeatherIcons.checkCircle |> FeatherIcons.withSize 22 |> FeatherIcons.toHtml []), image = Nothing }
+            , Timeline.viewItem { date = "2026", title = "Kuva oikealla", children = [ Html.text "Kohde, jossa kuva kelluu oikealla puolella." ], icon = Just (FeatherIcons.star |> FeatherIcons.withSize 22 |> FeatherIcons.toHtml []), image = Just "/logo/square/png/square-basic.png" }
             ]
         )
         """import Component.Timeline as Timeline
@@ -1045,7 +1046,7 @@ Timeline.view
         { date     = "2026"
         , title    = "Tärkeä tapahtuma"
         , children = [ Html.text "Kuvakkeella ja kuvalla." ]
-        , icon     = Just "★"
+        , icon     = Just (FeatherIcons.calendar |> FeatherIcons.withSize 22 |> FeatherIcons.toHtml [])
         , image    = Just "/logo/square/png/square-basic.png"
         }
     ]"""
@@ -1053,7 +1054,7 @@ Timeline.view
             "Timeline"
             "Component.Timeline"
             "Vertical timeline for changelogs and version history."
-            [ "items: List { date: String, title: String, children: List (Html msg), icon: Maybe String, image: Maybe String }" ]
+            [ "items: List { date: String, title: String, children: List (Html msg), icon: Maybe (Html msg), image: Maybe String }" ]
             [ "colors.semantic.border.default" ]
         )
 
