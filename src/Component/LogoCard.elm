@@ -11,6 +11,7 @@ type alias LogoVariant =
     , theme : String
     , animated : Bool
     , withText : Bool
+    , highlight : Bool
     , svgUrl : Maybe String
     , pngUrl : Maybe String
     , webpUrl : Maybe String
@@ -21,7 +22,14 @@ type alias LogoVariant =
 view : LogoVariant -> Html msg
 view variant =
     Html.div
-        [ Attr.class "border border-gray-200 rounded-lg overflow-hidden" ]
+        [ Attr.class
+            (if variant.highlight then
+                "border-2 border-brand-yellow rounded-lg overflow-hidden ring-2 ring-brand-yellow ring-offset-2"
+
+             else
+                "border border-gray-200 rounded-lg overflow-hidden"
+            )
+        ]
         [ viewPreview variant
         , viewInfo variant
         ]
@@ -76,6 +84,13 @@ viewInfo variant =
         [ Html.div [ Attr.class "mb-3" ]
             [ Html.span [ Attr.class "font-semibold text-sm text-brand" ]
                 [ Html.text variant.description ]
+            , if variant.highlight then
+                Html.span
+                    [ Attr.class "ml-2 inline-block bg-brand-yellow text-brand text-xs font-bold px-1.5 py-0.5 rounded" ]
+                    [ Html.text "Suositeltu" ]
+
+              else
+                Html.text ""
             , if variant.animated then
                 Html.span
                     [ Attr.class "ml-2 inline-block bg-brand text-brand-yellow text-xs font-bold px-1.5 py-0.5 rounded" ]
