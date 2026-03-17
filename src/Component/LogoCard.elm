@@ -11,6 +11,7 @@ type alias LogoVariant =
     , theme : String
     , animated : Bool
     , withText : Bool
+    , bold : Bool
     , highlight : Bool
     , svgUrl : Maybe String
     , pngUrl : Maybe String
@@ -95,6 +96,13 @@ viewInfo variant =
                 Html.span
                     [ Attr.class "ml-2 inline-block bg-brand text-brand-yellow text-xs font-bold px-1.5 py-0.5 rounded" ]
                     [ Html.text "ANI" ]
+
+              else
+                Html.text ""
+            , if variant.bold then
+                Html.span
+                    [ Attr.class "ml-2 inline-block bg-gray-200 text-gray-700 text-xs font-bold px-1.5 py-0.5 rounded" ]
+                    [ Html.text "BOLD" ]
 
               else
                 Html.text ""

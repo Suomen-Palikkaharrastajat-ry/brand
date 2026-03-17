@@ -152,6 +152,7 @@ viewLogotSection =
             ]
         , viewLogoUsageRules
         , viewSquareLogos
+        , viewSquareFullLogos
         , viewHorizontalLogos
         ]
 
@@ -175,8 +176,20 @@ viewSquareLogos =
             { title = "Neliö (square)"
             , description = Just "Hymyilevä minihahmon pää rakennuspalikoista koottuna. Sopii someen ja sovelluskuvakkeisiin."
             }
-        , Html.div [ Attr.class "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" ]
+        , Html.div [ Attr.class "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" ]
             (List.map LogoCard.view Logos.squareVariants)
+        ]
+
+
+viewSquareFullLogos : Html msg
+viewSquareFullLogos =
+    Html.div [ Attr.class "space-y-4" ]
+        [ SectionHeader.view
+            { title = "Neliö tekstillä (square with text)"
+            , description = Just "Hymyilevä logo kahdella tekstirivillä alla. Käytä kun tarvitset täydellisen tunnuksen pystysuuntaisessa asettelussa."
+            }
+        , Html.div [ Attr.class "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" ]
+            (List.map LogoCard.view Logos.squareFullVariants)
         ]
 
 

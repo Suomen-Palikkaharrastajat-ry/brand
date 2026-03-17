@@ -19,8 +19,13 @@ BLK_H     := 20
 SQ_PAD_V  := 20
 HZ_PAD_TOP:= 20
 GAP_STUDS := 2
-TXT_SIZE  := 63
-ANIM_MS   := 10000
+TXT_SIZE       := 63
+TXT_SIZE_SQ    := 24
+TXT_WEIGHT_BOLD := 700
+HZ_BOLD_PAD_X  := 40
+SUBTITLE_LINE1 := Suomen
+SUBTITLE_LINE2 := Palikkaharrastajat ry
+ANIM_MS        := 10000
 RASTER_W  := 800
 
 # Subtitle colours (6-digit hex, no #)
@@ -196,10 +201,43 @@ _RENDER = $(CABAL) run --offline blay-render --
 _COMPOSE_FLAGS := \
   --compose-font '$(FONT_PATH)' \
   --compose-text '$(SUBTITLE)' \
+  --compose-text-weight 400 \
   --compose-text-size $(TXT_SIZE) \
   --compose-light-color $(SUBTITLE_LIGHT) \
   --compose-dark-color $(SUBTITLE_DARK) \
   --compose-pad-bottom 0
+
+_COMPOSE_FLAGS_BOLD := \
+  --compose-font '$(FONT_PATH)' \
+  --compose-text '$(SUBTITLE)' \
+  --compose-text-weight $(TXT_WEIGHT_BOLD) \
+  --compose-text-size $(TXT_SIZE) \
+  --compose-light-color $(SUBTITLE_LIGHT) \
+  --compose-dark-color $(SUBTITLE_DARK) \
+  --compose-pad-bottom 0 \
+  --compose-pad-x $(HZ_BOLD_PAD_X)
+
+_COMPOSE_FLAGS_SQ := \
+  --compose-font '$(FONT_PATH)' \
+  --compose-text '$(SUBTITLE_LINE1)' \
+  --compose-text2 '$(SUBTITLE_LINE2)' \
+  --compose-text-weight 400 \
+  --compose-text-size $(TXT_SIZE_SQ) \
+  --compose-light-color $(SUBTITLE_LIGHT) \
+  --compose-dark-color $(SUBTITLE_DARK) \
+  --compose-pad-bottom 0 \
+  --compose-square
+
+_COMPOSE_FLAGS_SQ_BOLD := \
+  --compose-font '$(FONT_PATH)' \
+  --compose-text '$(SUBTITLE_LINE1)' \
+  --compose-text2 '$(SUBTITLE_LINE2)' \
+  --compose-text-weight $(TXT_WEIGHT_BOLD) \
+  --compose-text-size $(TXT_SIZE_SQ) \
+  --compose-light-color $(SUBTITLE_LIGHT) \
+  --compose-dark-color $(SUBTITLE_DARK) \
+  --compose-pad-bottom 0 \
+  --compose-square
 
 # Macro: render a square-basic.blay => SVG + PNG + WebP (no subtitle composition)
 # $(1) = stem (e.g. square-basic)
@@ -215,11 +253,14 @@ $(SQ_SVG)/$(1).svg $(SQ_PNG)/$(1).png $(SQ_PNG)/$(1).webp &: layout/$(1).blay $(
 endef
 
 # Macro: render a horizontal blay => SVG + PNG + WebP + light/dark composed variants
+# (regular weight 400 + bold weight 700)
 # $(1) = stem (e.g. horizontal)
 define render_horizontal
 $(HZ_SVG)/$(1).svg $(HZ_PNG)/$(1).png $(HZ_PNG)/$(1).webp \
 $(HZ_SVG)/$(1)-full.svg $(HZ_PNG)/$(1)-full.png $(HZ_PNG)/$(1)-full.webp \
-$(HZ_SVG)/$(1)-full-dark.svg $(HZ_PNG)/$(1)-full-dark.png $(HZ_PNG)/$(1)-full-dark.webp &: layout/$(1).blay $(FONT_PATH) $(HS_SOURCES) | build
+$(HZ_SVG)/$(1)-full-dark.svg $(HZ_PNG)/$(1)-full-dark.png $(HZ_PNG)/$(1)-full-dark.webp \
+$(HZ_SVG)/$(1)-full-bold.svg $(HZ_PNG)/$(1)-full-bold.png $(HZ_PNG)/$(1)-full-bold.webp \
+$(HZ_SVG)/$(1)-full-dark-bold.svg $(HZ_PNG)/$(1)-full-dark-bold.png $(HZ_PNG)/$(1)-full-dark-bold.webp &: layout/$(1).blay $(FONT_PATH) $(HS_SOURCES) | build
 	@mkdir -p $(HZ_SVG) $(HZ_PNG)
 	$(_RENDER) \
 	  --input    layout/$(1).blay \
@@ -234,6 +275,16 @@ $(HZ_SVG)/$(1)-full-dark.svg $(HZ_PNG)/$(1)-full-dark.png $(HZ_PNG)/$(1)-full-da
 	  --compose-dark-svg-out  $(HZ_SVG)/$(1)-full-dark.svg \
 	  --compose-dark-png-out  $(HZ_PNG)/$(1)-full-dark.png \
 	  --compose-dark-webp-out $(HZ_PNG)/$(1)-full-dark.webp
+	$(_RENDER) \
+	  --input    layout/$(1).blay \
+	  --width $(RASTER_W) \
+	  $(_COMPOSE_FLAGS_BOLD) \
+	  --compose-svg-out       $(HZ_SVG)/$(1)-full-bold.svg \
+	  --compose-png-out       $(HZ_PNG)/$(1)-full-bold.png \
+	  --compose-webp-out      $(HZ_PNG)/$(1)-full-bold.webp \
+	  --compose-dark-svg-out  $(HZ_SVG)/$(1)-full-dark-bold.svg \
+	  --compose-dark-png-out  $(HZ_PNG)/$(1)-full-dark-bold.png \
+	  --compose-dark-webp-out $(HZ_PNG)/$(1)-full-dark-bold.webp
 endef
 
 # square-basic is rendered by the favicon rule below (single grouped target);
@@ -263,11 +314,46 @@ $(SQ_SVG)/square-smile.svg $(SQ_PNG)/square-smile.png $(SQ_PNG)/square-smile.web
 	  --width $(RASTER_W) \
 	  --favicon-dir favicon
 
-ALL_SQ_OUTPUTS := $(foreach s,$(SQ_STEMS),$(SQ_SVG)/$(s).svg $(SQ_PNG)/$(s).png $(SQ_PNG)/$(s).webp)
+# Square logo with two-line centered text below (normal + bold, light + dark)
+$(SQ_SVG)/square-smile-full.svg $(SQ_PNG)/square-smile-full.png $(SQ_PNG)/square-smile-full.webp \
+$(SQ_SVG)/square-smile-full-dark.svg $(SQ_PNG)/square-smile-full-dark.png $(SQ_PNG)/square-smile-full-dark.webp \
+$(SQ_SVG)/square-smile-full-bold.svg $(SQ_PNG)/square-smile-full-bold.png $(SQ_PNG)/square-smile-full-bold.webp \
+$(SQ_SVG)/square-smile-full-dark-bold.svg $(SQ_PNG)/square-smile-full-dark-bold.png $(SQ_PNG)/square-smile-full-dark-bold.webp &: layout/square-smile.blay $(FONT_PATH) $(HS_SOURCES) | build
+	@mkdir -p $(SQ_SVG) $(SQ_PNG)
+	$(_RENDER) \
+	  --input layout/square-smile.blay \
+	  --width $(RASTER_W) \
+	  $(_COMPOSE_FLAGS_SQ) \
+	  --compose-svg-out       $(SQ_SVG)/square-smile-full.svg \
+	  --compose-png-out       $(SQ_PNG)/square-smile-full.png \
+	  --compose-webp-out      $(SQ_PNG)/square-smile-full.webp \
+	  --compose-dark-svg-out  $(SQ_SVG)/square-smile-full-dark.svg \
+	  --compose-dark-png-out  $(SQ_PNG)/square-smile-full-dark.png \
+	  --compose-dark-webp-out $(SQ_PNG)/square-smile-full-dark.webp
+	$(_RENDER) \
+	  --input layout/square-smile.blay \
+	  --width $(RASTER_W) \
+	  $(_COMPOSE_FLAGS_SQ_BOLD) \
+	  --compose-svg-out       $(SQ_SVG)/square-smile-full-bold.svg \
+	  --compose-png-out       $(SQ_PNG)/square-smile-full-bold.png \
+	  --compose-webp-out      $(SQ_PNG)/square-smile-full-bold.webp \
+	  --compose-dark-svg-out  $(SQ_SVG)/square-smile-full-dark-bold.svg \
+	  --compose-dark-png-out  $(SQ_PNG)/square-smile-full-dark-bold.png \
+	  --compose-dark-webp-out $(SQ_PNG)/square-smile-full-dark-bold.webp
+
+_SQ_FULL_OUTPUTS := \
+  $(SQ_SVG)/square-smile-full.svg $(SQ_PNG)/square-smile-full.png $(SQ_PNG)/square-smile-full.webp \
+  $(SQ_SVG)/square-smile-full-dark.svg $(SQ_PNG)/square-smile-full-dark.png $(SQ_PNG)/square-smile-full-dark.webp \
+  $(SQ_SVG)/square-smile-full-bold.svg $(SQ_PNG)/square-smile-full-bold.png $(SQ_PNG)/square-smile-full-bold.webp \
+  $(SQ_SVG)/square-smile-full-dark-bold.svg $(SQ_PNG)/square-smile-full-dark-bold.png $(SQ_PNG)/square-smile-full-dark-bold.webp
+
+ALL_SQ_OUTPUTS := $(foreach s,$(SQ_STEMS),$(SQ_SVG)/$(s).svg $(SQ_PNG)/$(s).png $(SQ_PNG)/$(s).webp) $(_SQ_FULL_OUTPUTS)
 ALL_HZ_OUTPUTS := $(foreach s,$(HZ_STEMS), \
   $(HZ_SVG)/$(s).svg $(HZ_PNG)/$(s).png $(HZ_PNG)/$(s).webp \
   $(HZ_SVG)/$(s)-full.svg $(HZ_PNG)/$(s)-full.png $(HZ_PNG)/$(s)-full.webp \
-  $(HZ_SVG)/$(s)-full-dark.svg $(HZ_PNG)/$(s)-full-dark.png $(HZ_PNG)/$(s)-full-dark.webp)
+  $(HZ_SVG)/$(s)-full-dark.svg $(HZ_PNG)/$(s)-full-dark.png $(HZ_PNG)/$(s)-full-dark.webp \
+  $(HZ_SVG)/$(s)-full-bold.svg $(HZ_PNG)/$(s)-full-bold.png $(HZ_PNG)/$(s)-full-bold.webp \
+  $(HZ_SVG)/$(s)-full-dark-bold.svg $(HZ_PNG)/$(s)-full-dark-bold.png $(HZ_PNG)/$(s)-full-dark-bold.webp)
 
 # ── blay-animate: PNG frames -> animated GIF + WebP ──────────────────────────
 
@@ -278,9 +364,11 @@ _SQ_FRAMES       := $(foreach s,$(_SQ_ANIM_STEMS),$(SQ_PNG)/$(s).png)
 _HZ_SKIN_STEMS   := horizontal horizontal-rot1 horizontal-rot2 horizontal-rot3
 _RB_STEMS        := horizontal-rainbow horizontal-rainbow-rot1 horizontal-rainbow-rot2 horizontal-rainbow-rot3 horizontal-rainbow-rot4 horizontal-rainbow-rot5 horizontal-rainbow-rot6
 _SC_STEMS        := horizontal-skintone horizontal-skintone-rot1 horizontal-skintone-rot2 horizontal-skintone-rot3
-_HZ_FRAMES       := $(foreach s,$(_HZ_SKIN_STEMS),$(HZ_PNG)/$(s).png)
-_HZ_FULL_FRAMES  := $(foreach s,$(_HZ_SKIN_STEMS),$(HZ_PNG)/$(s)-full.png)
-_HZ_DARK_FRAMES  := $(foreach s,$(_HZ_SKIN_STEMS),$(HZ_PNG)/$(s)-full-dark.png)
+_HZ_FRAMES           := $(foreach s,$(_HZ_SKIN_STEMS),$(HZ_PNG)/$(s).png)
+_HZ_FULL_FRAMES      := $(foreach s,$(_HZ_SKIN_STEMS),$(HZ_PNG)/$(s)-full.png)
+_HZ_DARK_FRAMES      := $(foreach s,$(_HZ_SKIN_STEMS),$(HZ_PNG)/$(s)-full-dark.png)
+_HZ_BOLD_FRAMES      := $(foreach s,$(_HZ_SKIN_STEMS),$(HZ_PNG)/$(s)-full-bold.png)
+_HZ_DARK_BOLD_FRAMES := $(foreach s,$(_HZ_SKIN_STEMS),$(HZ_PNG)/$(s)-full-dark-bold.png)
 _RB_FRAMES       := $(foreach s,$(_RB_STEMS),$(HZ_PNG)/$(s).png)
 _RB_FULL_FRAMES  := $(foreach s,$(_RB_STEMS),$(HZ_PNG)/$(s)-full.png)
 _RB_DARK_FRAMES  := $(foreach s,$(_RB_STEMS),$(HZ_PNG)/$(s)-full-dark.png)
@@ -303,6 +391,14 @@ $(HZ_PNG)/horizontal-full-animated.gif $(HZ_PNG)/horizontal-full-animated.webp &
 $(HZ_PNG)/horizontal-full-dark-animated.gif $(HZ_PNG)/horizontal-full-dark-animated.webp &: $(_HZ_DARK_FRAMES) | build
 	@mkdir -p $(HZ_PNG)
 	$(_ANIMATE) $(foreach f,$(_HZ_DARK_FRAMES),--input $(f)) --gif-out $(HZ_PNG)/horizontal-full-dark-animated.gif --webp-out $(HZ_PNG)/horizontal-full-dark-animated.webp --anim-ms $(ANIM_MS)
+
+$(HZ_PNG)/horizontal-full-bold-animated.gif $(HZ_PNG)/horizontal-full-bold-animated.webp &: $(_HZ_BOLD_FRAMES) | build
+	@mkdir -p $(HZ_PNG)
+	$(_ANIMATE) $(foreach f,$(_HZ_BOLD_FRAMES),--input $(f)) --gif-out $(HZ_PNG)/horizontal-full-bold-animated.gif --webp-out $(HZ_PNG)/horizontal-full-bold-animated.webp --anim-ms $(ANIM_MS)
+
+$(HZ_PNG)/horizontal-full-dark-bold-animated.gif $(HZ_PNG)/horizontal-full-dark-bold-animated.webp &: $(_HZ_DARK_BOLD_FRAMES) | build
+	@mkdir -p $(HZ_PNG)
+	$(_ANIMATE) $(foreach f,$(_HZ_DARK_BOLD_FRAMES),--input $(f)) --gif-out $(HZ_PNG)/horizontal-full-dark-bold-animated.gif --webp-out $(HZ_PNG)/horizontal-full-dark-bold-animated.webp --anim-ms $(ANIM_MS)
 
 $(HZ_PNG)/horizontal-rainbow-animated.gif $(HZ_PNG)/horizontal-rainbow-animated.webp &: $(_RB_FRAMES) | build
 	@mkdir -p $(HZ_PNG)
@@ -334,6 +430,8 @@ ALL_ANIMATIONS := \
   $(HZ_PNG)/horizontal-animated.gif $(HZ_PNG)/horizontal-animated.webp \
   $(HZ_PNG)/horizontal-full-animated.gif $(HZ_PNG)/horizontal-full-animated.webp \
   $(HZ_PNG)/horizontal-full-dark-animated.gif $(HZ_PNG)/horizontal-full-dark-animated.webp \
+  $(HZ_PNG)/horizontal-full-bold-animated.gif $(HZ_PNG)/horizontal-full-bold-animated.webp \
+  $(HZ_PNG)/horizontal-full-dark-bold-animated.gif $(HZ_PNG)/horizontal-full-dark-bold-animated.webp \
   $(HZ_PNG)/horizontal-rainbow-animated.gif $(HZ_PNG)/horizontal-rainbow-animated.webp \
   $(HZ_PNG)/horizontal-rainbow-full-animated.gif $(HZ_PNG)/horizontal-rainbow-full-animated.webp \
   $(HZ_PNG)/horizontal-rainbow-full-dark-animated.gif $(HZ_PNG)/horizontal-rainbow-full-dark-animated.webp \
@@ -347,7 +445,9 @@ design-guide.json src/Brand/Tokens.elm &: $(HS_SOURCES) | build
 	$(CABAL) run --offline brand-gen -- --elm-tokens-out src/Brand/Tokens.elm
 
 # ── Text outlining (post-process full composed SVGs) ─────────────────────────
-ALL_FULL_SVGS := $(foreach s,$(HZ_STEMS),$(HZ_SVG)/$(s)-full.svg $(HZ_SVG)/$(s)-full-dark.svg)
+ALL_FULL_SVGS := $(foreach s,$(HZ_STEMS),$(HZ_SVG)/$(s)-full.svg $(HZ_SVG)/$(s)-full-dark.svg $(HZ_SVG)/$(s)-full-bold.svg $(HZ_SVG)/$(s)-full-dark-bold.svg) \
+  $(SQ_SVG)/square-smile-full.svg $(SQ_SVG)/square-smile-full-dark.svg \
+  $(SQ_SVG)/square-smile-full-bold.svg $(SQ_SVG)/square-smile-full-dark-bold.svg
 
 outline-text: $(ALL_FULL_SVGS) ## Outline subtitle text in composed horizontal SVGs
 	python3 scripts/text_to_path.py '$(FONT_PATH)' $(ALL_FULL_SVGS)
