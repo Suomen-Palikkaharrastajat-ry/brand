@@ -26,7 +26,7 @@ type alias RainbowColor =
 
 brandColors : List ColorEntry
 brandColors =
-    [ { hex = "#F2CD37"
+    [ { hex = "#FAC80A"
       , id = "lego-yellow"
       , name = "Yellow"
       , usage = [ "primary brand", "accent" ]
@@ -51,7 +51,7 @@ brandColors =
 
 skinTones : List SkinToneEntry
 skinTones =
-    [ { hex = "#F2CD37", id = "yellow", name = "Yellow", description = "Classic minifig" }
+    [ { hex = "#FAC80A", id = "yellow", name = "Yellow", description = "Classic minifig" }
     , { hex = "#F6D7B3", id = "light-nougat", name = "Light Nougat", description = "Light skin" }
     , { hex = "#D09168", id = "nougat", name = "Nougat", description = "Medium skin" }
     , { hex = "#AD6140", id = "dark-nougat", name = "Dark Nougat", description = "Dark skin" }
@@ -62,7 +62,7 @@ rainbowColors : List RainbowColor
 rainbowColors =
     [ { hex = "#F2705E", name = "Salmon", description = "Red" }
     , { hex = "#F9BA61", name = "Light Orange", description = "Orange" }
-    , { hex = "#F2CD37", name = "Yellow", description = "Yellow" }
+    , { hex = "#FAC80A", name = "Yellow", description = "Yellow" }
     , { hex = "#73DCA1", name = "Medium Green", description = "Green" }
     , { hex = "#9FC3E9", name = "Bright Light Blue", description = "Blue" }
     , { hex = "#9195CA", name = "Light Lilac", description = "Indigo" }

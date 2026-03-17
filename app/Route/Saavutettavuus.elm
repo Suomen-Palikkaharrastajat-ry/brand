@@ -145,7 +145,7 @@ contrastData =
     [ { name = "Black", hex = "#05131D", onWhite = "17.3:1 (AAA*)", onBlack = "—", usage = "Teksti, otsikot, logo" }
     , { name = "White", hex = "#FFFFFF", onWhite = "—", onBlack = "17.3:1 (AAA*)", usage = "Teksti tummalla taustalla" }
     , { name = "Red", hex = "#C91A09", onWhite = "5.0:1 (AA)", onBlack = "4.2:1 (AA)", usage = "Aksentti, varoitus, korostus" }
-    , { name = "Yellow", hex = "#F2CD37", onWhite = "1.5:1 (ei)", onBlack = "11.5:1 (AAA*)", usage = "Aksenttiväri — ei tekstinä vaalealla" }
+    , { name = "Yellow", hex = "#FAC80A", onWhite = "1.5:1 (ei)", onBlack = "11.5:1 (AAA*)", usage = "Aksenttiväri — ei tekstinä vaalealla" }
     , { name = "Light Nougat", hex = "#F6D7B3", onWhite = "1.4:1 (ei)", onBlack = "12.4:1 (AAA*)", usage = "Vain koristelullinen käyttö" }
     , { name = "Nougat", hex = "#CC8E69", onWhite = "2.6:1 (ei)", onBlack = "6.7:1 (AA)", usage = "Suuri teksti mustalla taustalla" }
     , { name = "Dark Nougat", hex = "#AD6140", onWhite = "4.4:1 (AA)", onBlack = "4.0:1 (AA)", usage = "Suuri teksti, koristeet" }
@@ -259,7 +259,7 @@ viewFocusSection =
             [ viewRuleCard "Älä poista outline-attribuuttia"
                 "focus:outline-none on sallittu vain, jos tarjoat vastaavan näkyvän vaihtoehdon (focus:ring-2). Button-komponentti käyttää valmiiksi focus:ring-2 focus:ring-offset-2 -luokkia."
             , viewRuleCard "Kohdistusrengas kirkkuusvaatimus"
-                "Kohdistusindikaattorin kontrast taustan kanssa on oltava vähintään 3:1 (WCAG 2.1 AA, kriteeri 1.4.11). Merkkivärinen (brand-yellow #F2CD37) rengas tummalla taustalla täyttää vaatimuksen."
+                "Kohdistusindikaattorin kontrast taustan kanssa on oltava vähintään 3:1 (WCAG 2.1 AA, kriteeri 1.4.11). Merkkivärinen (brand-yellow #FAC80A) rengas tummalla taustalla täyttää vaatimuksen."
             ]
         ]
 

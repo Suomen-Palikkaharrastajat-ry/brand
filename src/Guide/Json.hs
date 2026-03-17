@@ -134,7 +134,7 @@ buildColors =
   where
     skinTonesWithDesc :: [(Text, Text, Hex, Text)]
     skinTonesWithDesc =
-        [ ("yellow",       "Yellow",       Hex "#F2CD37", "Classic LEGO minifig yellow. Brand accent color.")
+        [ ("yellow",       "Yellow",       Hex "#FAC80A", "Classic LEGO minifig yellow. Brand accent color.")
         , ("light-nougat", "Light Nougat", Hex "#F6D7B3", "Light skin tone. Contrast on white: 1.4:1 — decorative only.")
         , ("nougat",       "Nougat",       Hex "#D09168", "Medium skin tone. Contrast on black: 6.7:1 (AA).")
         , ("dark-nougat",  "Dark Nougat",  Hex "#AD6140", "Dark skin tone. Contrast on white: 4.4:1 (AA large text).")

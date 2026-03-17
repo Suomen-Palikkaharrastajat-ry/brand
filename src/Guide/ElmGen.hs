@@ -48,7 +48,7 @@ generateBrandModule = T.unlines $
     , ""
     , "colorBrandYellow : String"
     , "colorBrandYellow ="
-    , "    " <> q "#F2CD37"
+    , "    " <> q "#FAC80A"
     , ""
     , "-- ---------------------------------------------------------------------------"
     , "-- Semantic colors"

@@ -32,7 +32,7 @@ headSvgFaceColor = "#f8c70b"
 -- (id, name, hex)
 skinTones :: [(Text, Text, Hex)]
 skinTones =
-    [ ("yellow", "Yellow", Hex "#F2CD37")
+    [ ("yellow", "Yellow", Hex "#FAC80A")
     , ("light-nougat", "Light Nougat", Hex "#F6D7B3")
     , ("nougat", "Nougat", Hex "#D09168")
     , ("dark-nougat", "Dark Nougat", Hex "#AD6140")
@@ -43,7 +43,7 @@ rainbowColors :: [(Text, Text, Hex, Text)]
 rainbowColors =
     [ ("salmon", "Salmon", Hex "#F2705E", "Red")
     , ("light-orange", "Light Orange", Hex "#F9BA61", "Orange")
-    , ("yellow", "Yellow", Hex "#F2CD37", "Yellow")
+    , ("yellow", "Yellow", Hex "#FAC80A", "Yellow")
     , ("medium-green", "Medium Green", Hex "#73DCA1", "Green")
     , ("bright-light-blue", "Bright Light Blue", Hex "#9FC3E9", "Blue")
     , ("light-lilac", "Light Lilac", Hex "#9195CA", "Indigo")

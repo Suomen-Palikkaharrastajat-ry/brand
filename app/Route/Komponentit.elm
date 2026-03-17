@@ -1161,10 +1161,10 @@ viewTooltip model =
                     ]
                 }
             , Tooltip.view
-                { content = "#F2CD37 — brand yellow"
+                { content = "#FAC80A — brand yellow"
                 , children =
                     [ ColorSwatch.view
-                        { hex = "#F2CD37"
+                        { hex = "#FAC80A"
                         , name = "Yellow"
                         , description = ""
                         , usageTags = []

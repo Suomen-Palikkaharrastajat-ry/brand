@@ -160,7 +160,7 @@ buildColorsLd =
 
     skinData :: [(Text, Text, Text, Text, A.Value)]
     skinData =
-        [ ("yellow",       "Yellow",       "#F2CD37", "Classic LEGO minifig yellow. Brand accent colour."
+        [ ("yellow",       "Yellow",       "#FAC80A", "Classic LEGO minifig yellow. Brand accent colour."
           , A.object ["onWhite" .= (1.5 :: Double), "onWhiteRating" .= ("fail" :: Text), "onBlack" .= (11.5 :: Double), "onBlackRating" .= ("AAA" :: Text)])
         , ("light-nougat", "Light Nougat", "#F6D7B3", "Light skin tone. Decorative only."
           , A.object ["onWhite" .= (1.4 :: Double), "onWhiteRating" .= ("fail" :: Text), "onBlack" .= (12.4 :: Double), "onBlackRating" .= ("AAA" :: Text)])

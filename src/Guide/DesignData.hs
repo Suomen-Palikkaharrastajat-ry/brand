@@ -105,7 +105,7 @@ semanticColors =
     , ("colorBgPage",        "background.page",     "#FFFFFF",               "bg-white",          "Default page/document background.")
     , ("colorBgDark",        "background.dark",     hexText darkBg,          "bg-brand",          "Dark section backgrounds. Pair with colorTextOnDark.")
     , ("colorBgSubtle",      "background.subtle",   "#F9FAFB",               "bg-gray-50",        "Light card and section backgrounds.")
-    , ("colorBgAccent",      "background.accent",   "#F2CD37",               "bg-brand-yellow",   "Brand accent CTA color. Always pair with colorTextPrimary.")
+    , ("colorBgAccent",      "background.accent",   "#FAC80A",               "bg-brand-yellow",   "Brand accent CTA color. Always pair with colorTextPrimary.")
     , ("colorBorderDefault", "border.default",      "#E5E7EB",               "border-gray-200",   "Standard card and section divider borders.")
     , ("colorBorderBrand",   "border.brand",        hexText darkBg,          "border-brand",      "Brand-colored borders, left-accent rules, focus rings.")
     ]

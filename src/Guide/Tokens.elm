@@ -34,7 +34,7 @@ colorBrandWhite =
 
 colorBrandYellow : String
 colorBrandYellow =
-    "#F2CD37"
+    "#FAC80A"
 
 -- ---------------------------------------------------------------------------
 -- Semantic colors
@@ -106,7 +106,7 @@ colorBgSubtleTw =
 -- Brand accent CTA color. Always pair with colorTextPrimary.
 colorBgAccent : String
 colorBgAccent =
-    "#F2CD37"
+    "#FAC80A"
 
 colorBgAccentTw : String
 colorBgAccentTw =
@@ -139,7 +139,7 @@ type alias SkinTone =
 
 skinTones : List SkinTone
 skinTones =
-    [ { id = "yellow", name = "Yellow", hex = "#F2CD37" }
+    [ { id = "yellow", name = "Yellow", hex = "#FAC80A" }
     , { id = "light-nougat", name = "Light Nougat", hex = "#F6D7B3" }
     , { id = "nougat", name = "Nougat", hex = "#D09168" }
     , { id = "dark-nougat", name = "Dark Nougat", hex = "#AD6140" }
@@ -157,7 +157,7 @@ rainbowColors : List RainbowColor
 rainbowColors =
     [ { id = "salmon", name = "Salmon", hex = "#F2705E", description = "Red" }
     , { id = "light-orange", name = "Light Orange", hex = "#F9BA61", description = "Orange" }
-    , { id = "yellow", name = "Yellow", hex = "#F2CD37", description = "Yellow" }
+    , { id = "yellow", name = "Yellow", hex = "#FAC80A", description = "Yellow" }
     , { id = "medium-green", name = "Medium Green", hex = "#73DCA1", description = "Green" }
     , { id = "bright-light-blue", name = "Bright Light Blue", hex = "#9FC3E9", description = "Blue" }
     , { id = "light-lilac", name = "Light Lilac", hex = "#9195CA", description = "Indigo" }

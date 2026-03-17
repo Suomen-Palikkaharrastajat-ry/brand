@@ -286,7 +286,7 @@ semanticRows =
     , { name = "background.page", hex = "#FFFFFF", tw = "bg-white", desc = "Sivun pääväri" }
     , { name = "background.dark", hex = "#05131D", tw = "bg-brand", desc = "Tumma teema, navbar" }
     , { name = "background.subtle", hex = "#F9FAFB", tw = "bg-gray-50", desc = "Korostusalue, kortit" }
-    , { name = "background.accent", hex = "#F2CD37", tw = "bg-brand-yellow", desc = "Keltainen aksentti" }
+    , { name = "background.accent", hex = "#FAC80A", tw = "bg-brand-yellow", desc = "Keltainen aksentti" }
     , { name = "border.default", hex = "#E5E7EB", tw = "border-gray-200", desc = "Kortit, taulukot" }
     , { name = "border.brand", hex = "#05131D", tw = "border-brand", desc = "Aktiiviset elementit" }
     ]
