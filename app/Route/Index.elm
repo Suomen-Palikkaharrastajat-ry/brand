@@ -173,7 +173,7 @@ viewSquareLogos : Html msg
 viewSquareLogos =
     Html.div [ Attr.class "space-y-4" ]
         [ SectionHeader.view
-            { title = "Neliö (square)"
+            { title = "Neliö"
             , description = Just "Hymyilevä minihahmon pää rakennuspalikoista koottuna. Sopii someen ja sovelluskuvakkeisiin."
             }
         , Html.div [ Attr.class "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" ]
@@ -185,7 +185,7 @@ viewSquareFullLogos : Html msg
 viewSquareFullLogos =
     Html.div [ Attr.class "space-y-4" ]
         [ SectionHeader.view
-            { title = "Neliö tekstillä (square with text)"
+            { title = "Neliö tekstillä"
             , description = Just "Hymyilevä logo kahdella tekstirivillä alla. Käytä kun tarvitset täydellisen tunnuksen pystysuuntaisessa asettelussa."
             }
         , Html.div [ Attr.class "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" ]
@@ -197,7 +197,7 @@ viewHorizontalLogos : Html msg
 viewHorizontalLogos =
     Html.div [ Attr.class "space-y-4" ]
         [ SectionHeader.view
-            { title = "Vaakasuuntainen (horizontal)"
+            { title = "Vaakasuuntainen"
             , description = Just "Neljä minihahmon päätä vierekkäin. Vaakaversio tekstillä sopii esitteisiin ja nettisivuille."
             }
         , Html.div [ Attr.class "grid grid-cols-1 sm:grid-cols-2 gap-4" ]
@@ -222,8 +222,8 @@ viewVaritSection =
                 [ Html.text "colors.jsonld" ]
             ]
         , viewBrandColors
-        , viewSkinTones
-        , viewRainbowColors
+        -- , viewSkinTones
+        -- , viewRainbowColors
         , viewSemanticColors
         ]
 
@@ -444,15 +444,15 @@ viewWeightSpecimens =
                             [ Html.text "Nopea ruskea kettu hyppää laiskan koiran yli" ]
                         ]
                 )
-                [ ( 100, "Thin" )
-                , ( 200, "ExtraLight" )
-                , ( 300, "Light" )
-                , ( 400, "Regular" )
-                , ( 500, "Medium" )
-                , ( 600, "SemiBold" )
-                , ( 700, "Bold" )
-                , ( 800, "ExtraBold" )
-                , ( 900, "Black" )
+                [ ( 100, "Ohut" )
+                , ( 200, "Erittäin ohut" )
+                , ( 300, "Kevyt" )
+                , ( 400, "Normaali" )
+                , ( 500, "Keskipaksu" )
+                , ( 600, "Puolilihava" )
+                , ( 700, "Lihava" )
+                , ( 800, "Erittäin lihava" )
+                , ( 900, "Musta" )
                 ]
             )
         ]
