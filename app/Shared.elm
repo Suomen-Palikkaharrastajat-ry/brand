@@ -110,12 +110,20 @@ viewNavbar model toMsg =
                     [ Attr.href "/"
                     , Attr.class "flex-shrink-0 mr-auto"
                     ]
-                    [ Html.img
-                        [ Attr.src "/logo/horizontal/svg/horizontal.svg"
-                        , Attr.alt "Suomen Palikkaharrastajat ry"
-                        , Attr.class "h-10 sm:h-14"
-                        ]
+                    [ Html.node "picture"
                         []
+                        [ Html.node "source"
+                            [ Attr.attribute "media" "(min-width: 640px)"
+                            , Attr.attribute "srcset" "/logo/horizontal/svg/horizontal-full-dark.svg"
+                            ]
+                            []
+                        , Html.img
+                            [ Attr.src "/logo/horizontal/svg/horizontal.svg"
+                            , Attr.alt "Suomen Palikkaharrastajat ry"
+                            , Attr.class "h-10 sm:h-14"
+                            ]
+                            []
+                        ]
                     ]
                 , Html.button
                     [ Attr.class "sm:hidden text-white p-2 ml-2 rounded focus:outline-none focus:ring-2 focus:ring-brand-yellow"
@@ -142,8 +150,9 @@ viewNavbar model toMsg =
                 ]
             , if model.menuOpen then
                 Html.ul
-                    [ Attr.class "sm:hidden flex flex-col gap-1 list-none m-0 p-0 pb-3" ]
-                    [ navLink "/komponentit" "Komponentit"
+                    [ Attr.class "sm:hidden flex flex-col items-end gap-1 list-none m-0 p-0 pb-3" ]
+                    [ navLink "/" "Logot, värit ja fontit"
+                    , navLink "/komponentit" "Komponentit"
                     , navLink "/responsiivisuus" "Responsiivisuus"
                     , navLink "/saavutettavuus" "Saavutettavuus"
                     ]
