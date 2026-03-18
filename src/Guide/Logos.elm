@@ -19,7 +19,7 @@ type alias LogoVariant =
 squareVariants : List LogoVariant
 squareVariants =
     [ { id = "square-basic"
-      , description = "Basic / neutral expression"
+      , description = "Neutraali ilme"
       , theme = "light"
       , animated = False
       , withText = False
@@ -31,7 +31,7 @@ squareVariants =
       , gifUrl = Nothing
       }
     , { id = "square-smile"
-      , description = "Smiling expression"
+      , description = "Hymyilevä ilme"
       , theme = "light"
       , animated = False
       , withText = False
@@ -43,7 +43,7 @@ squareVariants =
       , gifUrl = Nothing
       }
     , { id = "square-blink"
-      , description = "Blinking expression"
+      , description = "Silmää iskevä ilme"
       , theme = "light"
       , animated = False
       , withText = False
@@ -55,7 +55,7 @@ squareVariants =
       , gifUrl = Nothing
       }
     , { id = "square-laugh"
-      , description = "Laughing expression"
+      , description = "Naurava ilme"
       , theme = "light"
       , animated = False
       , withText = False
@@ -67,7 +67,7 @@ squareVariants =
       , gifUrl = Nothing
       }
     , { id = "square-animated"
-      , description = "Animated logo cycling through all four expressions"
+      , description = "Animoitu logo, käy läpi kaikki neljä ilmettä"
       , theme = "light"
       , animated = True
       , withText = False
@@ -137,7 +137,7 @@ squareFullVariants =
 horizontalVariants : List LogoVariant
 horizontalVariants =
     [ { id = "horizontal"
-      , description = "Logo mark only, light theme"
+      , description = "Pelkkä logo, vaalea teema"
       , theme = "light"
       , animated = False
       , withText = False
@@ -149,7 +149,7 @@ horizontalVariants =
       , gifUrl = Nothing
       }
     , { id = "horizontal-full"
-      , description = "Logo mark with association name subtitle, light theme"
+      , description = "Logo yhdistyksen nimellä, vaalea teema"
       , theme = "light"
       , animated = False
       , withText = True
@@ -161,7 +161,7 @@ horizontalVariants =
       , gifUrl = Nothing
       }
     , { id = "horizontal-full-bold"
-      , description = "Logo mark with subtitle, lihavoitu, light theme"
+      , description = "Logo nimitekstillä, lihavoitu, vaalea teema"
       , theme = "light"
       , animated = False
       , withText = True
@@ -173,7 +173,7 @@ horizontalVariants =
       , gifUrl = Nothing
       }
     , { id = "horizontal-full-dark"
-      , description = "Logo mark with subtitle, dark theme"
+      , description = "Logo nimitekstillä, tumma teema"
       , theme = "dark"
       , animated = False
       , withText = True
@@ -185,7 +185,7 @@ horizontalVariants =
       , gifUrl = Nothing
       }
     , { id = "horizontal-full-dark-bold"
-      , description = "Logo mark with subtitle, lihavoitu, dark theme"
+      , description = "Logo nimitekstillä, lihavoitu, tumma teema"
       , theme = "dark"
       , animated = False
       , withText = True
@@ -197,7 +197,7 @@ horizontalVariants =
       , gifUrl = Nothing
       }
     , { id = "horizontal-animated"
-      , description = "Animated logo mark cycling skin-tone order"
+      , description = "Animoitu logo"
       , theme = "light"
       , animated = True
       , withText = False
@@ -209,7 +209,7 @@ horizontalVariants =
       , gifUrl = Just "/logo/horizontal/png/horizontal-animated.gif"
       }
     , { id = "horizontal-full-animated"
-      , description = "Animated logo with subtitle cycling skin-tone order, light theme"
+      , description = "Animoitu logo nimitekstillä, vaalea teema"
       , theme = "light"
       , animated = True
       , withText = True
@@ -221,7 +221,7 @@ horizontalVariants =
       , gifUrl = Just "/logo/horizontal/png/horizontal-full-animated.gif"
       }
     , { id = "horizontal-full-bold-animated"
-      , description = "Animated logo with subtitle, lihavoitu, cycling skin-tone order, light theme"
+      , description = "Animoitu logo nimitekstillä, lihavoitu, vaalea teema"
       , theme = "light"
       , animated = True
       , withText = True
@@ -233,7 +233,7 @@ horizontalVariants =
       , gifUrl = Just "/logo/horizontal/png/horizontal-full-bold-animated.gif"
       }
     , { id = "horizontal-full-dark-animated"
-      , description = "Animated logo with subtitle cycling skin-tone order, dark theme"
+      , description = "Animoitu logo nimitekstillä, tumma teema"
       , theme = "dark"
       , animated = True
       , withText = True
@@ -245,7 +245,7 @@ horizontalVariants =
       , gifUrl = Just "/logo/horizontal/png/horizontal-full-dark-animated.gif"
       }
     , { id = "horizontal-full-dark-bold-animated"
-      , description = "Animated logo with subtitle, lihavoitu, cycling skin-tone order, dark theme"
+      , description = "Animoitu logo nimitekstillä, lihavoitu, tumma teema"
       , theme = "dark"
       , animated = True
       , withText = True
