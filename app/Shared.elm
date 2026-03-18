@@ -1,11 +1,13 @@
 module Shared exposing (Data, Model, Msg(..), SharedMsg(..), template)
 
 import BackendTask exposing (BackendTask)
+import Browser.Events
 import Effect exposing (Effect)
 import FatalError exposing (FatalError)
 import Html exposing (Html)
 import Html.Attributes as Attr
 import Html.Events
+import Json.Decode
 import Pages.Flags
 import Pages.PageUrl exposing (PageUrl)
 import Route exposing (Route)
@@ -32,6 +34,7 @@ type alias Data =
 type SharedMsg
     = NoOp
     | ToggleMenu
+    | CloseMenu
 
 
 type Msg
@@ -65,13 +68,30 @@ update msg model =
         SharedMsg ToggleMenu ->
             ( { model | menuOpen = not model.menuOpen }, Effect.none )
 
+        SharedMsg CloseMenu ->
+            ( { model | menuOpen = False }, Effect.none )
+
         SharedMsg _ ->
             ( model, Effect.none )
 
 
 subscriptions : UrlPath -> Model -> Sub Msg
-subscriptions _ _ =
-    Sub.none
+subscriptions _ model =
+    if model.menuOpen then
+        Browser.Events.onKeyDown
+            (Json.Decode.field "key" Json.Decode.string
+                |> Json.Decode.andThen
+                    (\key ->
+                        if key == "Escape" then
+                            Json.Decode.succeed (SharedMsg CloseMenu)
+
+                        else
+                            Json.Decode.fail "not escape"
+                    )
+            )
+
+    else
+        Sub.none
 
 
 data : BackendTask FatalError Data
@@ -108,7 +128,8 @@ viewNavbar model toMsg =
                 [ Attr.class "flex items-center py-2 sm:py-3" ]
                 [ Html.a
                     [ Attr.href "/"
-                    , Attr.class "flex-shrink-0 mr-auto"
+                    , Attr.class "flex-shrink-0 mr-auto focus:outline-none focus:ring-2 focus:ring-brand-yellow rounded"
+                    , Html.Events.onClick (toMsg CloseMenu)
                     ]
                     [ Html.node "picture"
                         []
@@ -150,9 +171,9 @@ viewNavbar model toMsg =
                     ]
                 , Html.ul
                     [ Attr.class "hidden sm:flex flex-wrap gap-0.5 list-none m-0 p-0" ]
-                    [ navLink "/komponentit" "Komponentit"
-                    , navLink "/responsiivisuus" "Responsiivisuus"
-                    , navLink "/saavutettavuus" "Saavutettavuus"
+                    [ desktopNavLink "/komponentit" "Komponentit"
+                    , desktopNavLink "/responsiivisuus" "Responsiivisuus"
+                    , desktopNavLink "/saavutettavuus" "Saavutettavuus"
                     ]
                 ]
             , if model.menuOpen then
@@ -160,10 +181,10 @@ viewNavbar model toMsg =
                     [ Attr.id "mobile-nav"
                     , Attr.class "sm:hidden flex flex-col items-end gap-1 list-none m-0 p-0 pb-3"
                     ]
-                    [ navLink "/" "Logot, värit ja fontit"
-                    , navLink "/komponentit" "Komponentit"
-                    , navLink "/responsiivisuus" "Responsiivisuus"
-                    , navLink "/saavutettavuus" "Saavutettavuus"
+                    [ mobileNavLink "/" "Logot, värit ja fontit" toMsg
+                    , mobileNavLink "/komponentit" "Komponentit" toMsg
+                    , mobileNavLink "/responsiivisuus" "Responsiivisuus" toMsg
+                    , mobileNavLink "/saavutettavuus" "Saavutettavuus" toMsg
                     ]
 
               else
@@ -172,12 +193,24 @@ viewNavbar model toMsg =
         ]
 
 
-navLink : String -> String -> Html msg
-navLink href label =
+desktopNavLink : String -> String -> Html msg
+desktopNavLink href label =
     Html.li []
         [ Html.a
             [ Attr.href href
-            , Attr.class "text-white/80 hover:text-brand-yellow font-medium px-2 sm:px-3 py-1 rounded transition-colors text-sm cursor-pointer"
+            , Attr.class "text-white/80 hover:text-brand-yellow font-medium px-2 sm:px-3 py-1 rounded transition-colors text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-yellow"
+            ]
+            [ Html.text label ]
+        ]
+
+
+mobileNavLink : String -> String -> (SharedMsg -> msg) -> Html msg
+mobileNavLink href label toMsg =
+    Html.li []
+        [ Html.a
+            [ Attr.href href
+            , Attr.class "block text-white/90 hover:text-white hover:underline font-medium px-3 py-2 rounded transition-colors text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-yellow"
+            , Html.Events.onClick (toMsg CloseMenu)
             ]
             [ Html.text label ]
         ]
