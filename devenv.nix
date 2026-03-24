@@ -2,32 +2,18 @@
 let
   hsPkgs = pkgs.haskell.packages.ghc96;
 
-  # ghcWithPackages bundles all project deps into a single consolidated
-  # package-db, giving ONE bin-dir entry in PATH instead of hundreds of
-  # individual Haskell derivations.  The old logoDrv.nativeBuildInputs
-  # approach pulled in HLS and all its transitive deps as separate entries,
-  # blowing up PATH past Linux's per-string MAX_ARG_STRLEN limit and causing
-  # posix_spawnp to fail with E2BIG when cabal tried to configure the package.
-  ghcWithDeps = hsPkgs.ghcWithPackages (ps: with ps; [
-    # library deps (logo.cabal: library build-depends)
-    text bytestring base64-bytestring
-    directory filepath process xml-conduit
-    aeson aeson-pretty JuicyPixels containers vector
-    # test deps (logo.cabal: test-suite build-depends)
-    tasty tasty-hunit tasty-quickcheck temporary
-  ]);
-
   elm-pages = pkgs.callPackage ./elm-pages.nix {
     lamdera = pkgs.elmPackages.lamdera;
   };
 in {
   profiles.shell.module = {
     languages.elm.enable = true;
+    languages.haskell.enable = true;
+    languages.haskell.package = pkgs.haskell.packages.ghc96.ghc;
+
+    dotenv.enable = true;
 
     packages = [
-      ghcWithDeps
-      hsPkgs.cabal-install
-      hsPkgs.haskell-language-server
       hsPkgs.hlint
       hsPkgs.fourmolu
       # External raster/image tools (called via System.Process)
@@ -54,11 +40,17 @@ in {
     ];
 
     enterShell = ''
-      git --version
-      cabal --version
-      elm-pages --version
+      echo ""
+      echo "── logo dev environment ─────────────────────────────"
+      echo "  GHC:       $(ghc --version)"
+      echo "  Cabal:     $(cabal --version | head -1)"
+      echo "  Elm:       $(elm --version)"
+      echo "  elm-pages: $(elm-pages --version)"
+      echo "  rsvg:      $(rsvg-convert --version | head -1)"
+      echo ""
+      echo "  make dev      — pipeline + hot-reload site"
+      echo "  make render   — regenerate all logo assets"
+      echo ""
     '';
   };
-
-  cachix.pull = [ "palikkaharrastajat" ];
 }

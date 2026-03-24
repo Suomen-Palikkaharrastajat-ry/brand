@@ -485,7 +485,11 @@ test: ## Run Haskell test suite and hlint
 check: ## Run hlint static analysis
 	hlint src tests
 
-format: ## Format hand-written Elm source files with elm-format
+cabal-check: ## Check the package for common errors
+	$(CABAL) check
+
+format: ## Auto-format Haskell and Elm source files
+	find src app -name '*.hs' | xargs fourmolu --mode inplace
 	elm-format --yes app/ src/Component/ src/Brand/Colors.elm
 
 # ── Watching ──────────────────────────────────────────────────────────────────

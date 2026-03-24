@@ -1,4 +1,9 @@
 [formatter.fourmolu]
 command = "fourmolu"
-args = ["--mode", "inplace"]
-includes = ["**/*.hs"]
+options = ["--mode", "inplace"]
+includes = ["src/**/*.hs", "app/**/*.hs", "tests/**/*.hs"]
+
+[formatter.elm-format]
+command = "elm-format"
+options = ["--yes"]
+includes = ["app/**/*.elm", "src/**/*.elm"]

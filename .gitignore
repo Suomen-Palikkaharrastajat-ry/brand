@@ -1,11 +1,12 @@
-# ----- OS / Editor -----
-.DS_Store
-Thumbs.db
-.vscode/
-.idea/
-*.swp
+# --- Environment / local ---
+.devcontainer.json
+.devenv*
+.direnv
+devenv.local.nix
+devenv.local.yaml
+.env
 
-# ----- Languages / Runtimes -----
+# --- Dependencies ---
 # Python
 __pycache__/
 *.py[cod]
@@ -17,19 +18,11 @@ node_modules/
 elm-stuff/
 .elm-pages/
 
-# ----- Haskell / Build -----
+# --- Haskell build artifacts ---
 dist-newstyle/
-.stack-work/
 dist/
 
-# ----- Dev environment -----
-.devcontainer.json
-.devenv*
-.direnv
-devenv.local.nix
-devenv.local.yaml
-
-# ----- Generated / build artifacts (do NOT commit) -----
+# --- Generated / build artifacts (do NOT commit) ---
 # Outputs from the logo pipeline and site build
 src/Brand/
 logo/
@@ -42,11 +35,18 @@ public/fonts/
 public/design-guide/
 public/design-guide.json
 
-# ----- Misc / Logs -----
-.claude
+# --- Editor & OS ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Misc / local ---
+.claude/
 job-logs.txt
 
-# ----- Project notes -----
-# Keep TODO files out of the repo
+# --- Project notes ---
 TODO.md
 TODO*
