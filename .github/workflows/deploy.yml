@@ -113,7 +113,7 @@ jobs:
       # ── Build ─────────────────────────────────────────────────────────────────
 
       - name: Run tests
-        run: make test
+        run: cabal test
 
       - name: Run Haskell pipeline and copy assets
         run: make assets-from-blay
