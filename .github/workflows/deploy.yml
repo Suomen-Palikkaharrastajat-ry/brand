@@ -29,8 +29,8 @@ jobs:
         run: |
           curl -fsSL -o gifski.tar.xz \
             https://github.com/ImageOptim/gifski/releases/download/1.34.0/gifski-1.34.0.tar.xz
-          tar -xf gifski.tar.xz
-          sudo install -m755 gifski /usr/local/bin/gifski
+          tar -xf gifski.tar.xz linux/gifski
+          sudo install -m755 linux/gifski /usr/local/bin/gifski
 
       - name: Install fonttools
         run: pip install fonttools
