@@ -49,7 +49,7 @@ exportPngSquareTrimmed svgIn pngOut sizePx = do
     -- Step 2: read back the trimmed dimensions so we can pad to a square
     -- with a concrete geometry string.  Using %w/%h avoids FX expressions
     -- that are not supported by ImageMagick 6's -extent argument.
-    dimStr <- readProcess "magick" ["identify", "-format", "%w %h", tmpTrim] ""
+    dimStr <- readProcess "identify" ["-format", "%w %h", tmpTrim] ""
     let [w, h] = map (read :: String -> Int) (words dimStr)
         dim    = show (max w h)
     -- Step 3: pad to square and scale to final size.
