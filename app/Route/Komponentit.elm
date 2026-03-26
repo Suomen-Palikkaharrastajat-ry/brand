@@ -11,6 +11,7 @@ import Component.Card as Card
 import Component.CloseButton as CloseButton
 import Component.Collapse as Collapse
 import Component.ColorSwatch as ColorSwatch
+import Component.SectionHeader as SectionHeader
 import Component.Dialog as Dialog
 import Component.Dropdown as Dropdown
 import Component.ListGroup as ListGroup
@@ -211,6 +212,7 @@ view _ _ model =
                 , viewToast model
                 , viewToggle model
                 , viewTooltip model
+                , viewToolbar
                 ]
             ]
         ]
@@ -1323,3 +1325,120 @@ jsonLdSnippet slug name_ elmModule description props deps =
         ++ "  \"tokenDeps\": "
         ++ depsStr
         ++ "\n}"
+
+
+
+-- ── Toolbar ───────────────────────────────────────────────────────────────────
+
+
+viewToolbar : Html (PagesMsg Msg)
+viewToolbar =
+    Html.section [ Attr.id "toolbar", Attr.class "scroll-mt-28 space-y-8 sm:space-y-10" ]
+        [ Html.h2 [ Attr.class "text-xl sm:text-2xl font-bold text-brand" ] [ Html.text "Toolbar-vaihtoehdot" ]
+        , Html.p [ Attr.class "text-sm text-gray-600" ]
+            [ Html.text "Kaksi virallista toolbar-mallia. Tumma toolbar on suositeltava uusille projekteille." ]
+        , viewDarkToolbar
+        , viewLightToolbar
+        ]
+
+
+viewDarkToolbar : Html (PagesMsg Msg)
+viewDarkToolbar =
+    Html.div [ Attr.class "space-y-4" ]
+        [ SectionHeader.viewSub
+            { title = "1. Tumma toolbar — neliölogo (suositus)"
+            , description = Just "Referenssitoteutus: planet. Korkeus h-14, bg-brand, sticky. Käytä uusissa projekteissa."
+            }
+        , Html.div [ Attr.class "rounded-xl overflow-hidden border border-gray-200" ]
+            [ Html.div [ Attr.class "flex items-center justify-between px-4 h-14 bg-brand" ]
+                [ Html.div [ Attr.class "flex items-center gap-2" ]
+                    [ Html.img
+                        [ Attr.src "/logo/square/square-smile.svg"
+                        , Attr.alt ""
+                        , Attr.attribute "aria-hidden" "true"
+                        , Attr.class "h-8 w-8"
+                        ]
+                        []
+                    , Html.span [ Attr.class "text-lg font-bold text-white" ] [ Html.text "Sivuston nimi" ]
+                    ]
+                , Html.div [ Attr.class "flex items-center gap-4" ]
+                    [ Html.span [ Attr.class "text-white/80 hover:text-white font-medium text-sm cursor-pointer" ] [ Html.text "Etusivu" ]
+                    , Html.span [ Attr.class "text-white/80 hover:text-white font-medium text-sm cursor-pointer" ] [ Html.text "Tapahtumat" ]
+                    ]
+                ]
+            , Html.div [ Attr.class "bg-white p-4 text-sm text-gray-500" ]
+                [ Html.text "↑ Esikatselu — h-14, bg-brand (#05131D), neliölogo 32×32 px, linkit text-white/80" ]
+            ]
+        , Html.div [ Attr.class "space-y-2" ]
+            [ Html.p [ Attr.class "text-xs font-semibold text-gray-500 uppercase tracking-wider" ] [ Html.text "HTML" ]
+            , Html.pre [ Attr.class "bg-gray-900 text-gray-100 rounded-lg p-4 text-xs leading-relaxed overflow-x-auto" ]
+                [ Html.code []
+                    [ Html.text """<nav class="bg-brand border-b border-brand sticky top-0 z-50">
+  <div class="flex items-center justify-between px-4 h-14">
+    <a href="/" class="flex items-center gap-2">
+      <img src="/logo/square/square-smile.svg" aria-hidden="true" class="h-8 w-8">
+      <span class="text-lg font-bold text-white">Sivuston nimi</span>
+    </a>
+    <div class="hidden md:flex items-center gap-6">
+      <a href="/" class="text-white/80 hover:text-white font-medium text-sm">Etusivu</a>
+      <a href="/tapahtumat" class="text-white/80 hover:text-white font-medium text-sm">Tapahtumat</a>
+    </div>
+    <!-- hamburger (md:hidden) -->
+  </div>
+</nav>""" ]
+                ]
+            ]
+        ]
+
+
+viewLightToolbar : Html (PagesMsg Msg)
+viewLightToolbar =
+    Html.div [ Attr.class "space-y-4" ]
+        [ SectionHeader.viewSub
+            { title = "2. Vaakalogo toolbar (vaihtoehto)"
+            , description = Just "Vaihtoehto, jos projekti tarvitsee vaakalogon. Myös bg-brand, h-14."
+            }
+        , Html.div [ Attr.class "rounded-xl overflow-hidden border border-gray-200" ]
+            [ Html.div [ Attr.class "flex items-center justify-between px-4 h-14 bg-brand" ]
+                [ Html.node "picture"
+                    []
+                    [ Html.node "source"
+                        [ Attr.attribute "type" "image/svg+xml"
+                        , Attr.attribute "srcset" "/logo/horizontal/svg/horizontal-full-dark.svg"
+                        ]
+                        []
+                    , Html.img
+                        [ Attr.src "/logo/horizontal/svg/horizontal.svg"
+                        , Attr.alt "Suomen Palikkaharrastajat ry"
+                        , Attr.class "h-10"
+                        ]
+                        []
+                    ]
+                , Html.div [ Attr.class "flex items-center gap-4" ]
+                    [ Html.span [ Attr.class "text-white/80 font-medium text-sm cursor-pointer" ] [ Html.text "Etusivu" ]
+                    ]
+                ]
+            , Html.div [ Attr.class "bg-white p-4 text-sm text-gray-500" ]
+                [ Html.text "↑ Esikatselu — h-14, bg-brand, vaakalogo h-10, picture-elementti (SVG + PNG)" ]
+            ]
+        , Html.div [ Attr.class "space-y-2" ]
+            [ Html.p [ Attr.class "text-xs font-semibold text-gray-500 uppercase tracking-wider" ] [ Html.text "HTML" ]
+            , Html.pre [ Attr.class "bg-gray-900 text-gray-100 rounded-lg p-4 text-xs leading-relaxed overflow-x-auto" ]
+                [ Html.code []
+                    [ Html.text """<nav class="bg-brand border-b border-brand sticky top-0 z-50">
+  <div class="flex items-center justify-between px-4 h-14">
+    <a href="/" class="shrink-0">
+      <picture>
+        <source type="image/svg+xml" srcset="/logo/horizontal/svg/horizontal-full-dark.svg">
+        <img src="/logo/horizontal/png/horizontal-full.png"
+             alt="Suomen Palikkaharrastajat ry" class="h-10 w-auto">
+      </picture>
+    </a>
+    <div class="hidden md:flex items-center gap-6">
+      <a href="/" class="text-white/80 hover:text-white font-medium text-sm">Etusivu</a>
+    </div>
+  </div>
+</nav>""" ]
+                ]
+            ]
+        ]

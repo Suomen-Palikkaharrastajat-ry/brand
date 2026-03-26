@@ -4,7 +4,9 @@ import BackendTask exposing (BackendTask)
 import Browser.Events
 import Effect exposing (Effect)
 import FatalError exposing (FatalError)
+import FeatherIcons
 import Html exposing (Html)
+import Ports
 import Html.Attributes as Attr
 import Html.Events
 import Json.Decode
@@ -66,7 +68,11 @@ update : Msg -> Model -> ( Model, Effect msg )
 update msg model =
     case msg of
         SharedMsg ToggleMenu ->
-            ( { model | menuOpen = not model.menuOpen }, Effect.none )
+            if model.menuOpen then
+                ( { model | menuOpen = False }, Effect.none )
+
+            else
+                ( { model | menuOpen = True }, Effect.fromCmd (Ports.focusMobileNav ()) )
 
         SharedMsg CloseMenu ->
             ( { model | menuOpen = False }, Effect.none )
@@ -113,6 +119,8 @@ view _ page model toMsg pageView =
             [ viewNavbar model (toMsg << SharedMsg)
             , Html.main_ [ Attr.class "flex-1" ] pageView.body
             , viewFooter
+            , viewMobileOverlay model (toMsg << SharedMsg)
+            , viewMobileDrawer page.path model (toMsg << SharedMsg)
             ]
         ]
     }
@@ -165,32 +173,20 @@ viewNavbar model toMsg =
                         )
                     , Attr.attribute "aria-controls" "mobile-nav"
                     ]
-                    [ Html.span [ Attr.class "block w-6 h-0.5 bg-white mb-1.5" ] []
-                    , Html.span [ Attr.class "block w-6 h-0.5 bg-white mb-1.5" ] []
-                    , Html.span [ Attr.class "block w-6 h-0.5 bg-white" ] []
+                    [ if model.menuOpen then
+                        FeatherIcons.x |> FeatherIcons.withSize 24 |> FeatherIcons.toHtml []
+
+                      else
+                        FeatherIcons.menu |> FeatherIcons.withSize 24 |> FeatherIcons.toHtml []
                     ]
                 , Html.ul
                     [ Attr.class "hidden sm:flex flex-wrap gap-0.5 list-none m-0 p-0" ]
-                    [ desktopNavLink "/komponentit" "Komponentit"
+                    [ desktopNavLink "/typografia" "Typografia"
+                    , desktopNavLink "/komponentit" "Komponentit"
                     , desktopNavLink "/responsiivisuus" "Responsiivisuus"
                     , desktopNavLink "/saavutettavuus" "Saavutettavuus"
-                    , desktopNavLink "/kayttoohje" "Käyttöohje"
                     ]
                 ]
-            , if model.menuOpen then
-                Html.ul
-                    [ Attr.id "mobile-nav"
-                    , Attr.class "sm:hidden flex flex-col items-end gap-1 list-none m-0 p-0 pb-3"
-                    ]
-                    [ mobileNavLink "/" "Logot, värit ja fontit" toMsg
-                    , mobileNavLink "/komponentit" "Komponentit" toMsg
-                    , mobileNavLink "/responsiivisuus" "Responsiivisuus" toMsg
-                    , mobileNavLink "/saavutettavuus" "Saavutettavuus" toMsg
-                    , mobileNavLink "/kayttoohje" "Käyttöohje" toMsg
-                    ]
-
-              else
-                Html.text ""
             ]
         ]
 
@@ -206,36 +202,153 @@ desktopNavLink href label =
         ]
 
 
-mobileNavLink : String -> String -> (SharedMsg -> msg) -> Html msg
-mobileNavLink href label toMsg =
-    Html.li []
-        [ Html.a
-            [ Attr.href href
-            , Attr.class "block text-white/90 hover:text-white hover:underline font-medium px-3 py-2 rounded transition-colors text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-yellow"
+viewMobileOverlay : Model -> (SharedMsg -> msg) -> Html msg
+viewMobileOverlay model toMsg =
+    if model.menuOpen then
+        Html.div
+            [ Attr.class "sm:hidden fixed inset-0 z-40"
             , Html.Events.onClick (toMsg CloseMenu)
             ]
-            [ Html.text label ]
+            []
+
+    else
+        Html.text ""
+
+
+viewMobileDrawer : UrlPath -> Model -> (SharedMsg -> msg) -> Html msg
+viewMobileDrawer currentPath model toMsg =
+    let
+        isActive href =
+            "/" ++ UrlPath.toRelative currentPath == href
+    in
+    Html.div
+        [ Attr.class
+            ("sm:hidden fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-50 "
+                ++ "transform overflow-y-auto transition-transform duration-300 ease-in-out motion-reduce:transition-none "
+                ++ (if model.menuOpen then
+                        "translate-x-0"
+
+                    else
+                        "-translate-x-full"
+                   )
+            )
+        , Attr.id "mobile-nav"
+        ]
+        [ Html.button
+            [ Html.Events.onClick (toMsg CloseMenu)
+            , Attr.class "sr-only"
+            , Attr.attribute "aria-label" "Sulje valikko"
+            ]
+            [ Html.text "Sulje valikko" ]
+        , Html.nav [ Attr.class "p-4" ]
+            [ Html.ul [ Attr.class "flex flex-col gap-1 list-none m-0 p-0" ]
+                [ drawerNavLink (isActive "/") "/" "Logot ja värit" toMsg
+                , drawerNavLink (isActive "/typografia") "/typografia" "Typografia" toMsg
+                , drawerNavLink (isActive "/komponentit") "/komponentit" "Komponentit" toMsg
+                , drawerNavLink (isActive "/responsiivisuus") "/responsiivisuus" "Responsiivisuus" toMsg
+                , drawerNavLink (isActive "/saavutettavuus") "/saavutettavuus" "Saavutettavuus" toMsg
+                ]
+            ]
+        ]
+
+
+drawerNavLink : Bool -> String -> String -> (SharedMsg -> msg) -> Html msg
+drawerNavLink isActive href label toMsg =
+    Html.li []
+        [ Html.a
+            ([ Attr.href href
+             , Attr.class "flex items-center gap-2 text-brand font-medium px-3 py-2 rounded hover:bg-gray-100 transition-colors text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-yellow"
+             , Html.Events.onClick (toMsg CloseMenu)
+             ]
+                ++ (if isActive then
+                        [ Attr.id "mobile-nav-active" ]
+
+                    else
+                        []
+                   )
+            )
+            [ Html.span
+                [ Attr.class
+                    (if isActive then
+                        "w-2 h-2 rounded-full bg-brand-yellow flex-shrink-0"
+
+                     else
+                        "w-2 h-2 rounded-full flex-shrink-0 invisible"
+                    )
+                ]
+                []
+            , Html.text label
+            ]
         ]
 
 
 viewFooter : Html msg
 viewFooter =
     Html.footer
-        [ Attr.class "bg-brand text-white mt-16 py-8 px-4" ]
+        [ Attr.class "bg-brand text-white mt-16 py-12 px-4" ]
         [ Html.div
-            [ Attr.class "max-w-5xl mx-auto text-center space-y-2" ]
-            [ Html.p [ Attr.class "text-sm text-white/80" ]
-                [ Html.text "© 2026 Suomen Palikkaharrastajat ry" ]
-            , Html.p [ Attr.class "text-xs text-white/50" ]
-                [ Html.text "Fontit: Outfit (SIL Open Font License) · Logot: CC BY 4.0" ]
-            , Html.p [ Attr.class "text-xs text-white/50" ]
-                [ Html.text "LEGO® on LEGO Groupin rekisteröity tavaramerkki" ]
-            , Html.p [ Attr.class "text-xs text-white/50" ]
-                [ Html.a
-                    [ Attr.href "/design-guide/index.jsonld"
-                    , Attr.class "underline hover:text-white/80 transition-colors"
+            [ Attr.class "max-w-5xl mx-auto" ]
+            [ Html.div
+                [ Attr.class "grid grid-cols-1 sm:grid-cols-2 gap-8" ]
+                [ -- Col 1: logo + org name & legal side by side
+                  Html.div [ Attr.class "flex items-start gap-4" ]
+                    [ Html.img
+                        [ Attr.src "/logo/square/svg/square-smile.svg"
+                        , Attr.alt ""
+                        , Attr.attribute "aria-hidden" "true"
+                        , Attr.class "h-25 w-25 flex-shrink-0"
+                        ]
+                        []
+                    , Html.div [ Attr.class "space-y-1" ]
+                        [ Html.p [ Attr.class "font-semibold text-white text-sm" ]
+                            [ Html.a
+                                [ Attr.href "https://palikkaharrastajat.fi"
+                                , Attr.class "text-white/80 hover:text-white transition-colors"
+                                ]
+                                [ Html.text "Suomen Palikkaharrastajat ry" ]
+                            ]
+                        , Html.div [ Attr.class "space-y-1 text-xs text-white/50" ]
+                            [ Html.p [] [ Html.text "© 2026 Suomen Palikkaharrastajat ry" ]
+                            , Html.p [] [ Html.text "Fontit: Outfit (SIL Open Font License) · Logot: CC BY 4.0" ]
+                            , Html.p [] [ Html.text "LEGO® on LEGO Groupin rekisteröity tavaramerkki" ]
+                            , Html.p []
+                                [ Html.a
+                                    [ Attr.href "/design-guide/index.jsonld"
+                                    , Attr.class "underline hover:text-white/80 transition-colors"
+                                    ]
+                                    [ Html.text "design-guide/ (JSON-LD)" ]
+                                ]
+                            ]
+                        ]
                     ]
-                    [ Html.text "design-guide/ (JSON-LD)" ]
+                , -- Col 2: service links
+                  Html.div [ Attr.class "space-y-3 pl-29 sm:pl-0" ]
+                    [ Html.p [ Attr.class "text-xs font-semibold text-white/50 uppercase tracking-wider" ]
+                        [ Html.text "Linkit" ]
+                    , Html.ul [ Attr.class "space-y-2 list-none m-0 p-0" ]
+                        [ Html.li []
+                            [ Html.a
+                                [ Attr.href "https://palikkaharrastajat.fi"
+                                , Attr.class "text-sm text-white/80 hover:text-white underline transition-colors"
+                                ]
+                                [ Html.text "Kotisivut" ]
+                            ]
+                        , Html.li []
+                            [ Html.a
+                                [ Attr.href "https://kalenteri.palikkaharrastajat.fi"
+                                , Attr.class "text-sm text-white/80 hover:text-white underline transition-colors"
+                                ]
+                                [ Html.text "Palikkakalenteri" ]
+                            ]
+                        , Html.li []
+                            [ Html.a
+                                [ Attr.href "https://linkit.palikkaharrastajat.fi"
+                                , Attr.class "text-sm text-white/80 hover:text-white underline transition-colors"
+                                ]
+                                [ Html.text "Palikkalinkit" ]
+                            ]
+                        ]
+                    ]
                 ]
             ]
         ]
