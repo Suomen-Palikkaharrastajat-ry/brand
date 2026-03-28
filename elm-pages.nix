@@ -35,7 +35,8 @@ pkgs.buildNpmPackage {
   #     'let p=(builtins.getFlake "nixpkgs").legacyPackages.x86_64-linux;
   #      in p.callPackage ./nix/elm-pages.nix {lamdera=p.elmPackages.lamdera;}' \
   #     2>&1 | grep "got:"
-  npmDepsHash = "sha256-ljlPBe9aWVgf9Oy/OJsHz2K30AmHO12kkbgIH6CBY7c=";
+  npmDepsFetcherVersion = 2;
+  npmDepsHash = "sha256-aymQBBkcHEjH40/fR/7/dCcclQfZ8j6XovvoafUyiLM=";
 
   # Skip postinstall scripts:
   #   - elm-tooling install  (elm / elm-format come from Nix)
