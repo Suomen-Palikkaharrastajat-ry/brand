@@ -2,6 +2,7 @@ module Shared exposing (Data, Model, Msg(..), SharedMsg(..), template)
 
 import BackendTask exposing (BackendTask)
 import Browser.Events
+import Component.MobileDrawer as MobileDrawer
 import Effect exposing (Effect)
 import FatalError exposing (FatalError)
 import FeatherIcons
@@ -119,7 +120,7 @@ view _ page model toMsg pageView =
             [ viewNavbar model (toMsg << SharedMsg)
             , Html.main_ [ Attr.class "flex-1" ] pageView.body
             , viewFooter
-            , viewMobileOverlay model (toMsg << SharedMsg)
+            , MobileDrawer.viewOverlay { isOpen = model.menuOpen, onClose = toMsg (SharedMsg CloseMenu), breakpoint = MobileDrawer.Sm }
             , viewMobileDrawer page.path model (toMsg << SharedMsg)
             ]
         ]
@@ -202,84 +203,33 @@ desktopNavLink href label =
         ]
 
 
-viewMobileOverlay : Model -> (SharedMsg -> msg) -> Html msg
-viewMobileOverlay model toMsg =
-    if model.menuOpen then
-        Html.div
-            [ Attr.class "sm:hidden fixed inset-0 z-40"
-            , Html.Events.onClick (toMsg CloseMenu)
-            ]
-            []
-
-    else
-        Html.text ""
-
 
 viewMobileDrawer : UrlPath -> Model -> (SharedMsg -> msg) -> Html msg
 viewMobileDrawer currentPath model toMsg =
     let
         isActive href =
             "/" ++ UrlPath.toRelative currentPath == href
+
+        close =
+            toMsg CloseMenu
     in
-    Html.div
-        [ Attr.class
-            ("sm:hidden fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-50 "
-                ++ "transform overflow-y-auto transition-transform duration-300 ease-in-out motion-reduce:transition-none "
-                ++ (if model.menuOpen then
-                        "translate-x-0"
-
-                    else
-                        "-translate-x-full"
-                   )
-            )
-        , Attr.id "mobile-nav"
-        ]
-        [ Html.button
-            [ Html.Events.onClick (toMsg CloseMenu)
-            , Attr.class "sr-only"
-            , Attr.attribute "aria-label" "Sulje valikko"
-            ]
-            [ Html.text "Sulje valikko" ]
-        , Html.nav [ Attr.class "p-4" ]
-            [ Html.ul [ Attr.class "flex flex-col gap-1 list-none m-0 p-0" ]
-                [ drawerNavLink (isActive "/") "/" "Logot ja värit" toMsg
-                , drawerNavLink (isActive "/typografia") "/typografia" "Typografia" toMsg
-                , drawerNavLink (isActive "/komponentit") "/komponentit" "Komponentit" toMsg
-                , drawerNavLink (isActive "/responsiivisuus") "/responsiivisuus" "Responsiivisuus" toMsg
-                , drawerNavLink (isActive "/saavutettavuus") "/saavutettavuus" "Saavutettavuus" toMsg
+    MobileDrawer.view
+        { isOpen = model.menuOpen
+        , id = "mobile-nav"
+        , onClose = close
+        , breakpoint = MobileDrawer.Sm
+        , content =
+            [ Html.nav [ Attr.class "p-4" ]
+                [ Html.ul [ Attr.class "flex flex-col gap-1 list-none m-0 p-0" ]
+                    [ MobileDrawer.viewNavLink { href = "/", label = "Logot ja värit", isActive = isActive "/", onClose = close }
+                    , MobileDrawer.viewNavLink { href = "/typografia", label = "Typografia", isActive = isActive "/typografia", onClose = close }
+                    , MobileDrawer.viewNavLink { href = "/komponentit", label = "Komponentit", isActive = isActive "/komponentit", onClose = close }
+                    , MobileDrawer.viewNavLink { href = "/responsiivisuus", label = "Responsiivisuus", isActive = isActive "/responsiivisuus", onClose = close }
+                    , MobileDrawer.viewNavLink { href = "/saavutettavuus", label = "Saavutettavuus", isActive = isActive "/saavutettavuus", onClose = close }
+                    ]
                 ]
             ]
-        ]
-
-
-drawerNavLink : Bool -> String -> String -> (SharedMsg -> msg) -> Html msg
-drawerNavLink isActive href label toMsg =
-    Html.li []
-        [ Html.a
-            ([ Attr.href href
-             , Attr.class "flex items-center gap-2 text-brand font-medium px-3 py-2 rounded hover:bg-gray-100 transition-colors text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-yellow"
-             , Html.Events.onClick (toMsg CloseMenu)
-             ]
-                ++ (if isActive then
-                        [ Attr.id "mobile-nav-active" ]
-
-                    else
-                        []
-                   )
-            )
-            [ Html.span
-                [ Attr.class
-                    (if isActive then
-                        "w-2 h-2 rounded-full bg-brand-yellow flex-shrink-0"
-
-                     else
-                        "w-2 h-2 rounded-full flex-shrink-0 invisible"
-                    )
-                ]
-                []
-            , Html.text label
-            ]
-        ]
+        }
 
 
 viewFooter : Html msg
