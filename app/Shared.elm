@@ -144,7 +144,7 @@ viewNavbar model toMsg =
                         []
                         [ Html.node "source"
                             [ Attr.attribute "media" "(min-width: 640px)"
-                            , Attr.attribute "srcset" "/logo/horizontal/svg/horizontal-full-dark.svg"
+                            , Attr.attribute "srcset" "/logo/horizontal/svg/horizontal-full-dark-bold.svg"
                             ]
                             []
                         , Html.img
@@ -243,7 +243,7 @@ viewFooter =
                 [ -- Col 1: service links + logo
                   Html.div [ Attr.class "flex items-start gap-4" ]
                     [ Html.img
-                        [ Attr.src "/logo/square/svg/square-smile-full-dark.svg"
+                        [ Attr.src "/logo/square/svg/square-smile-full-dark-bold.svg"
                         , Attr.alt ""
                         , Attr.attribute "aria-hidden" "true"
                         , Attr.class "h-35 w-35 flex-shrink-0"
