@@ -37,12 +37,12 @@ viewItem config =
             , Tw.flex_wrap
             , Tw.items_baseline
             , Tw.justify_between
-            , Tw.gap_x (Th.s4)
-            , Tw.gap_y (Th.s2)
+            , Tw.gap_x Th.s4
+            , Tw.gap_y Th.s2
             , Tw.bg_simple Th.white
-            , Tw.px (Th.s6)
-            , Tw.py (Th.s5)
-            , Bp.sm [ Tw.px (Th.s8) ]
+            , Tw.px Th.s6
+            , Tw.py Th.s5
+            , Bp.sm [ Tw.px Th.s8 ]
             ]
         ]
         [ Html.dt

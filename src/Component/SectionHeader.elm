@@ -13,11 +13,11 @@ import TailwindTokens as TC
 -}
 view : { title : String, description : Maybe String } -> Html msg
 view { title, description } =
-    Html.div [ classes [ Tw.mb (Th.s6) ] ]
+    Html.div [ classes [ Tw.mb Th.s6 ] ]
         (Html.h2 [ classes [ Tw.type_h2, Tw.text_simple TC.brand ] ] [ Html.text title ]
             :: (case description of
                     Just desc ->
-                        [ Html.p [ classes [ Tw.mt (Th.s2), Tw.text_color (Th.gray Th.s600) ] ] [ Html.text desc ] ]
+                        [ Html.p [ classes [ Tw.mt Th.s2, Tw.text_color (Th.gray Th.s600) ] ] [ Html.text desc ] ]
 
                     Nothing ->
                         []
@@ -29,11 +29,11 @@ view { title, description } =
 -}
 viewSub : { title : String, description : Maybe String } -> Html msg
 viewSub { title, description } =
-    Html.div [ classes [ Tw.mb (Th.s4) ] ]
+    Html.div [ classes [ Tw.mb Th.s4 ] ]
         (Html.h3 [ classes [ Tw.type_h4, Tw.text_simple TC.brand ] ] [ Html.text title ]
             :: (case description of
                     Just desc ->
-                        [ Html.p [ classes [ Tw.mt (Th.s1), Tw.text_color (Th.gray Th.s600), Tw.text_sm ] ] [ Html.text desc ] ]
+                        [ Html.p [ classes [ Tw.mt Th.s1, Tw.text_color (Th.gray Th.s600), Tw.text_sm ] ] [ Html.text desc ] ]
 
                     Nothing ->
                         []

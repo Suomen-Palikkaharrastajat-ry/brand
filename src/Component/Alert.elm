@@ -32,7 +32,7 @@ view config =
                 (Html.div [ classes [ Tw.flex ] ]
                     [ Html.div [ classes [ Tw.shrink_0, Tw.leading_none ] ]
                         [ icon config.alertType ]
-                    , Html.div [ classes [ Tw.ml (Th.s3) ] ]
+                    , Html.div [ classes [ Tw.ml Th.s3 ] ]
                         (List.filterMap identity
                             [ Maybe.map
                                 (\t ->
@@ -72,7 +72,7 @@ dismissTw onDismiss =
 
 containerTw : AlertType -> List Tw.Tailwind
 containerTw alertType =
-    [ Tw.rounded_lg, Tw.p (Th.s4) ]
+    [ Tw.rounded_lg, Tw.p Th.s4 ]
         ++ (case alertType of
                 Info ->
                     [ Tw.bg_color (Th.blue Th.s50) ]

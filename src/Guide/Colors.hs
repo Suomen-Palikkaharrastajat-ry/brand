@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+
 module Guide.Colors where
 
 import Data.Text (Text)

@@ -75,8 +75,8 @@ viewPreview variant =
             ([ Tw.flex
              , Tw.items_center
              , Tw.justify_center
-             , Tw.p (Th.s6)
-             , Tw.min_h (Th.s44)
+             , Tw.p Th.s6
+             , Tw.min_h Th.s44
              ]
                 ++ bgTw
             )
@@ -88,7 +88,7 @@ viewPreview variant =
             Html.img
                 [ Attr.src previewSrc
                 , Attr.alt variant.description
-                , classes [ Tw.max_w_full, Tw.max_h (Th.s40), Tw.object_contain ]
+                , classes [ Tw.max_w_full, Tw.max_h Th.s40, Tw.object_contain ]
                 ]
                 []
         ]
@@ -97,33 +97,33 @@ viewPreview variant =
 viewInfo : LogoVariant -> Html msg
 viewInfo variant =
     Html.div
-        [ classes [ Tw.p (Th.s4), Tw.bg_color (Th.gray Th.s50), Tw.border_t, Tw.border_color (Th.gray Th.s100) ] ]
-        [ Html.div [ classes [ Tw.mb (Th.s3) ] ]
+        [ classes [ Tw.p Th.s4, Tw.bg_color (Th.gray Th.s50), Tw.border_t, Tw.border_color (Th.gray Th.s100) ] ]
+        [ Html.div [ classes [ Tw.mb Th.s3 ] ]
             [ Html.span [ classes [ Tw.type_body_small, Tw.text_simple TC.brand ] ]
                 [ Html.text variant.description ]
             , if variant.highlight then
                 Html.span
-                    [ classes [ Tw.ml (Th.s2), Tw.inline_block, Tw.bg_simple TC.brandYellow, Tw.text_simple TC.brand, Tw.text_xs, Tw.font_bold, Tw.px (Th.s1_dot_5), Tw.py (Th.s0_dot_5), Tw.rounded ] ]
+                    [ classes [ Tw.ml Th.s2, Tw.inline_block, Tw.bg_simple TC.brandYellow, Tw.text_simple TC.brand, Tw.text_xs, Tw.font_bold, Tw.px Th.s1_dot_5, Tw.py Th.s0_dot_5, Tw.rounded ] ]
                     [ Html.text "Suositeltu" ]
 
               else
                 Html.text ""
             , if variant.animated then
                 Html.span
-                    [ classes [ Tw.ml (Th.s2), Tw.inline_block, Tw.bg_simple TC.brand, Tw.text_simple TC.brandYellow, Tw.text_xs, Tw.font_bold, Tw.px (Th.s1_dot_5), Tw.py (Th.s0_dot_5), Tw.rounded ] ]
+                    [ classes [ Tw.ml Th.s2, Tw.inline_block, Tw.bg_simple TC.brand, Tw.text_simple TC.brandYellow, Tw.text_xs, Tw.font_bold, Tw.px Th.s1_dot_5, Tw.py Th.s0_dot_5, Tw.rounded ] ]
                     [ Html.text "ANI" ]
 
               else
                 Html.text ""
             , if variant.bold then
                 Html.span
-                    [ classes [ Tw.ml (Th.s2), Tw.inline_block, Tw.bg_color (Th.gray Th.s200), Tw.text_color (Th.gray Th.s700), Tw.text_xs, Tw.font_bold, Tw.px (Th.s1_dot_5), Tw.py (Th.s0_dot_5), Tw.rounded ] ]
+                    [ classes [ Tw.ml Th.s2, Tw.inline_block, Tw.bg_color (Th.gray Th.s200), Tw.text_color (Th.gray Th.s700), Tw.text_xs, Tw.font_bold, Tw.px Th.s1_dot_5, Tw.py Th.s0_dot_5, Tw.rounded ] ]
                     [ Html.text "BOLD" ]
 
               else
                 Html.text ""
             ]
-        , Html.div [ classes [ Tw.flex, Tw.flex_wrap, Tw.gap (Th.s2) ] ]
+        , Html.div [ classes [ Tw.flex, Tw.flex_wrap, Tw.gap Th.s2 ] ]
             (List.filterMap identity
                 [ Maybe.map (\u -> DownloadButton.view { label = "SVG", href = u }) variant.svgUrl
                 , Maybe.map (\u -> DownloadButton.view { label = "PNG", href = u }) variant.pngUrl

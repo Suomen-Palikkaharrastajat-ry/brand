@@ -10,12 +10,12 @@ import Effect exposing (Effect)
 import FatalError exposing (FatalError)
 import FeatherIcons
 import Html exposing (Html)
-import Ports
 import Html.Attributes as Attr
 import Html.Events
 import Json.Decode
 import Pages.Flags
 import Pages.PageUrl exposing (PageUrl)
+import Ports
 import Route exposing (Route)
 import SharedTemplate exposing (SharedTemplate)
 import Tailwind as Tw exposing (classes)
@@ -148,9 +148,9 @@ viewNavbar model toMsg =
             ]
         ]
         [ Html.div
-            [ classes [ TwEx.max_w_5xl, Tw.mx_auto, Tw.px (Th.s4) ] ]
+            [ classes [ TwEx.max_w_5xl, Tw.mx_auto, Tw.px Th.s4 ] ]
             [ Html.div
-                [ classes [ Tw.flex, Tw.items_center, Tw.py (Th.s2), Bp.sm [ Tw.py (Th.s3) ] ] ]
+                [ classes [ Tw.flex, Tw.items_center, Tw.py Th.s2, Bp.sm [ Tw.py Th.s3 ] ] ]
                 [ Html.a
                     [ Attr.href "/"
                     , classes [ Tw.shrink_0, Tw.mr_auto, Bp.focus [ Tw.outline_none, Tw.ring_2, TwEx.ring_brand_yellow ], Tw.rounded ]
@@ -166,7 +166,7 @@ viewNavbar model toMsg =
                         , Html.img
                             [ Attr.src "/logo/horizontal/svg/horizontal.svg"
                             , Attr.alt "Suomen Palikkaharrastajat ry"
-                            , classes [ Tw.h (Th.s10), Bp.sm [ Tw.h (Th.s14) ] ]
+                            , classes [ Tw.h Th.s10, Bp.sm [ Tw.h Th.s14 ] ]
                             ]
                             []
                         ]
@@ -175,8 +175,8 @@ viewNavbar model toMsg =
                     [ classes
                         [ Bp.sm [ Tw.hidden ]
                         , Tw.text_simple Th.white
-                        , Tw.p (Th.s2)
-                        , Tw.ml (Th.s2)
+                        , Tw.p Th.s2
+                        , Tw.ml Th.s2
                         , Tw.rounded
                         , Bp.focus [ Tw.outline_none, Tw.ring_2, TwEx.ring_brand_yellow ]
                         , Tw.cursor_pointer
@@ -205,7 +205,7 @@ viewNavbar model toMsg =
                         FeatherIcons.menu |> FeatherIcons.withSize 24 |> FeatherIcons.toHtml []
                     ]
                 , Html.ul
-                    [ classes [ Tw.hidden, Bp.sm [ Tw.flex ], Tw.flex_wrap, Tw.gap (Th.s0_dot_5), Tw.list_none, Tw.m (Th.s0), Tw.p (Th.s0) ] ]
+                    [ classes [ Tw.hidden, Bp.sm [ Tw.flex ], Tw.flex_wrap, Tw.gap Th.s0_dot_5, Tw.list_none, Tw.m Th.s0, Tw.p Th.s0 ] ]
                     [ desktopNavLink "/typografia" "Typografia"
                     , desktopNavLink "/komponentit" "Komponentit"
                     , desktopNavLink "/responsiivisuus" "Responsiivisuus"
@@ -225,9 +225,9 @@ desktopNavLink href label =
                 [ TwEx.text_white_80
                 , Bp.hover [ Tw.text_simple TC.brandYellow ]
                 , Tw.font_medium
-                , Tw.px (Th.s2)
-                , Bp.sm [ Tw.px (Th.s3) ]
-                , Tw.py (Th.s1)
+                , Tw.px Th.s2
+                , Bp.sm [ Tw.px Th.s3 ]
+                , Tw.py Th.s1
                 , Tw.rounded
                 , Tw.transition_colors
                 , Tw.text_sm
@@ -254,8 +254,8 @@ viewMobileDrawer currentPath model toMsg =
         , onClose = close
         , breakpoint = MobileDrawer.Sm
         , content =
-            [ Html.nav [ classes [ Tw.p (Th.s4) ] ]
-                [ Html.ul [ classes [ Tw.flex, Tw.flex_col, Tw.gap (Th.s1), Tw.list_none, Tw.m (Th.s0), Tw.p (Th.s0) ] ]
+            [ Html.nav [ classes [ Tw.p Th.s4 ] ]
+                [ Html.ul [ classes [ Tw.flex, Tw.flex_col, Tw.gap Th.s1, Tw.list_none, Tw.m Th.s0, Tw.p Th.s0 ] ]
                     [ MobileDrawer.viewNavLink { href = "/", label = "Logot ja värit", isActive = isActive "/", onClose = close }
                     , MobileDrawer.viewNavLink { href = "/typografia", label = "Typografia", isActive = isActive "/typografia", onClose = close }
                     , MobileDrawer.viewNavLink { href = "/komponentit", label = "Komponentit", isActive = isActive "/komponentit", onClose = close }
@@ -270,13 +270,13 @@ viewMobileDrawer currentPath model toMsg =
 viewFooter : Html msg
 viewFooter =
     Html.footer
-        [ classes [ Tw.bg_simple TC.brand, Tw.text_simple Th.white, Tw.mt (Th.s16), Tw.py (Th.s12), Tw.px (Th.s4) ] ]
+        [ classes [ Tw.bg_simple TC.brand, Tw.text_simple Th.white, Tw.mt Th.s16, Tw.py Th.s12, Tw.px Th.s4 ] ]
         [ Html.div
             [ classes [ TwEx.max_w_5xl, Tw.mx_auto ] ]
             [ Html.div
-                [ classes [ Tw.grid, Tw.grid_cols_1, Bp.sm [ TwEx.grid_cols_auto_1fr, Tw.items_end ], Tw.gap (Th.s8) ] ]
+                [ classes [ Tw.grid, Tw.grid_cols_1, Bp.sm [ Tw.grid_cols_2, Tw.items_end ], Tw.gap Th.s8 ] ]
                 [ -- Col 1: service links + logo
-                  Html.div [ classes [ Tw.flex, Tw.items_start, Tw.gap (Th.s4) ] ]
+                  Html.div [ classes [ Tw.flex, Tw.items_start, Tw.gap Th.s4 ] ]
                     [ Html.img
                         [ Attr.src "/logo/square/svg/square-smile-full-dark-bold.svg"
                         , Attr.alt ""
@@ -284,10 +284,10 @@ viewFooter =
                         , classes [ TwEx.h_35, TwEx.w_35, Tw.shrink_0 ]
                         ]
                         []
-                    , Html.div [ classes [ TwEx.space_y (Th.s3) ] ]
+                    , Html.div [ classes [ TwEx.space_y Th.s3 ] ]
                         [ Html.p [ classes [ Tw.text_xs, Tw.font_semibold, TwEx.text_white_50, Tw.uppercase, Tw.tracking_wider ] ]
                             [ Html.text "Palikkaharrastajat" ]
-                        , Html.ul [ classes [ TwEx.space_y (Th.s2), Tw.list_none, Tw.m (Th.s0), Tw.p (Th.s0) ] ]
+                        , Html.ul [ classes [ TwEx.space_y Th.s2, Tw.list_none, Tw.m Th.s0, Tw.p Th.s0 ] ]
                             [ Html.li []
                                 [ Html.a
                                     [ Attr.href "https://palikkaharrastajat.fi"
@@ -313,8 +313,8 @@ viewFooter =
                         ]
                     ]
                 , -- Col 2: org name & legal
-                  Html.div [ classes [ TwEx.space_y (Th.s1), Bp.sm [ Tw.text_right ] ] ]
-                    [ Html.div [ classes [ TwEx.space_y (Th.s1), Tw.text_xs, TwEx.text_white_50 ] ]
+                  Html.div [ classes [ TwEx.space_y Th.s1, Bp.sm [ Tw.text_right ] ] ]
+                    [ Html.div [ classes [ TwEx.space_y Th.s1, Tw.text_xs, TwEx.text_white_50 ] ]
                         [ Html.p [] [ Html.text "© 2026 Suomen Palikkaharrastajat ry" ]
                         , Html.p [] [ Html.text "Fontit: Outfit (SIL Open Font License)" ]
                         , Html.p [] [ Html.text "LEGO® on LEGO Groupin rekisteröity tavaramerkki" ]

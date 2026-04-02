@@ -1,24 +1,24 @@
 module TailwindTokens exposing
-    ( -- Text colors
-      textPrimary
-    , textOnDark
-    , textMuted
-    , textSubtle
-      -- Background colors
-    , bgPage
-    , bgSubtle
-    , bgAccent
+    ( bgAccent
     , bgDark
       -- Brand colors (for bg/text/border)
+    , bgPage
+    , bgSubtle
+    , borderBrand
+    , borderDefault
     , brand
-    , brandYellow
-    , brandRed
     , brandNougat
-    , brandNougatLight
     , brandNougatDark
       -- Border colors
-    , borderDefault
-    , borderBrand
+    , brandNougatLight
+    , brandRed
+    , brandYellow
+    , textMuted
+    , textOnDark
+    , -- Text colors
+      textPrimary
+    , textSubtle
+      -- Background colors
     )
 
 {-| Semantic color tokens for elm-tailwind-classes.
@@ -30,8 +30,8 @@ express them with the standard `Shade -> Color` helpers. We use the exposed
 and `Tw.border_simple` emit the right Tailwind class names.
 
 Usage:
-    import Tailwind as Tw exposing (classes)
-    import TailwindTokens as TC
+import Tailwind as Tw exposing (classes)
+import TailwindTokens as TC
 
     classes [ Tw.bg_simple TC.brand, Tw.text_simple TC.textPrimary ]
 

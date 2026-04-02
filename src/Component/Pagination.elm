@@ -22,7 +22,7 @@ view config =
     Html.nav
         [ Attr.attribute "aria-label" "Sivutus" ]
         [ Html.ul
-            [ classes [ Tw.inline_flex, Tw.items_center, Tw.gap (Th.s1), Tw.text_sm ] ]
+            [ classes [ Tw.inline_flex, Tw.items_center, Tw.gap Th.s1, Tw.text_sm ] ]
             (prevButton config
                 :: List.map (pageButton config) (List.range 1 config.totalPages)
                 ++ [ nextButton config ]
@@ -79,8 +79,8 @@ pageButton config page =
 
 pageBtnTw : Bool -> List Tw.Tailwind
 pageBtnTw active =
-    [ Tw.w (Th.s9)
-    , Tw.h (Th.s9)
+    [ Tw.w Th.s9
+    , Tw.h Th.s9
     , Tw.flex
     , Tw.items_center
     , Tw.justify_center
@@ -99,8 +99,8 @@ pageBtnTw active =
 
 navBtnTw : Bool -> List Tw.Tailwind
 navBtnTw isDisabled =
-    [ Tw.w (Th.s9)
-    , Tw.h (Th.s9)
+    [ Tw.w Th.s9
+    , Tw.h Th.s9
     , Tw.flex
     , Tw.items_center
     , Tw.justify_center

@@ -23,7 +23,7 @@ view config =
         pct =
             toFloat config.value / toFloat config.max * 100 |> round |> clamp 0 100
     in
-    Html.div [ classes [ TwEx.space_y (Th.s1) ] ]
+    Html.div [ classes [ TwEx.space_y Th.s1 ] ]
         (case config.label of
             Just lbl ->
                 [ Html.div [ classes [ Tw.flex, Tw.justify_between, Tw.text_sm, Tw.text_color (Th.gray Th.s600) ] ]
@@ -41,14 +41,14 @@ view config =
 bar : Int -> Color -> Html msg
 bar pct color =
     Html.div
-        [ classes [ Tw.w_full, Tw.bg_color (Th.gray Th.s200), Tw.rounded_full, Tw.h (Th.s2_dot_5), Tw.overflow_hidden ]
+        [ classes [ Tw.w_full, Tw.bg_color (Th.gray Th.s200), Tw.rounded_full, Tw.h Th.s2_dot_5, Tw.overflow_hidden ]
         , Attr.attribute "role" "progressbar"
         , Attr.attribute "aria-valuenow" (String.fromInt pct)
         , Attr.attribute "aria-valuemin" "0"
         , Attr.attribute "aria-valuemax" "100"
         ]
         [ Html.div
-            [ classes ([ Tw.h (Th.s2_dot_5), Tw.rounded_full, Tw.transition_all ] ++ colorTw color)
+            [ classes ([ Tw.h Th.s2_dot_5, Tw.rounded_full, Tw.transition_all ] ++ colorTw color)
             , Attr.style "width" (String.fromInt pct ++ "%")
             ]
             []

@@ -13,7 +13,7 @@ import TailwindExtra as TwEx
 view : { size : Size, label : String } -> Html msg
 view config =
     Html.div
-        [ classes [ Tw.inline_flex, Tw.items_center, Tw.gap (Th.s2) ]
+        [ classes [ Tw.inline_flex, Tw.items_center, Tw.gap Th.s2 ]
         , Attr.attribute "role" "status"
         ]
         [ Html.div
@@ -42,10 +42,10 @@ sizeTw : Size -> List Tw.Tailwind
 sizeTw size =
     case size of
         Small ->
-            [ Tw.w (Th.s4), Tw.h (Th.s4) ]
+            [ Tw.w Th.s4, Tw.h Th.s4 ]
 
         Medium ->
-            [ Tw.w (Th.s6), Tw.h (Th.s6) ]
+            [ Tw.w Th.s6, Tw.h Th.s6 ]
 
         Large ->
-            [ Tw.w (Th.s10), Tw.h (Th.s10) ]
+            [ Tw.w Th.s10, Tw.h Th.s10 ]

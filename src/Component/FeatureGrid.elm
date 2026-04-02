@@ -21,7 +21,7 @@ type alias Feature msg =
 view : { columns : Int, features : List (Feature msg) } -> Html msg
 view config =
     Html.div
-        [ classes [ Tw.py (Th.s12) ] ]
+        [ classes [ Tw.py Th.s12 ] ]
         [ Html.div
             [ classes (gridTw config.columns) ]
             (List.map viewFeature config.features)
@@ -36,10 +36,10 @@ viewFeature feature =
             Just ico ->
                 Html.div
                     [ classes
-                        [ Tw.mb (Th.s4)
+                        [ Tw.mb Th.s4
                         , Tw.flex
-                        , Tw.h (Th.s10)
-                        , Tw.w (Th.s10)
+                        , Tw.h Th.s10
+                        , Tw.w Th.s10
                         , Tw.items_center
                         , Tw.justify_center
                         , Tw.rounded_lg
@@ -56,14 +56,14 @@ viewFeature feature =
             [ classes [ Tw.type_h4, TwEx.leading_7, Tw.text_simple TC.textPrimary ] ]
             [ Html.text feature.title ]
         , Html.div
-            [ classes [ Tw.mt (Th.s2), Tw.type_caption, TwEx.leading_7, Tw.text_simple TC.textMuted ] ]
+            [ classes [ Tw.mt Th.s2, Tw.type_caption, TwEx.leading_7, Tw.text_simple TC.textMuted ] ]
             feature.description
         ]
 
 
 gridTw : Int -> List Tw.Tailwind
 gridTw columns =
-    [ Tw.grid, Tw.gap_x (Th.s8), Tw.gap_y (Th.s10) ]
+    [ Tw.grid, Tw.gap_x Th.s8, Tw.gap_y Th.s10 ]
         ++ (case columns of
                 2 ->
                     [ Bp.sm [ Tw.grid_cols_2 ] ]

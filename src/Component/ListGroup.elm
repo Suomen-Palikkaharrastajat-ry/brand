@@ -31,12 +31,12 @@ view items =
 viewItem : { label : String, badge : Maybe String } -> Html msg
 viewItem config =
     Html.li
-        [ classes [ Tw.flex, Tw.items_center, Tw.justify_between, Tw.bg_simple Th.white, Tw.px (Th.s4), Tw.py (Th.s3), Tw.text_sm, Tw.text_color (Th.gray Th.s800) ] ]
+        [ classes [ Tw.flex, Tw.items_center, Tw.justify_between, Tw.bg_simple Th.white, Tw.px Th.s4, Tw.py Th.s3, Tw.text_sm, Tw.text_color (Th.gray Th.s800) ] ]
         [ Html.span [] [ Html.text config.label ]
         , case config.badge of
             Just b ->
                 Html.span
-                    [ classes [ Tw.inline_flex, Tw.items_center, Tw.rounded_full, TwEx.bg_brand_10, Tw.px (Th.s2), Tw.py (Th.s0_dot_5), Tw.text_xs, Tw.font_medium, Tw.text_simple TC.brand ] ]
+                    [ classes [ Tw.inline_flex, Tw.items_center, Tw.rounded_full, TwEx.bg_brand_10, Tw.px Th.s2, Tw.py Th.s0_dot_5, Tw.text_xs, Tw.font_medium, Tw.text_simple TC.brand ] ]
                     [ Html.text b ]
 
             Nothing ->
@@ -50,7 +50,7 @@ viewActionItem config =
         [ Html.button
             [ Attr.type_ "button"
             , classes
-                ([ Tw.w_full, Tw.text_left, Tw.px (Th.s4), Tw.py (Th.s3), Tw.cursor_pointer ]
+                ([ Tw.w_full, Tw.text_left, Tw.px Th.s4, Tw.py Th.s3, Tw.cursor_pointer ]
                     ++ (if config.active then
                             [ Tw.type_body_small, Tw.bg_simple TC.brand, Tw.text_simple Th.white ]
 

@@ -48,7 +48,7 @@ view config =
 viewSimple : List (Html msg) -> Html msg
 viewSimple body =
     Html.div
-        [ classes [ Tw.bg_simple Th.white, Tw.rounded_xl, Tw.border, Tw.border_color (Th.gray Th.s200), Tw.p (Th.s6) ] ]
+        [ classes [ Tw.bg_simple Th.white, Tw.rounded_xl, Tw.border, Tw.border_color (Th.gray Th.s200), Tw.p Th.s6 ] ]
         body
 
 
@@ -65,21 +65,21 @@ viewImage src =
 viewHeader : Html msg -> Html msg
 viewHeader content =
     Html.div
-        [ classes [ Tw.px (Th.s6), Tw.py (Th.s4) ] ]
+        [ classes [ Tw.px Th.s6, Tw.py Th.s4 ] ]
         [ content ]
 
 
 viewBody : List (Html msg) -> Html msg
 viewBody content =
     Html.div
-        [ classes [ Tw.p (Th.s6) ] ]
+        [ classes [ Tw.p Th.s6 ] ]
         content
 
 
 viewFooter : Html msg -> Html msg
 viewFooter content =
     Html.div
-        [ classes [ Tw.px (Th.s6), Tw.py (Th.s4), Tw.border_t, Tw.border_color (Th.gray Th.s100) ] ]
+        [ classes [ Tw.px Th.s6, Tw.py Th.s4, Tw.border_t, Tw.border_color (Th.gray Th.s100) ] ]
         [ content ]
 
 

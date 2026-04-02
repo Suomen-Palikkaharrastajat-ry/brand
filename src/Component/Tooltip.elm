@@ -20,9 +20,9 @@ view config =
                 , Tw.bottom_full
                 , TwEx.left_half
                 , TwEx.neg_translate_x_half
-                , Tw.mb (Th.s2)
-                , Tw.px (Th.s2)
-                , Tw.py (Th.s1)
+                , Tw.mb Th.s2
+                , Tw.px Th.s2
+                , Tw.py Th.s1
                 , Tw.rounded
                 , Tw.bg_color (Th.gray Th.s900)
                 , Tw.text_simple Th.white

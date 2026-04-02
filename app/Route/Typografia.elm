@@ -4,11 +4,12 @@ module Route.Typografia exposing (ActionData, Data, Model, Msg, route)
 
 Documents the type scale, font families, line-height, and usage
 rules for headings, body text, and brand-specific type styles.
+
 -}
 
 import BackendTask exposing (BackendTask)
-import FeatherIcons
 import FatalError exposing (FatalError)
+import FeatherIcons
 import Head
 import Head.Seo as Seo
 import Html exposing (Html)
@@ -86,11 +87,11 @@ view _ _ =
             [ classes
                 [ TwEx.max_w_5xl
                 , Tw.mx_auto
-                , Tw.px (Th.s4)
-                , Tw.py (Th.s8)
-                , Bp.sm [ Tw.py (Th.s12) ]
-                , TwEx.space_y (Th.s14)
-                , Bp.sm [ TwEx.space_y (Th.s20) ]
+                , Tw.px Th.s4
+                , Tw.py Th.s8
+                , Bp.sm [ Tw.py Th.s12 ]
+                , TwEx.space_y Th.s14
+                , Bp.sm [ TwEx.space_y Th.s20 ]
                 ]
             ]
             [ viewPageHeader
@@ -109,16 +110,16 @@ view _ _ =
 
 viewPageHeader : Html msg
 viewPageHeader =
-    Html.div [ classes [ TwEx.space_y (Th.s2) ] ]
+    Html.div [ classes [ TwEx.space_y Th.s2 ] ]
         [ Html.h1 [ classes [ Tw.text_2xl, Bp.sm [ Tw.text_3xl ], Tw.font_bold, Tw.text_simple TC.brand ] ]
             [ Html.text "Typografia" ]
         , Html.p [ classes [ Tw.text_sm, Bp.sm [ Tw.text_base ], Tw.text_color (Th.gray Th.s500) ] ]
             [ Html.text "Outfit-fonttiperhe, typografiaskaala ja "
-            , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px (Th.s1), Tw.rounded ] ] [ Html.text "type-*" ]
+            , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px Th.s1, Tw.rounded ] ] [ Html.text "type-*" ]
             , Html.text " CSS-apuohjelmat. Nämä apuohjelmat on määritelty "
-            , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px (Th.s1), Tw.rounded ] ] [ Html.text "brand.css" ]
+            , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px Th.s1, Tw.rounded ] ] [ Html.text "brand.css" ]
             , Html.text ":ssä ja "
-            , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px (Th.s1), Tw.rounded ] ] [ Html.text "style.css" ]
+            , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px Th.s1, Tw.rounded ] ] [ Html.text "style.css" ]
             , Html.text ":ssä."
             ]
         ]
@@ -136,14 +137,14 @@ viewTypeScaleSection =
                 [ Tw.text_xl
                 , Tw.font_bold
                 , Tw.text_simple TC.brand
-                , Tw.mb (Th.s6)
-                , Tw.pb (Th.s2)
+                , Tw.mb Th.s6
+                , Tw.pb Th.s2
                 , Tw.border_b
                 , Tw.border_color (Th.gray Th.s200)
                 ]
             ]
             [ Html.text "Typografiaskaala" ]
-        , Html.div [ classes [ TwEx.space_y (Th.s10) ] ]
+        , Html.div [ classes [ TwEx.space_y Th.s10 ] ]
             (List.map viewTypeRow typeScaleRows)
         ]
 
@@ -262,29 +263,29 @@ viewTypeRow row =
             [ Tw.grid
             , Tw.grid_cols_1
             , Bp.md [ Tw.grid_cols_2 ]
-            , Tw.gap (Th.s4)
-            , Tw.py (Th.s6)
+            , Tw.gap Th.s4
+            , Tw.py Th.s6
             , Tw.border_b
             , Tw.border_color (Th.gray Th.s100)
             , Bp.last [ Tw.border_b_0 ]
             ]
         ]
         [ -- Live example
-          Html.div [ classes [ Tw.flex, Tw.flex_col, Tw.justify_center, Tw.min_h (Th.s16) ] ]
+          Html.div [ classes [ Tw.flex, Tw.flex_col, Tw.justify_center, Tw.min_h Th.s16 ] ]
             [ Html.p [ classes [ row.cls ] ]
                 [ Html.text row.example ]
             ]
         , -- Spec and usage
-          Html.div [ classes [ TwEx.space_y (Th.s2) ] ]
-            [ Html.div [ classes [ Tw.flex, Tw.items_center, Tw.gap (Th.s2) ] ]
+          Html.div [ classes [ TwEx.space_y Th.s2 ] ]
+            [ Html.div [ classes [ Tw.flex, Tw.items_center, Tw.gap Th.s2 ] ]
                 [ Html.code
                     [ classes
                         [ Tw.font_mono
                         , Tw.text_sm
                         , TwEx.bg_brand_10
                         , Tw.text_simple TC.brand
-                        , Tw.px (Th.s2)
-                        , Tw.py (Th.s0_dot_5)
+                        , Tw.px Th.s2
+                        , Tw.py Th.s0_dot_5
                         , Tw.rounded
                         , Tw.font_semibold
                         ]
@@ -308,8 +309,8 @@ viewTypeRow row =
 specRow : String -> String -> Html msg
 specRow label value =
     Html.tr []
-        [ Html.td [ classes [ Tw.pr (Th.s3), Tw.py (Th.s0_dot_5), Tw.text_color (Th.gray Th.s400), Tw.font_medium, Tw.w (Th.s24) ] ] [ Html.text label ]
-        , Html.td [ classes [ Tw.py (Th.s0_dot_5), Tw.font_mono ] ] [ Html.text value ]
+        [ Html.td [ classes [ Tw.pr Th.s3, Tw.py Th.s0_dot_5, Tw.text_color (Th.gray Th.s400), Tw.font_medium, Tw.w Th.s24 ] ] [ Html.text label ]
+        , Html.td [ classes [ Tw.py Th.s0_dot_5, Tw.font_mono ] ] [ Html.text value ]
         ]
 
 
@@ -325,14 +326,14 @@ viewDosDontsSection =
                 [ Tw.text_xl
                 , Tw.font_bold
                 , Tw.text_simple TC.brand
-                , Tw.mb (Th.s6)
-                , Tw.pb (Th.s2)
+                , Tw.mb Th.s6
+                , Tw.pb Th.s2
                 , Tw.border_b
                 , Tw.border_color (Th.gray Th.s200)
                 ]
             ]
             [ Html.text "Käyttöohjeet" ]
-        , Html.div [ classes [ Tw.grid, Tw.grid_cols_1, Bp.sm [ Tw.grid_cols_2 ], Tw.gap (Th.s6) ] ]
+        , Html.div [ classes [ Tw.grid, Tw.grid_cols_1, Bp.sm [ Tw.grid_cols_2 ], Tw.gap Th.s6 ] ]
             [ viewDoCard
             , viewDontCard
             ]
@@ -341,14 +342,14 @@ viewDosDontsSection =
 
 viewDoCard : Html msg
 viewDoCard =
-    Html.div [ classes [ Tw.rounded_xl, Tw.border, Tw.border_color (Th.green Th.s200), Tw.bg_color (Th.green Th.s50), Tw.p (Th.s6), TwEx.space_y (Th.s4) ] ]
-        [ Html.h3 [ classes [ Tw.type_h4, Tw.text_color (Th.green Th.s800), Tw.flex, Tw.items_center, Tw.gap (Th.s2) ] ]
+    Html.div [ classes [ Tw.rounded_xl, Tw.border, Tw.border_color (Th.green Th.s200), Tw.bg_color (Th.green Th.s50), Tw.p Th.s6, TwEx.space_y Th.s4 ] ]
+        [ Html.h3 [ classes [ Tw.type_h4, Tw.text_color (Th.green Th.s800), Tw.flex, Tw.items_center, Tw.gap Th.s2 ] ]
             [ FeatherIcons.check
                 |> FeatherIcons.withSize 18
                 |> FeatherIcons.toHtml [ Attr.attribute "aria-hidden" "true" ]
             , Html.text "Tee näin"
             ]
-        , Html.ul [ classes [ TwEx.space_y (Th.s2), Tw.text_sm, Tw.text_color (Th.green Th.s900), Tw.list_disc, Tw.list_inside ] ]
+        , Html.ul [ classes [ TwEx.space_y Th.s2, Tw.text_sm, Tw.text_color (Th.green Th.s900), Tw.list_disc, Tw.list_inside ] ]
             [ Html.li [] [ Html.text "Käytä ", codeInline "type-h2", Html.text " osion otsikoihin" ]
             , Html.li [] [ Html.text "Käytä ", codeInline "type-body", Html.text " oletustekstiin" ]
             , Html.li [] [ Html.text "Käytä ", codeInline "type-overline", Html.text " kategorialabeleissa — aina versaalein" ]
@@ -361,14 +362,14 @@ viewDoCard =
 
 viewDontCard : Html msg
 viewDontCard =
-    Html.div [ classes [ Tw.rounded_xl, Tw.border, Tw.border_color (Th.red Th.s200), Tw.bg_color (Th.red Th.s50), Tw.p (Th.s6), TwEx.space_y (Th.s4) ] ]
-        [ Html.h3 [ classes [ Tw.type_h4, Tw.text_color (Th.red Th.s800), Tw.flex, Tw.items_center, Tw.gap (Th.s2) ] ]
+    Html.div [ classes [ Tw.rounded_xl, Tw.border, Tw.border_color (Th.red Th.s200), Tw.bg_color (Th.red Th.s50), Tw.p Th.s6, TwEx.space_y Th.s4 ] ]
+        [ Html.h3 [ classes [ Tw.type_h4, Tw.text_color (Th.red Th.s800), Tw.flex, Tw.items_center, Tw.gap Th.s2 ] ]
             [ FeatherIcons.x
                 |> FeatherIcons.withSize 18
                 |> FeatherIcons.toHtml [ Attr.attribute "aria-hidden" "true" ]
             , Html.text "Älä tee näin"
             ]
-        , Html.ul [ classes [ TwEx.space_y (Th.s2), Tw.text_sm, Tw.text_color (Th.red Th.s900), Tw.list_disc, Tw.list_inside ] ]
+        , Html.ul [ classes [ TwEx.space_y Th.s2, Tw.text_sm, Tw.text_color (Th.red Th.s900), Tw.list_disc, Tw.list_inside ] ]
             [ Html.li [] [ Html.text "Älä käytä raa'oitaTailwind-luokkia kuten ", codeInlineDont "text-2xl font-bold" ]
             , Html.li [] [ Html.text "Älä ohita hierarkiatasoja (esim. H1 → H3)" ]
             , Html.li [] [ Html.text "Älä aseta ", codeInlineDont "html { font-size: ... }", Html.text " — rikkoo rem-skaalan" ]
@@ -380,12 +381,12 @@ viewDontCard =
 
 codeInline : String -> Html msg
 codeInline s =
-    Html.code [ classes [ Tw.font_mono, Tw.text_xs, Tw.bg_color (Th.green Th.s100), Tw.text_color (Th.green Th.s800), Tw.px (Th.s1), Tw.rounded ] ] [ Html.text s ]
+    Html.code [ classes [ Tw.font_mono, Tw.text_xs, Tw.bg_color (Th.green Th.s100), Tw.text_color (Th.green Th.s800), Tw.px Th.s1, Tw.rounded ] ] [ Html.text s ]
 
 
 codeInlineDont : String -> Html msg
 codeInlineDont s =
-    Html.code [ classes [ Tw.font_mono, Tw.text_xs, Tw.bg_color (Th.red Th.s100), Tw.text_color (Th.red Th.s800), Tw.px (Th.s1), Tw.rounded ] ] [ Html.text s ]
+    Html.code [ classes [ Tw.font_mono, Tw.text_xs, Tw.bg_color (Th.red Th.s100), Tw.text_color (Th.red Th.s800), Tw.px Th.s1, Tw.rounded ] ] [ Html.text s ]
 
 
 
@@ -400,50 +401,50 @@ viewUsageSection =
                 [ Tw.text_xl
                 , Tw.font_bold
                 , Tw.text_simple TC.brand
-                , Tw.mb (Th.s6)
-                , Tw.pb (Th.s2)
+                , Tw.mb Th.s6
+                , Tw.pb Th.s2
                 , Tw.border_b
                 , Tw.border_color (Th.gray Th.s200)
                 ]
             ]
             [ Html.text "CSS-esimerkki" ]
-        , Html.div [ classes [ TwEx.space_y (Th.s6) ] ]
+        , Html.div [ classes [ TwEx.space_y Th.s6 ] ]
             [ Html.p [ classes [ Tw.type_body, Tw.text_color (Th.gray Th.s600) ] ]
                 [ Html.text "Apuohjelmat on määritelty "
-                , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px (Th.s1), Tw.rounded, Tw.text_sm ] ] [ Html.text "@utility" ]
+                , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px Th.s1, Tw.rounded, Tw.text_sm ] ] [ Html.text "@utility" ]
                 , Html.text "-lohkoilla Tailwind v4:ssä. Käytä luokkanimeä suoraan HTML:ssä:"
                 ]
             , Html.pre
-                [ classes [ Tw.bg_color (Th.gray Th.s900), Tw.text_color (Th.green Th.s300), Tw.rounded_xl, Tw.p (Th.s4), Tw.overflow_x_auto, Tw.text_sm, Tw.font_mono, Tw.leading_relaxed ] ]
+                [ classes [ Tw.bg_color (Th.gray Th.s900), Tw.text_color (Th.green Th.s300), Tw.rounded_xl, Tw.p Th.s4, Tw.overflow_x_auto, Tw.text_sm, Tw.font_mono, Tw.leading_relaxed ] ]
                 [ Html.text """<!-- Otsikko -->
-<h1 class=\"type-h1 text-brand\">Tapahtumakalenteri</h1>
+<h1 class="type-h1 text-brand">Tapahtumakalenteri</h1>
 
 <!-- Osion otsikko -->
-<h2 class=\"type-h2\">Tulevat tapahtumat</h2>
+<h2 class="type-h2">Tulevat tapahtumat</h2>
 
 <!-- Leipäteksti -->
-<p class=\"type-body\">Tapahtuman kuvaus tähän.</p>
+<p class="type-body">Tapahtuman kuvaus tähän.</p>
 
 <!-- Kategorialabel (overline) -->
-<span class=\"type-overline text-text-muted\">Kilpailut</span>
+<span class="type-overline text-text-muted">Kilpailut</span>
 
 <!-- Kuvateksti -->
-<figcaption class=\"type-caption text-text-muted\">Kuva: SPH 2025</figcaption>""" ]
+<figcaption class="type-caption text-text-muted">Kuva: SPH 2025</figcaption>""" ]
             , Html.p [ classes [ Tw.type_body_small, Tw.text_color (Th.gray Th.s500) ] ]
                 [ Html.text "Huom: Tailwind v4 generoi automaattisesti "
-                , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px (Th.s1), Tw.rounded, Tw.text_xs ] ] [ Html.text "text-*" ]
+                , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px Th.s1, Tw.rounded, Tw.text_xs ] ] [ Html.text "text-*" ]
                 , Html.text "-, "
-                , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px (Th.s1), Tw.rounded, Tw.text_xs ] ] [ Html.text "bg-*" ]
+                , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px Th.s1, Tw.rounded, Tw.text_xs ] ] [ Html.text "bg-*" ]
                 , Html.text "- ja "
-                , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px (Th.s1), Tw.rounded, Tw.text_xs ] ] [ Html.text "border-*" ]
+                , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px Th.s1, Tw.rounded, Tw.text_xs ] ] [ Html.text "border-*" ]
                 , Html.text "-apuohjelmat "
-                , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px (Th.s1), Tw.rounded, Tw.text_xs ] ] [ Html.text "@theme" ]
+                , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px Th.s1, Tw.rounded, Tw.text_xs ] ] [ Html.text "@theme" ]
                 , Html.text ":n "
-                , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px (Th.s1), Tw.rounded, Tw.text_xs ] ] [ Html.text "--color-*" ]
+                , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px Th.s1, Tw.rounded, Tw.text_xs ] ] [ Html.text "--color-*" ]
                 , Html.text "-muuttujista. Esim. "
-                , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px (Th.s1), Tw.rounded, Tw.text_xs ] ] [ Html.text "--color-text-muted" ]
+                , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px Th.s1, Tw.rounded, Tw.text_xs ] ] [ Html.text "--color-text-muted" ]
                 , Html.text " → "
-                , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px (Th.s1), Tw.rounded, Tw.text_xs ] ] [ Html.text "text-text-muted" ]
+                , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px Th.s1, Tw.rounded, Tw.text_xs ] ] [ Html.text "text-text-muted" ]
                 , Html.text "."
                 ]
             ]
@@ -458,15 +459,15 @@ viewIconsSection : Html msg
 viewIconsSection =
     Html.section
         [ Attr.id "ikonit"
-        , classes [ TwEx.scroll_mt (Th.s28), TwEx.space_y (Th.s6) ]
+        , classes [ TwEx.scroll_mt Th.s28, TwEx.space_y Th.s6 ]
         ]
         [ Html.h2
             [ classes
                 [ Tw.text_xl
                 , Tw.font_bold
                 , Tw.text_simple TC.brand
-                , Tw.mb (Th.s6)
-                , Tw.pb (Th.s2)
+                , Tw.mb Th.s6
+                , Tw.pb Th.s2
                 , Tw.border_b
                 , Tw.border_color (Th.gray Th.s200)
                 ]
@@ -494,10 +495,10 @@ viewIconsSection =
 
 viewIconUsage : Html msg
 viewIconUsage =
-    Html.div [ classes [ TwEx.space_y (Th.s4) ] ]
+    Html.div [ classes [ TwEx.space_y Th.s4 ] ]
         [ Html.p [ classes [ Tw.text_sm, Tw.text_color (Th.gray Th.s600) ] ]
             [ Html.text "Tuo kirjasto Elm-moduuliisi ja käytä ikonia putkioperaattorilla:" ]
-        , Html.pre [ classes [ Tw.bg_color (Th.gray Th.s900), Tw.text_color (Th.gray Th.s100), Tw.rounded_lg, Tw.p (Th.s4), Tw.text_xs, Tw.leading_relaxed, Tw.overflow_x_auto ] ]
+        , Html.pre [ classes [ Tw.bg_color (Th.gray Th.s900), Tw.text_color (Th.gray Th.s100), Tw.rounded_lg, Tw.p Th.s4, Tw.text_xs, Tw.leading_relaxed, Tw.overflow_x_auto ] ]
             [ Html.code []
                 [ Html.text """import FeatherIcons
 
@@ -512,11 +513,11 @@ FeatherIcons.check |> FeatherIcons.withSize 16 |> FeatherIcons.toHtml [ Attr.cla
             ]
         , Html.p [ classes [ Tw.text_xs, Tw.text_color (Th.gray Th.s500) ] ]
             [ Html.text "Ikonit perivät nykyisen tekstivärin ("
-            , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px (Th.s1), Tw.rounded ] ] [ Html.text "currentColor" ]
+            , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px Th.s1, Tw.rounded ] ] [ Html.text "currentColor" ]
             , Html.text "), joten voit värittää ne Tailwind-väriluokilla kuten "
-            , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px (Th.s1), Tw.rounded ] ] [ Html.text "text-brand" ]
+            , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px Th.s1, Tw.rounded ] ] [ Html.text "text-brand" ]
             , Html.text " tai "
-            , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px (Th.s1), Tw.rounded ] ] [ Html.text "text-red-500" ]
+            , Html.code [ classes [ Tw.font_mono, Tw.bg_color (Th.gray Th.s100), Tw.px Th.s1, Tw.rounded ] ] [ Html.text "text-red-500" ]
             , Html.text "."
             ]
         ]
@@ -610,7 +611,7 @@ actionIcons =
 
 viewIconGrid : String -> List IconEntry -> Html msg
 viewIconGrid title icons =
-    Html.section [ classes [ TwEx.scroll_mt (Th.s28), TwEx.space_y (Th.s4) ] ]
+    Html.section [ classes [ TwEx.scroll_mt Th.s28, TwEx.space_y Th.s4 ] ]
         [ Html.h3 [ classes [ Tw.text_base, Tw.font_semibold, Tw.text_simple TC.brand ] ] [ Html.text title ]
         , Html.div
             [ classes
@@ -619,7 +620,7 @@ viewIconGrid title icons =
                 , Bp.sm [ Tw.grid_cols_4 ]
                 , Bp.md [ Tw.grid_cols_6 ]
                 , Bp.lg [ Tw.grid_cols_8 ]
-                , Tw.gap (Th.s3)
+                , Tw.gap Th.s3
                 ]
             ]
             (List.map viewIconCard icons)
@@ -633,8 +634,8 @@ viewIconCard entry =
             [ Tw.flex
             , Tw.flex_col
             , Tw.items_center
-            , Tw.gap (Th.s2)
-            , Tw.p (Th.s3)
+            , Tw.gap Th.s2
+            , Tw.p Th.s3
             , Tw.rounded_lg
             , Tw.border
             , Tw.border_color (Th.gray Th.s100)

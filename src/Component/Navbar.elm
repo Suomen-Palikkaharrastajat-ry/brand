@@ -28,12 +28,12 @@ view config =
     Html.nav
         [ classes [ Tw.bg_simple Th.white, Tw.border_b, Tw.border_simple TC.borderDefault ] ]
         [ Html.div
-            [ classes [ Tw.mx_auto, TwEx.max_w_7xl, Tw.px (Th.s6), Bp.lg [ Tw.px (Th.s8) ] ] ]
+            [ classes [ Tw.mx_auto, TwEx.max_w_7xl, Tw.px Th.s6, Bp.lg [ Tw.px Th.s8 ] ] ]
             [ Html.div
-                [ classes [ Tw.flex, Tw.h (Th.s16), Tw.items_center, Tw.justify_between ] ]
-                [ Html.div [ classes [ Tw.flex, Tw.items_center, Tw.gap_x (Th.s8) ] ]
+                [ classes [ Tw.flex, Tw.h Th.s16, Tw.items_center, Tw.justify_between ] ]
+                [ Html.div [ classes [ Tw.flex, Tw.items_center, Tw.gap_x Th.s8 ] ]
                     [ config.logo
-                    , Html.div [ classes [ Tw.hidden, Bp.md [ Tw.flex ], Tw.items_center, Tw.gap_x (Th.s6) ] ]
+                    , Html.div [ classes [ Tw.hidden, Bp.md [ Tw.flex ], Tw.items_center, Tw.gap_x Th.s6 ] ]
                         (List.map viewLink config.links)
                     ]
                 , case config.action of

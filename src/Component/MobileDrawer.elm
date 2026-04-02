@@ -20,7 +20,8 @@ import TailwindExtra as TwEx
 import TailwindTokens as TC
 
 
-{-| The responsive breakpoint above which the drawer (and overlay) are hidden. -}
+{-| The responsive breakpoint above which the drawer (and overlay) are hidden.
+-}
 type Breakpoint
     = Sm
     | Md
@@ -40,7 +41,8 @@ breakpointTw bp =
             Bp.lg [ Tw.hidden ]
 
 
-{-| Configuration for a single navigation link inside the drawer. -}
+{-| Configuration for a single navigation link inside the drawer.
+-}
 type alias NavLink msg =
     { href : String
     , label : String
@@ -50,7 +52,8 @@ type alias NavLink msg =
 
 
 {-| Clickable semi-transparent backdrop. Place it in the DOM before `view`
-so the drawer renders on top. -}
+so the drawer renders on top.
+-}
 viewOverlay : { isOpen : Bool, onClose : msg, breakpoint : Breakpoint } -> Html msg
 viewOverlay config =
     if config.isOpen then
@@ -65,7 +68,8 @@ viewOverlay config =
 
 
 {-| Slide-in drawer panel. Supply navigation markup (and any extra content such
-as auth controls) via `content`. -}
+as auth controls) via `content`.
+-}
 view :
     { isOpen : Bool
     , id : String
@@ -81,7 +85,7 @@ view config =
             , Tw.fixed
             , TwEx.inset_y_0
             , TwEx.left_0
-            , Tw.w (Th.s64)
+            , Tw.w Th.s64
             , Tw.bg_simple Th.white
             , Tw.shadow_lg
             , Tw.z_50
@@ -124,11 +128,11 @@ viewNavLink config =
              , classes
                 [ Tw.flex
                 , Tw.items_center
-                , Tw.gap (Th.s2)
+                , Tw.gap Th.s2
                 , Tw.text_simple TC.brand
                 , Tw.font_medium
-                , Tw.px (Th.s3)
-                , Tw.py (Th.s2)
+                , Tw.px Th.s3
+                , Tw.py Th.s2
                 , Tw.rounded
                 , Bp.hover [ Tw.bg_color (Th.gray Th.s100) ]
                 , Tw.transition_colors
@@ -146,7 +150,7 @@ viewNavLink config =
             )
             [ Html.span
                 [ classes
-                    ([ Tw.w (Th.s2), Tw.h (Th.s2), Tw.rounded_full, Tw.shrink_0 ]
+                    ([ Tw.w Th.s2, Tw.h Th.s2, Tw.rounded_full, Tw.shrink_0 ]
                         ++ (if config.isActive then
                                 [ Tw.bg_simple TC.brandYellow ]
 

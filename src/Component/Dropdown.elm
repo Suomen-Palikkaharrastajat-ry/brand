@@ -47,9 +47,9 @@ view config =
                 , Tw.cursor_pointer
                 , Tw.inline_flex
                 , Tw.items_center
-                , Tw.gap (Th.s1)
-                , Tw.px (Th.s4)
-                , Tw.py (Th.s2)
+                , Tw.gap Th.s1
+                , Tw.px Th.s4
+                , Tw.py Th.s2
                 , Tw.type_body_small
                 , Tw.bg_simple Th.white
                 , Tw.border
@@ -80,15 +80,15 @@ view config =
                     [ Tw.absolute
                     , TwEx.left_0
                     , Tw.top_full
-                    , Tw.mt (Th.s1)
+                    , Tw.mt Th.s1
                     , Tw.z_10
-                    , Tw.w (Th.s48)
+                    , Tw.w Th.s48
                     , Tw.rounded_md
                     , Tw.border
                     , Tw.border_color (Th.gray Th.s200)
                     , Tw.bg_simple Th.white
                     , Tw.shadow_lg
-                    , Tw.py (Th.s1)
+                    , Tw.py Th.s1
                     ]
                 ]
                 config.items
@@ -105,8 +105,8 @@ viewItem config =
         , Attr.attribute "role" "menuitem"
         , classes
             [ Tw.block
-            , Tw.px (Th.s4)
-            , Tw.py (Th.s2)
+            , Tw.px Th.s4
+            , Tw.py Th.s2
             , Tw.text_sm
             , Tw.text_color (Th.gray Th.s700)
             , Bp.hover [ Tw.bg_color (Th.gray Th.s100), Tw.text_simple TC.brand ]
@@ -118,5 +118,5 @@ viewItem config =
 viewDivider : Html msg
 viewDivider =
     Html.hr
-        [ classes [ Tw.my (Th.s1), Tw.border_color (Th.gray Th.s200) ] ]
+        [ classes [ Tw.my Th.s1, Tw.border_color (Th.gray Th.s200) ] ]
         []

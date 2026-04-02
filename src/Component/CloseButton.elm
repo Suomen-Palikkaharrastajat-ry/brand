@@ -20,8 +20,8 @@ view config =
             [ Tw.inline_flex
             , Tw.items_center
             , Tw.justify_center
-            , Tw.w (Th.s11)
-            , Tw.h (Th.s11)
+            , Tw.w Th.s11
+            , Tw.h Th.s11
             , Tw.rounded
             , Tw.text_color (Th.gray Th.s400)
             , Bp.hover [ Tw.text_color (Th.gray Th.s600), Tw.bg_color (Th.gray Th.s100) ]

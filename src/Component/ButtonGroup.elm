@@ -44,8 +44,8 @@ viewEllipsis =
         [ classes
             [ Tw.inline_flex
             , Tw.items_center
-            , Tw.px (Th.s3)
-            , Tw.py (Th.s2)
+            , Tw.px Th.s3
+            , Tw.py Th.s2
             , Tw.type_body_small
             , Tw.border
             , Tw.border_color (Th.gray Th.s300)
@@ -67,8 +67,8 @@ type Position
 
 buttonTw : Bool -> Position -> List Tw.Tailwind
 buttonTw active position =
-    [ Tw.px (Th.s4)
-    , Tw.py (Th.s2)
+    [ Tw.px Th.s4
+    , Tw.py Th.s2
     , Tw.type_body_small
     , Tw.border
     , Tw.transition_colors

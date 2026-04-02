@@ -20,10 +20,10 @@ view config =
         [ classes
             [ Tw.inline_flex
             , Tw.items_center
-            , Tw.gap (Th.s1)
+            , Tw.gap Th.s1
             , Tw.rounded_full
-            , Tw.px (Th.s2_dot_5)
-            , Tw.py (Th.s0_dot_5)
+            , Tw.px Th.s2_dot_5
+            , Tw.py Th.s0_dot_5
             , Tw.text_xs
             , Tw.font_medium
             , TwEx.bg_brand_10
@@ -40,12 +40,12 @@ view config =
                             [ Attr.type_ "button"
                             , Attr.attribute "aria-label" ("Poista " ++ config.label)
                             , classes
-                                [ Tw.ml (Th.s0_dot_5)
+                                [ Tw.ml Th.s0_dot_5
                                 , Tw.inline_flex
                                 , Tw.items_center
                                 , Tw.justify_center
-                                , Tw.w (Th.s3_dot_5)
-                                , Tw.h (Th.s3_dot_5)
+                                , Tw.w Th.s3_dot_5
+                                , Tw.h Th.s3_dot_5
                                 , Tw.rounded_full
                                 , Bp.hover [ TwEx.bg_brand_20 ]
                                 , Tw.transition_colors

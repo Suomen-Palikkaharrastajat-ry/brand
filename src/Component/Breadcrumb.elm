@@ -19,7 +19,7 @@ view items =
                 [ Tw.flex
                 , Tw.flex_wrap
                 , Tw.items_center
-                , Tw.gap (Th.s1_dot_5)
+                , Tw.gap Th.s1_dot_5
                 , Tw.text_sm
                 , Tw.text_color (Th.gray Th.s500)
                 ]
@@ -34,7 +34,7 @@ viewItem total idx item =
         isLast =
             idx == total - 1
     in
-    Html.li [ classes [ Tw.flex, Tw.items_center, Tw.gap (Th.s1_dot_5) ] ]
+    Html.li [ classes [ Tw.flex, Tw.items_center, Tw.gap Th.s1_dot_5 ] ]
         ([ if isLast then
             Html.span
                 [ classes [ Tw.font_medium, Tw.text_color (Th.gray Th.s900) ]

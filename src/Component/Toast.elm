@@ -32,11 +32,11 @@ view config =
         [ classes
             ([ Tw.flex
              , Tw.items_start
-             , Tw.gap (Th.s3)
-             , Tw.w (Th.s80)
+             , Tw.gap Th.s3
+             , Tw.w Th.s80
              , Tw.rounded_lg
              , Tw.border
-             , Tw.p (Th.s4)
+             , Tw.p Th.s4
              , Tw.shadow_lg
              , Tw.bg_simple Th.white
              ]
@@ -44,11 +44,11 @@ view config =
             )
         ]
         [ Html.div
-            [ classes ([ Tw.mt (Th.s0_dot_5), Tw.shrink_0, Tw.leading_none ] ++ iconColorTw config.variant) ]
+            [ classes ([ Tw.mt Th.s0_dot_5, Tw.shrink_0, Tw.leading_none ] ++ iconColorTw config.variant) ]
             [ icon config.variant ]
-        , Html.div [ classes [ Tw.flex_1, Tw.min_w (Th.s0) ] ]
+        , Html.div [ classes [ Tw.flex_1, Tw.min_w Th.s0 ] ]
             [ Html.p [ classes [ Tw.type_body_small, Tw.text_color (Th.gray Th.s900) ] ] [ Html.text config.title ]
-            , Html.p [ classes [ Tw.mt (Th.s0_dot_5), Tw.text_sm, Tw.text_color (Th.gray Th.s500) ] ] [ Html.text config.body ]
+            , Html.p [ classes [ Tw.mt Th.s0_dot_5, Tw.text_sm, Tw.text_color (Th.gray Th.s500) ] ] [ Html.text config.body ]
             ]
         , case config.onClose of
             Just onClose ->

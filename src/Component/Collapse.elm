@@ -32,10 +32,10 @@ view config =
                 [ Tw.flex
                 , Tw.cursor_pointer
                 , Tw.items_center
-                , Tw.gap (Th.s2)
+                , Tw.gap Th.s2
                 , Tw.select_none
                 , Tw.list_none
-                , Tw.py (Th.s2)
+                , Tw.py Th.s2
                 , Tw.font_medium
                 , Tw.text_simple TC.brand
                 , Bp.hover [ TwEx.text_brand_80 ]
@@ -48,5 +48,5 @@ view config =
                 ]
             , config.summary
             ]
-        , Html.div [ classes [ Tw.pt (Th.s2), Tw.pb (Th.s4) ] ] config.body
+        , Html.div [ classes [ Tw.pt Th.s2, Tw.pb Th.s4 ] ] config.body
         ]

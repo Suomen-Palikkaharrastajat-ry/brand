@@ -40,13 +40,13 @@ sizeTw : Size -> List Tw.Tailwind
 sizeTw size =
     case size of
         Small ->
-            [ Tw.px (Th.s1_dot_5), Tw.py_px, Tw.text_xs ]
+            [ Tw.px Th.s1_dot_5, Tw.py_px, Tw.text_xs ]
 
         Medium ->
-            [ Tw.px (Th.s2_dot_5), Tw.py (Th.s0_dot_5), Tw.text_xs ]
+            [ Tw.px Th.s2_dot_5, Tw.py Th.s0_dot_5, Tw.text_xs ]
 
         Large ->
-            [ Tw.px (Th.s3), Tw.py (Th.s1), Tw.text_sm ]
+            [ Tw.px Th.s3, Tw.py Th.s1, Tw.text_sm ]
 
 
 colorTw : Color -> List Tw.Tailwind

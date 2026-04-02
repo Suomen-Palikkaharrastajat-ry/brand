@@ -17,7 +17,7 @@ view : { id : String, label : String, checked : Bool, onToggle : Bool -> msg, di
 view config =
     Html.label
         [ Attr.for config.id
-        , classes [ Tw.inline_flex, Tw.items_center, Tw.gap (Th.s3), Tw.cursor_pointer ]
+        , classes [ Tw.inline_flex, Tw.items_center, Tw.gap Th.s3, Tw.cursor_pointer ]
         ]
         [ Html.input
             [ Attr.type_ "checkbox"
@@ -31,8 +31,8 @@ view config =
         , Html.div
             [ classes
                 [ Tw.relative
-                , Tw.w (Th.s11)
-                , Tw.h (Th.s6)
+                , Tw.w Th.s11
+                , Tw.h Th.s6
                 , Tw.rounded_full
                 , Tw.transition_colors
                 , Tw.bg_color (Th.gray Th.s300)
@@ -46,8 +46,8 @@ view config =
                     [ Tw.absolute
                     , TwEx.top_0_5
                     , TwEx.left_0_5
-                    , Tw.w (Th.s5)
-                    , Tw.h (Th.s5)
+                    , Tw.w Th.s5
+                    , Tw.h Th.s5
                     , Tw.rounded_full
                     , Tw.bg_simple Th.white
                     , Tw.shadow

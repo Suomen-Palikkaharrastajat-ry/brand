@@ -25,9 +25,9 @@ type alias Tier msg =
 view : List (Tier msg) -> Html msg
 view tiers =
     Html.div
-        [ classes [ Tw.py (Th.s12) ] ]
+        [ classes [ Tw.py Th.s12 ] ]
         [ Html.div
-            [ classes [ Tw.grid, Tw.gap (Th.s8), Bp.sm [ Tw.grid_cols_2 ], Bp.lg [ Tw.grid_cols_3 ] ] ]
+            [ classes [ Tw.grid, Tw.gap Th.s8, Bp.sm [ Tw.grid_cols_2 ], Bp.lg [ Tw.grid_cols_3 ] ] ]
             (List.map viewTier tiers)
         ]
 
@@ -36,11 +36,11 @@ viewTier : Tier msg -> Html msg
 viewTier tier =
     Html.div
         [ classes (tierTw tier.highlighted) ]
-        [ Html.div [ classes [ Tw.p (Th.s8) ] ]
+        [ Html.div [ classes [ Tw.p Th.s8 ] ]
             [ Html.h3
                 [ classes (tierNameTw tier.highlighted) ]
                 [ Html.text tier.name ]
-            , Html.div [ classes [ Tw.mt (Th.s4), Tw.flex, Tw.items_baseline, Tw.gap_x (Th.s2) ] ]
+            , Html.div [ classes [ Tw.mt Th.s4, Tw.flex, Tw.items_baseline, Tw.gap_x Th.s2 ] ]
                 [ Html.span
                     [ classes (priceTw tier.highlighted) ]
                     [ Html.text tier.price ]
@@ -54,9 +54,9 @@ viewTier tier =
                         Html.text ""
                 ]
             , Html.ul
-                [ classes [ Tw.mt (Th.s8), TwEx.space_y (Th.s3) ] ]
+                [ classes [ Tw.mt Th.s8, TwEx.space_y Th.s3 ] ]
                 (List.map (viewFeature tier.highlighted) tier.features)
-            , Html.div [ classes [ Tw.mt (Th.s8) ] ] [ tier.cta ]
+            , Html.div [ classes [ Tw.mt Th.s8 ] ] [ tier.cta ]
             ]
         ]
 
@@ -64,7 +64,7 @@ viewTier tier =
 viewFeature : Bool -> String -> Html msg
 viewFeature highlighted feature =
     Html.li
-        [ classes [ Tw.flex, Tw.items_center, Tw.gap_x (Th.s3), Tw.type_caption ] ]
+        [ classes [ Tw.flex, Tw.items_center, Tw.gap_x Th.s3, Tw.type_caption ] ]
         [ Html.span
             [ classes
                 (Tw.type_h4

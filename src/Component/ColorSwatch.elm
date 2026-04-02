@@ -23,13 +23,13 @@ type alias ColorSwatchConfig =
 view : ColorSwatchConfig -> Html msg
 view config =
     Html.div
-        [ classes [ Tw.flex, Tw.flex_col, Tw.gap (Th.s2) ] ]
+        [ classes [ Tw.flex, Tw.flex_col, Tw.gap Th.s2 ] ]
         [ Html.div
-            [ classes [ Tw.h (Th.s20), Tw.rounded_lg, Tw.border, TwEx.border_black_10, Tw.shadow_sm ]
+            [ classes [ Tw.h Th.s20, Tw.rounded_lg, Tw.border, TwEx.border_black_10, Tw.shadow_sm ]
             , Attr.style "background-color" config.hex
             ]
             []
-        , Html.div [ classes [ TwEx.space_y (Th.s1) ] ]
+        , Html.div [ classes [ TwEx.space_y Th.s1 ] ]
             [ Html.div [ classes [ Tw.type_body_small, Tw.text_simple TC.brand ] ]
                 [ Html.text config.name ]
             , Html.div [ classes [ Tw.font_mono, Tw.text_xs, Tw.text_color (Th.gray Th.s500) ] ]
@@ -45,7 +45,7 @@ view config =
                 Html.text ""
 
               else
-                Html.div [ classes [ Tw.flex, Tw.flex_wrap, Tw.gap (Th.s1), Tw.mt (Th.s1) ] ]
+                Html.div [ classes [ Tw.flex, Tw.flex_wrap, Tw.gap Th.s1, Tw.mt Th.s1 ] ]
                     (List.map viewTag config.usageTags)
             ]
         ]
@@ -54,7 +54,7 @@ view config =
 viewTag : String -> Html msg
 viewTag tag =
     Html.span
-        [ classes [ Tw.text_xs, TwEx.bg_brand_10, Tw.text_simple TC.brand, Tw.px (Th.s2), Tw.py (Th.s0_dot_5), Tw.rounded_full ] ]
+        [ classes [ Tw.text_xs, TwEx.bg_brand_10, Tw.text_simple TC.brand, Tw.px Th.s2, Tw.py Th.s0_dot_5, Tw.rounded_full ] ]
         [ Html.text tag ]
 
 
@@ -112,12 +112,12 @@ viewContrastInfo hex =
                         |> FeatherIcons.withSize 12
                         |> FeatherIcons.toHtml [ Attr.attribute "aria-hidden" "true" ]
             in
-            Html.div [ classes [ TwEx.space_y (Th.s0_dot_5), Tw.mt (Th.s1) ] ]
-                [ Html.div [ classes [ Tw.text_xs, Tw.font_mono, Tw.text_color (Th.gray Th.s400), Tw.flex, Tw.items_center, Tw.gap (Th.s1) ] ]
+            Html.div [ classes [ TwEx.space_y Th.s0_dot_5, Tw.mt Th.s1 ] ]
+                [ Html.div [ classes [ Tw.text_xs, Tw.font_mono, Tw.text_color (Th.gray Th.s400), Tw.flex, Tw.items_center, Tw.gap Th.s1 ] ]
                     [ Html.text ("vs #FFF: " ++ fmt ratioVsWhite ++ " " ++ gradeLabel ratioVsWhite)
                     , gradeIcon ratioVsWhite
                     ]
-                , Html.div [ classes [ Tw.text_xs, Tw.font_mono, Tw.text_color (Th.gray Th.s400), Tw.flex, Tw.items_center, Tw.gap (Th.s1) ] ]
+                , Html.div [ classes [ Tw.text_xs, Tw.font_mono, Tw.text_color (Th.gray Th.s400), Tw.flex, Tw.items_center, Tw.gap Th.s1 ] ]
                     [ Html.text ("vs #1A1A2E: " ++ fmt ratioVsDark ++ " " ++ gradeLabel ratioVsDark)
                     , gradeIcon ratioVsDark
                     ]

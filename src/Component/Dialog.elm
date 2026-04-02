@@ -38,11 +38,11 @@ view config =
                     [ Tw.relative
                     , Tw.rounded_xl
                     , Tw.shadow_xl
-                    , Tw.p (Th.s0)
-                    , Tw.max_w (Th.s0)
+                    , Tw.p Th.s0
+                    , Tw.max_w Th.s0
                     , TwEx.max_w_lg
                     , Tw.w_full
-                    , Tw.mx (Th.s4)
+                    , Tw.mx Th.s4
                     , Tw.flex
                     , Tw.flex_col
                     , Tw.z_10
@@ -50,7 +50,7 @@ view config =
                 , Events.on "cancel" (Json.Decode.succeed config.onClose)
                 ]
                 [ Html.div
-                    [ classes [ Tw.flex, Tw.items_center, Tw.justify_between, Tw.px (Th.s6), Tw.py (Th.s4) ] ]
+                    [ classes [ Tw.flex, Tw.items_center, Tw.justify_between, Tw.px Th.s6, Tw.py Th.s4 ] ]
                     [ Html.h2 [ classes [ Tw.type_h4, Tw.text_simple TC.brand ] ] [ Html.text config.title ]
                     , Html.button
                         [ Attr.type_ "button"
@@ -58,8 +58,8 @@ view config =
                             [ Tw.inline_flex
                             , Tw.items_center
                             , Tw.justify_center
-                            , Tw.w (Th.s11)
-                            , Tw.h (Th.s11)
+                            , Tw.w Th.s11
+                            , Tw.h Th.s11
                             , Tw.rounded
                             , Tw.text_color (Th.gray Th.s400)
                             , Bp.hover [ Tw.text_color (Th.gray Th.s600), Tw.bg_color (Th.gray Th.s100) ]
@@ -74,13 +74,13 @@ view config =
                         [ FeatherIcons.x |> FeatherIcons.withSize 18 |> FeatherIcons.toHtml [ Attr.attribute "aria-hidden" "true" ]
                         ]
                     ]
-                , Html.div [ classes [ Tw.px (Th.s6), Tw.py (Th.s4), Tw.flex_1 ] ] config.body
+                , Html.div [ classes [ Tw.px Th.s6, Tw.py Th.s4, Tw.flex_1 ] ] config.body
                 , case config.footer of
                     Nothing ->
                         Html.text ""
 
                     Just f ->
-                        Html.div [ classes [ Tw.px (Th.s6), Tw.py (Th.s4) ] ] [ f ]
+                        Html.div [ classes [ Tw.px Th.s6, Tw.py Th.s4 ] ] [ f ]
                 ]
             ]
 

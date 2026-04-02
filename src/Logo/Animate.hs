@@ -3,8 +3,9 @@ module Logo.Animate (assembleGif, assembleWebp) where
 import System.Process (callProcess)
 import Text.Printf (printf)
 
--- | Assemble PNG frames into an animated GIF using gifski.
--- animMs is the milliseconds per frame.
+{- | Assemble PNG frames into an animated GIF using gifski.
+animMs is the milliseconds per frame.
+-}
 assembleGif :: [FilePath] -> FilePath -> Int -> IO ()
 assembleGif framePaths outGif animMs = do
     putStrLn $ "  animate " ++ outGif ++ "  (" ++ show (length framePaths) ++ " frames)"
@@ -15,8 +16,9 @@ assembleGif framePaths outGif animMs = do
         fpsStr = printf "%.4f" fps
     callProcess "gifski" (["--fps", fpsStr, "-o", outGif] ++ framePaths)
 
--- | Assemble PNG frames into an animated WebP using img2webp.
--- animMs is the milliseconds per frame.
+{- | Assemble PNG frames into an animated WebP using img2webp.
+animMs is the milliseconds per frame.
+-}
 assembleWebp :: [FilePath] -> FilePath -> Int -> IO ()
 assembleWebp framePaths outWebp animMs = do
     putStrLn $ "  animate " ++ outWebp ++ "  (" ++ show (length framePaths) ++ " frames)"

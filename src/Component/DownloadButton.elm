@@ -21,8 +21,8 @@ view { label, href } =
             [ Tw.inline_block
             , Tw.bg_simple TC.brandYellow
             , Tw.text_simple TC.brand
-            , Tw.px (Th.s3)
-            , Tw.py (Th.s1_dot_5)
+            , Tw.px Th.s3
+            , Tw.py Th.s1_dot_5
             , Tw.rounded
             , Tw.type_body_small
             , Tw.cursor_pointer

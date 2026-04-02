@@ -79,19 +79,19 @@ view config =
 
         content =
             if config.loading then
-                Html.div [ classes [ Tw.flex, Tw.items_center, Tw.gap (Th.s1) ] ]
+                Html.div [ classes [ Tw.flex, Tw.items_center, Tw.gap Th.s1 ] ]
                     [ Html.span
-                        [ classes [ Tw.w (Th.s1_dot_5), Tw.h (Th.s1_dot_5), Tw.rounded_full, TwEx.bg_current, Tw.animate_bounce ]
+                        [ classes [ Tw.w Th.s1_dot_5, Tw.h Th.s1_dot_5, Tw.rounded_full, TwEx.bg_current, Tw.animate_bounce ]
                         , Attr.style "animation-delay" "0ms"
                         ]
                         []
                     , Html.span
-                        [ classes [ Tw.w (Th.s1_dot_5), Tw.h (Th.s1_dot_5), Tw.rounded_full, TwEx.bg_current, Tw.animate_bounce ]
+                        [ classes [ Tw.w Th.s1_dot_5, Tw.h Th.s1_dot_5, Tw.rounded_full, TwEx.bg_current, Tw.animate_bounce ]
                         , Attr.style "animation-delay" "150ms"
                         ]
                         []
                     , Html.span
-                        [ classes [ Tw.w (Th.s1_dot_5), Tw.h (Th.s1_dot_5), Tw.rounded_full, TwEx.bg_current, Tw.animate_bounce ]
+                        [ classes [ Tw.w Th.s1_dot_5, Tw.h Th.s1_dot_5, Tw.rounded_full, TwEx.bg_current, Tw.animate_bounce ]
                         , Attr.style "animation-delay" "300ms"
                         ]
                         []
@@ -167,10 +167,10 @@ sizeTw : Size -> List Tw.Tailwind
 sizeTw size =
     case size of
         Small ->
-            [ Tw.px (Th.s3), Tw.py (Th.s1_dot_5), Tw.text_sm ]
+            [ Tw.px Th.s3, Tw.py Th.s1_dot_5, Tw.text_sm ]
 
         Medium ->
-            [ Tw.px (Th.s4), Tw.py (Th.s2), Tw.text_sm ]
+            [ Tw.px Th.s4, Tw.py Th.s2, Tw.text_sm ]
 
         Large ->
-            [ Tw.px (Th.s6), Tw.py (Th.s3), Tw.text_base ]
+            [ Tw.px Th.s6, Tw.py Th.s3, Tw.text_base ]

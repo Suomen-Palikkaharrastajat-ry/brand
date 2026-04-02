@@ -11,13 +11,13 @@ import TailwindExtra as TwEx
 
 view : List (Html msg) -> Html msg
 view items =
-    Html.div [ classes [ Tw.animate_pulse, TwEx.space_y (Th.s3) ] ] items
+    Html.div [ classes [ Tw.animate_pulse, TwEx.space_y Th.s3 ] ] items
 
 
 viewLine : { widthClass : List Tw.Tailwind } -> Html msg
 viewLine config =
     Html.div
-        [ classes ([ Tw.h (Th.s4), Tw.bg_color (Th.gray Th.s200), Tw.rounded ] ++ config.widthClass) ]
+        [ classes ([ Tw.h Th.s4, Tw.bg_color (Th.gray Th.s200), Tw.rounded ] ++ config.widthClass) ]
         []
 
 
