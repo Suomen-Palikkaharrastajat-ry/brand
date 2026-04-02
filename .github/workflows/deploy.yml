@@ -124,6 +124,18 @@ jobs:
       - name: Install pnpm dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Fix lamdera bin shim
+        # lamdera's postinstall (binary.js) hard-links bin/lamdera to the native
+        # ELF binary, but pnpm already generated a shim that calls `node` on it.
+        # Rewrite the shim to exec the ELF directly.
+        run: |
+          cat > node_modules/.bin/lamdera << 'EOF'
+          #!/bin/sh
+          basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
+          exec "$basedir/../lamdera/bin/lamdera" "$@"
+          EOF
+          chmod +x node_modules/.bin/lamdera
+
       - name: Generate elm-tailwind Elm modules
         run: pnpm exec elm-tailwind-classes gen
 
