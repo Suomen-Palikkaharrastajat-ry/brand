@@ -469,11 +469,6 @@ assets: render ## Copy generated assets into public/ for elm-pages
 	rm -rf public/logo public/favicon public/fonts public/design-guide.json public/design-guide
 	cp -r logo favicon fonts design-guide.json design-guide public/
 
-dev: assets ## Dev server: pipeline -> copy assets -> elm-pages dev (hot reload)
-	$(ELM_TAILWIND_GEN)
-	chmod -R u+w .elm-pages/ elm-stuff/elm-pages/ 2>/dev/null || true
-	elm-pages dev
-
 site: assets ## Production build: pipeline -> copy assets -> elm-pages build -> dist/
 	$(ELM_TAILWIND_GEN)
 	chmod -R u+w .elm-pages/ elm-stuff/elm-pages/ 2>/dev/null || true
@@ -501,18 +496,13 @@ format: ## Auto-format Haskell and Elm source files
 
 # ── Watching ──────────────────────────────────────────────────────────────────
 
-dev-watch: assets ## Build all static assets, then watch with elm-pages dev
+watch: assets ## elm-pages dev server only (assumes assets already in public/)
 	$(ELM_TAILWIND_GEN)
 	chmod -R u+w .elm-pages/ elm-stuff/elm-pages/ 2>/dev/null || true
 	elm-pages dev
 
-watch: ## Re-run render on .hs/.cabal changes (requires entr)
+watch-hs: ## Re-run render on .hs/.cabal changes (requires entr)
 	find src app tests -name '*.hs' -o -name '*.cabal' | entr -r $(MAKE) render
-
-watch-elm: ## elm-pages dev server only (assumes assets already in public/)
-	$(ELM_TAILWIND_GEN)
-	chmod -R u+w .elm-pages/ elm-stuff/elm-pages/ 2>/dev/null || true
-	elm-pages dev
 
 # ── REPL ──────────────────────────────────────────────────────────────────────
 

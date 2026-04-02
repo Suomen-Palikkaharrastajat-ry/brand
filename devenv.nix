@@ -62,7 +62,7 @@ let
         echo "  elm-pages: $(elm-pages --version)"
         echo "  rsvg:      $(rsvg-convert --version | head -1)"
         echo ""
-        echo "  make dev      — pipeline + hot-reload site"
+        echo "  make watch    — pipeline + hot-reload site"
         echo "  make render   — regenerate all logo assets"
         echo ""
       '';
