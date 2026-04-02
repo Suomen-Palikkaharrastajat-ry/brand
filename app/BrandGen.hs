@@ -32,7 +32,7 @@ data BrandArgs = BrandArgs
 defaultBrandArgs :: BrandArgs
 defaultBrandArgs =
     BrandArgs
-        { baElmTokensOut = "src/Brand/Tokens.elm"
+        { baElmTokensOut = "src/Guide/Tokens.elm"
         , baCssOut = Nothing
         }
 
@@ -82,6 +82,6 @@ usageText =
         , "Generate project design-guide assets from Guide.* modules."
         , ""
         , "Options:"
-        , "  --elm-tokens-out FILE   Elm tokens output path [default: src/Brand/Tokens.elm]"
+        , "  --elm-tokens-out FILE   Elm tokens output path [default: src/Guide/Tokens.elm]"
         , "  --css-out FILE          Brand CSS output path  [default: none]"
         ]

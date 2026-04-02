@@ -1,9 +1,5 @@
 .PHONY: help all build blay-compose-all assets assets-from-blay site dev dev-watch deploy install test check format clean watch watch-elm repl develop shell render outline-text
 
-# Use pnpm exec for elm-pages so the project-local writable node_modules are used.
-# This avoids the Nix store's read-only node_modules being added to PATH (which
-# causes the lamdera JS wrapper to attempt hard-linking into the Nix store → EPERM).
-
 # ── Pipeline constants ────────────────────────────────────────────────────────
 # Single source of truth — forwarded verbatim as CLI flags to the executables.
 # Change a value here; no Haskell rebuild required.
@@ -458,6 +454,7 @@ render: $(ALL_SQ_OUTPUTS) $(ALL_HZ_OUTPUTS) $(ALL_ANIMATIONS) design-guide.json 
 # ── elm-pages site ────────────────────────────────────────────────────────────
 
 ELM_TAILWIND_GEN := node_modules/.bin/elm-tailwind-classes gen
+ELM_PAGES        ?= elm-pages
 
 install: ## Install pnpm deps and resolve Elm packages (run once after checkout)
 	pnpm install
@@ -472,7 +469,7 @@ assets: render ## Copy generated assets into public/ for elm-pages
 site: assets ## Production build: pipeline -> copy assets -> elm-pages build -> dist/
 	$(ELM_TAILWIND_GEN)
 	chmod -R u+w .elm-pages/ elm-stuff/elm-pages/ 2>/dev/null || true
-	elm-pages build
+	$(ELM_PAGES) build
 
 deploy: ## Push main branch to trigger GitHub Actions deploy
 	git push origin main
@@ -499,7 +496,7 @@ format: ## Auto-format Haskell and Elm source files
 watch: assets ## elm-pages dev server only (assumes assets already in public/)
 	$(ELM_TAILWIND_GEN)
 	chmod -R u+w .elm-pages/ elm-stuff/elm-pages/ 2>/dev/null || true
-	elm-pages dev
+	$(ELM_PAGES) dev
 
 watch-hs: ## Re-run render on .hs/.cabal changes (requires entr)
 	find src app tests -name '*.hs' -o -name '*.cabal' | entr -r $(MAKE) render
