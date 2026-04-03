@@ -6,55 +6,16 @@ build-type:    Simple
 
 library
   exposed-modules:
-    Guide.Colors, Guide.DesignData, Guide.Json, Guide.JsonLd, Guide.ElmGen, Guide.CssGen,
-    Logo.BrickLayout, Logo.Blockify, Logo.Compose,
-    Logo.Animate, Logo.Raster, Logo.Favicons
+    Guide.Types, Guide.Toml,
+    Guide.Colors, Guide.DesignData, Guide.Json, Guide.JsonLd, Guide.ElmGen, Guide.CssGen
   hs-source-dirs: src
   ghc-options: -Wall
   default-language: GHC2021
   build-depends:
-    base >=4.7 && <5, text, bytestring, base64-bytestring,
-    directory, filepath, process, xml-conduit,
-    aeson, aeson-pretty, JuicyPixels, containers, vector
-
--- Render a single .blay file to SVG / PNG / WebP + optional subtitle composition.
--- Generic: no filenames or brand colours are hardcoded.
-executable blay-render
-  main-is: Main.hs
-  hs-source-dirs: app
-  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
-  default-language: GHC2021
-  build-depends:
-    base >=4.7 && <5, logo-gen, text, directory, filepath
-
--- Draft a new .blay file from a source SVG (rasterise → blockify).
--- Local developer tool only; not used in CI.
-executable blay-draft
-  main-is: Draft.hs
-  hs-source-dirs: app
-  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
-  default-language: GHC2021
-  build-depends:
-    base >=4.7 && <5, logo-gen
-
--- Transform .blay files: recolour and/or tile side-by-side.
--- No filenames, colours, or project specifics are hardcoded.
-executable blay-compose
-  main-is: Compose.hs
-  hs-source-dirs: app
-  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
-  default-language: GHC2021
-  build-depends:
-    base >=4.7 && <5, logo-gen, text
-
--- Assemble pre-rendered PNG frames into animated GIF / WebP.
-executable blay-animate
-  main-is: Animate.hs
-  hs-source-dirs: app
-  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
-  default-language: GHC2021
-  build-depends:
-    base >=4.7 && <5, logo-gen
+    base >=4.7 && <5, text, bytestring,
+    directory, filepath,
+    aeson, aeson-pretty, containers, vector,
+    toml-parser
 
 -- Generate design-guide JSON, JSON-LD, and Elm brand tokens.
 executable brand-gen
@@ -69,8 +30,7 @@ test-suite logo-gen-tests
   type: exitcode-stdio-1.0
   main-is: TestSuite.hs
   other-modules:
-    Guide.ColorsSpec, Guide.ElmGenSpec, Guide.JsonSpec,
-    Logo.BlockifySpec
+    Guide.ColorsSpec, Guide.ElmGenSpec, Guide.JsonSpec
   hs-source-dirs: tests
   ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
   default-language: GHC2021

@@ -17,6 +17,7 @@ let
           JuicyPixels
           vector
           base64-bytestring
+          toml-parser
           temporary
           tasty
           tasty-hunit
@@ -27,12 +28,6 @@ let
       packages = [
         hsPkgs.hlint
         hsPkgs.fourmolu
-        # External raster/image tools (called via System.Process)
-        pkgs.librsvg # provides rsvg-convert
-        pkgs.libwebp # provides cwebp, img2webp
-        pkgs.gifski # animated GIF
-        pkgs.icoutils # provides icotool (favicon.ico)
-        pkgs.imagemagick # fallback for animated WebP (convert)
         pkgs.git
         pkgs.treefmt
         # Elm tooling
@@ -47,10 +42,7 @@ let
           lamdera = pkgs.elmPackages.lamdera;
         })
         # Other CLI tools
-        pkgs.entr
         pkgs.vim
-        # Python with fontTools for SVG text-to-path conversion
-        (pkgs.python3.withPackages (ps: [ ps.fonttools ]))
       ];
 
       enterShell = ''
@@ -60,10 +52,9 @@ let
         echo "  Cabal:     $(cabal --version | head -1)"
         echo "  Elm:       $(elm --version)"
         echo "  elm-pages: $(elm-pages --version)"
-        echo "  rsvg:      $(rsvg-convert --version | head -1)"
         echo ""
-        echo "  make watch    — pipeline + hot-reload site"
-        echo "  make render   — regenerate all logo assets"
+        echo "  make assets   — run brand-gen + copy assets"
+        echo "  make site     — full build to dist/"
         echo ""
       '';
     };

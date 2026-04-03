@@ -10,17 +10,16 @@ module Guide.CssGen (generateBrandCss) where
 import Data.Maybe (mapMaybe)
 import Data.Text (Text)
 import Data.Text qualified as T
-import Guide.Colors
-import Guide.DesignData
+import Guide.Types
 import Numeric (showFFloat)
 
-generateBrandCss :: Text
-generateBrandCss =
+generateBrandCss :: DesignGuide -> Text
+generateBrandCss dg =
     T.concat
         [ cssHeader
-        , cssFontFace
-        , cssTheme
-        , cssTypeUtilities
+        , cssFontFace (dgTypography dg)
+        , cssTheme dg
+        , cssTypeUtilities (dgTypography dg)
         , cssBaseLayer
         , cssReducedMotion
         , cssSharedComponents
@@ -45,12 +44,12 @@ cssHeader =
 -- @font-face
 -- ---------------------------------------------------------------------------
 
-cssFontFace :: Text
-cssFontFace =
+cssFontFace :: TypographyConfig -> Text
+cssFontFace tc =
     T.unlines
         [ "@font-face {"
-        , "  font-family: \"Outfit\";"
-        , "  src: url(\"fonts/Outfit-VariableFont_wght.ttf\") format(\"truetype\");"
+        , "  font-family: \"" <> head (tcFontFamily tc) <> "\";"
+        , "  src: url(\"" <> tcFontFile tc <> "\") format(\"truetype\");"
         , "  font-weight: 100 900;"
         , "  font-style: normal;"
         , "  font-display: swap;"
@@ -62,48 +61,52 @@ cssFontFace =
 -- @theme block
 -- ---------------------------------------------------------------------------
 
-cssTheme :: Text
-cssTheme =
-    T.unlines $
-        [ "@theme {"
-        , "  /* \x2500\x2500 Brand core \x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500 */"
-        , "  --color-brand:              " <> hexText featureColor <> ";"
-        , "  --color-brand-yellow:       #FAC80A;"
-        , "  --color-brand-red:          " <> semHex "colorBrandRed" <> ";"
-        , ""
-        , "  /* \x2500\x2500 Nougat palette \x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500 */"
-        ]
-            ++ nougatLines
-            ++ [ ""
-               , "  /* \x2500\x2500 Semantic text \x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500 */"
-               , "  --color-text-primary: " <> semHex "colorTextPrimary" <> ";"
-               , "  --color-text-on-dark: " <> semHex "colorTextOnDark" <> ";"
-               , "  --color-text-muted:   " <> semHex "colorTextMuted" <> ";"
-               , "  --color-text-subtle:  " <> semHex "colorTextSubtle" <> ";"
-               , ""
-               , "  /* \x2500\x2500 Semantic backgrounds \x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500 */"
-               , "  --color-bg-page:   " <> semHex "colorBgPage" <> ";"
-               , "  --color-bg-dark:   " <> semHex "colorBgDark" <> ";"
-               , "  --color-bg-subtle: " <> semHex "colorBgSubtle" <> ";"
-               , "  --color-bg-accent: " <> semHex "colorBgAccent" <> ";"
-               , ""
-               , "  /* \x2500\x2500 Semantic borders \x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500 */"
-               , "  --color-border-default: " <> semHex "colorBorderDefault" <> ";"
-               , "  --color-border-brand:   " <> semHex "colorBorderBrand" <> ";"
-               , ""
-               , "  /* \x2500\x2500 Typography \x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500 */"
-               , "  --font-sans: \"Outfit\", system-ui, sans-serif;"
-               , ""
-               , "  /* \x2500\x2500 Motion \x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500 */"
-               ]
-            ++ durationLines
-            ++ easingLines
-            ++ [ "}"
-               , ""
-               ]
+cssTheme :: DesignGuide -> Text
+cssTheme dg =
+    let m = dgMeta dg
+        tc = dgTypography dg
+        mc = dgMotion dg
+        fontStack = "\"" <> head (tcFontFamily tc) <> "\", " <> T.intercalate ", " (tail (tcFontFamily tc))
+     in T.unlines $
+            [ "@theme {"
+            , "  /* \x2500\x2500 Brand core \x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500 */"
+            , "  --color-brand:              " <> hexText (metaFeatureColor m) <> ";"
+            , "  --color-brand-yellow:       #FAC80A;"
+            , "  --color-brand-red:          " <> semHex dg "colorBrandRed" <> ";"
+            , ""
+            , "  /* \x2500\x2500 Nougat palette \x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500 */"
+            ]
+                ++ nougatLines dg
+                ++ [ ""
+                   , "  /* \x2500\x2500 Semantic text \x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500 */"
+                   , "  --color-text-primary: " <> semHex dg "colorTextPrimary" <> ";"
+                   , "  --color-text-on-dark: " <> semHex dg "colorTextOnDark" <> ";"
+                   , "  --color-text-muted:   " <> semHex dg "colorTextMuted" <> ";"
+                   , "  --color-text-subtle:  " <> semHex dg "colorTextSubtle" <> ";"
+                   , ""
+                   , "  /* \x2500\x2500 Semantic backgrounds \x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500 */"
+                   , "  --color-bg-page:   " <> semHex dg "colorBgPage" <> ";"
+                   , "  --color-bg-dark:   " <> semHex dg "colorBgDark" <> ";"
+                   , "  --color-bg-subtle: " <> semHex dg "colorBgSubtle" <> ";"
+                   , "  --color-bg-accent: " <> semHex dg "colorBgAccent" <> ";"
+                   , ""
+                   , "  /* \x2500\x2500 Semantic borders \x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500 */"
+                   , "  --color-border-default: " <> semHex dg "colorBorderDefault" <> ";"
+                   , "  --color-border-brand:   " <> semHex dg "colorBorderBrand" <> ";"
+                   , ""
+                   , "  /* \x2500\x2500 Typography \x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500 */"
+                   , "  --font-sans: " <> fontStack <> ";"
+                   , ""
+                   , "  /* \x2500\x2500 Motion \x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500 */"
+                   ]
+                ++ durationLines mc
+                ++ easingLines mc
+                ++ [ "}"
+                   , ""
+                   ]
 
-nougatLines :: [Text]
-nougatLines =
+nougatLines :: DesignGuide -> [Text]
+nougatLines dg =
     mapMaybe
         mkLine
         [ ("light-nougat", "  --color-brand-nougat-light: ")
@@ -111,17 +114,17 @@ nougatLines =
         , ("dark-nougat", "  --color-brand-nougat-dark:  ")
         ]
   where
-    mkLine (sid, prop) = case filter (\(i, _, _) -> i == sid) skinTones of
-        ((_, _, Hex h) : _) -> Just $ prop <> h <> ";"
+    mkLine (sid, prop) = case filter (\st -> stId st == sid) (dgSkinTones dg) of
+        (st : _) -> Just $ prop <> hexText (stHex st) <> ";"
         _ -> Nothing
 
-semHex :: Text -> Text
-semHex name = case filter (\(n, _, _, _, _, _) -> n == name) semanticColors of
-    ((_, _, h, _, _, _) : _) -> h
+semHex :: DesignGuide -> Text -> Text
+semHex dg name = case filter (\sc -> scElmName sc == name) (dgSemanticColors dg) of
+    (sc : _) -> scHex sc
     _ -> "#000000"
 
-durationLines :: [Text]
-durationLines =
+durationLines :: MotionConfig -> [Text]
+durationLines mc =
     mapMaybe
         mkLine
         [ ("fast", "  --duration-fast: ")
@@ -129,12 +132,12 @@ durationLines =
         , ("slow", "  --duration-slow: ")
         ]
   where
-    mkLine (name, prop) = case filter (\(n, _, _, _) -> n == name) motionDurationData of
-        ((_, ms, _, _) : _) -> Just $ prop <> T.pack (show ms) <> "ms;"
+    mkLine (name, prop) = case filter (\d -> mdName d == name) (mcDurations mc) of
+        (d : _) -> Just $ prop <> T.pack (show (mdMs d)) <> "ms;"
         _ -> Nothing
 
-easingLines :: [Text]
-easingLines =
+easingLines :: MotionConfig -> [Text]
+easingLines mc =
     mapMaybe
         mkLine
         [ ("standard", "  --ease-standard:   ")
@@ -142,18 +145,18 @@ easingLines =
         , ("accelerate", "  --ease-accelerate: ")
         ]
   where
-    mkLine (name, prop) = case filter (\(n, _, _, _, _, _) -> n == name) motionEasingData of
-        ((_, p1x, p1y, p2x, p2y, _) : _) ->
+    mkLine (name, prop) = case filter (\e -> meName e == name) (mcEasings mc) of
+        (e : _) ->
             Just $
                 prop
                     <> "cubic-bezier("
-                    <> fmtD p1x
+                    <> fmtD (meP1x e)
                     <> ", "
-                    <> fmtD p1y
+                    <> fmtD (meP1y e)
                     <> ", "
-                    <> fmtD p2x
+                    <> fmtD (meP2x e)
                     <> ", "
-                    <> fmtD p2y
+                    <> fmtD (meP2y e)
                     <> ");"
         _ -> Nothing
 
@@ -161,23 +164,29 @@ easingLines =
 -- @utility type-* blocks
 -- ---------------------------------------------------------------------------
 
-cssTypeUtilities :: Text
-cssTypeUtilities =
+cssTypeUtilities :: TypographyConfig -> Text
+cssTypeUtilities tc =
     T.unlines $
         [ "/* \x2500\x2500 Typography scale \x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500\x2500 */"
         , ""
         ]
-            ++ concatMap renderTypeUtility typeScale
+            ++ concatMap renderTypeUtility (tcScale tc)
 
-renderTypeUtility :: TypeScaleRow -> [Text]
-renderTypeUtility (name, w, sr, _, lh, ls, cssClass, _) =
-    [ "@utility " <> cssClass <> " {"
-    , "  font-size: " <> fmtD sr <> "rem;"
-    , "  font-weight: " <> T.pack (show w) <> ";"
-    , "  line-height: " <> fmtD lh <> ";"
-    ]
-        ++ extraProps name ls
-        ++ ["}", ""]
+renderTypeUtility :: TypeScaleEntry -> [Text]
+renderTypeUtility e =
+    let name = tseName e
+        sr = tseSizeRem e
+        w = tseWeight e
+        lh = tseLineHeight e
+        ls = tseLetterSpacingEm e
+        cc = tseCssClass e
+     in [ "@utility " <> cc <> " {"
+        , "  font-size: " <> fmtD sr <> "rem;"
+        , "  font-weight: " <> T.pack (show w) <> ";"
+        , "  line-height: " <> fmtD lh <> ";"
+        ]
+            ++ extraProps name ls
+            ++ ["}", ""]
   where
     extraProps "Overline" ls' =
         "  text-transform: uppercase;"
@@ -261,8 +270,6 @@ cssSharedComponents =
 -- Helpers
 -- ---------------------------------------------------------------------------
 
--- Format a Double for CSS: fixed notation, no scientific notation, no trailing zeros.
--- Examples: 3.0 -> "3", 1.875 -> "1.875", -0.02 -> "-0.02", 0.08 -> "0.08"
 fmtD :: Double -> Text
 fmtD d = T.pack (stripZeros (showFFloat (Just 6) d ""))
   where

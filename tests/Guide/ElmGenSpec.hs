@@ -1,8 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Guide.ElmGenSpec (tests) where
 
-import Guide.Colors (rainbowColors, skinTones)
 import Guide.ElmGen (generateBrandModule)
+import Guide.Toml (parseDesignGuide)
+import Guide.Types
 import Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
@@ -17,32 +18,39 @@ tests :: TestTree
 tests =
     testGroup
         "Guide.ElmGen"
-        [ testCase "module header is correct" $
+        [ testCase "module header is correct" $ do
+            dg <- parseDesignGuide "design-guide.toml"
             assertBool "starts with module Guide.Tokens exposing (..)" $
-                "module Guide.Tokens exposing (..)" `T.isPrefixOf` generateBrandModule
-        , testCase "contains associationName" $
+                "module Guide.Tokens exposing (..)" `T.isPrefixOf` generateBrandModule dg
+        , testCase "contains associationName" $ do
+            dg <- parseDesignGuide "design-guide.toml"
             assertBool "has association name" $
-                "Suomen Palikkaharrastajat ry" `T.isInfixOf` generateBrandModule
+                "Suomen Palikkaharrastajat ry" `T.isInfixOf` generateBrandModule dg
         , testCase "escapeElmString handles quotes" $
             renderString "say \"hi\"" @?= "\"say \\\"hi\\\"\""
         , testCase "escapeElmString handles backslash" $
             renderString "a\\b" @?= "\"a\\\\b\""
-        , testCase "skinTones list has 4 items" $
-            length skinTones @?= 4
-        , testCase "rainbowColors list has 7 items" $
-            length rainbowColors @?= 7
-        , testCase "generated module contains skinTones" $
+        , testCase "skinTones list has 4 items" $ do
+            dg <- parseDesignGuide "design-guide.toml"
+            length (dgSkinTones dg) @?= 4
+        , testCase "rainbowColors list has 7 items" $ do
+            dg <- parseDesignGuide "design-guide.toml"
+            length (dgRainbowColors dg) @?= 7
+        , testCase "generated module contains skinTones" $ do
+            dg <- parseDesignGuide "design-guide.toml"
             assertBool "skinTones appears in output" $
-                "skinTones : List SkinTone" `T.isInfixOf` generateBrandModule
-        , testCase "generated module contains rainbowColors" $
+                "skinTones : List SkinTone" `T.isInfixOf` generateBrandModule dg
+        , testCase "generated module contains rainbowColors" $ do
+            dg <- parseDesignGuide "design-guide.toml"
             assertBool "rainbowColors appears in output" $
-                "rainbowColors : List RainbowColor" `T.isInfixOf` generateBrandModule
+                "rainbowColors : List RainbowColor" `T.isInfixOf` generateBrandModule dg
         , testCase "generated Elm passes elm-format --validate" $ do
+            dg <- parseDesignGuide "design-guide.toml"
             (rc, _, _) <- readProcessWithExitCode "which" ["elm-format"] ""
             case rc of
                 ExitFailure _ -> pure ()  -- elm-format not in PATH; skip
                 ExitSuccess   -> withTempFile "." "Generated.elm" $ \path handle -> do
-                    TIO.hPutStr handle generateBrandModule
+                    TIO.hPutStr handle (generateBrandModule dg)
                     hClose handle
                     (code, _, _) <- readProcessWithExitCode "elm-format" ["--validate", path] ""
                     code @?= ExitSuccess

@@ -1,8 +1,12 @@
-{- | brand-gen: generate project design-guide assets from Guide.* modules.
+{- | brand-gen: generate project design-guide assets from design-guide.toml.
 
-Writes design-guide.json, design-guide/*.jsonld, an Elm Guide.Tokens module,
-and optionally public/brand.css.  No .blay files are read; this step is
-independent of the blay render pipeline.
+Reads design-guide.toml and generates:
+  * design-guide.tokens.json (W3C Design Tokens 2025.10)
+  * design-guide/*.jsonld (JSON-LD section files)
+  * src/Guide/Tokens.elm (Elm constants)
+  * optionally public/brand.css
+
+No .blay files are read; this step is independent of the blay render pipeline.
 
 == Usage
 
@@ -19,6 +23,7 @@ import Guide.CssGen (generateBrandCss)
 import Guide.ElmGen (generateBrandModule)
 import Guide.Json (generateDesignGuide)
 import Guide.JsonLd (generateJsonLd)
+import Guide.Toml (parseDesignGuide)
 import System.Directory (createDirectoryIfMissing)
 import System.Environment (getArgs)
 import System.Exit (exitSuccess)
@@ -48,21 +53,22 @@ main = do
 
 runBrandGen :: BrandArgs -> IO ()
 runBrandGen ba = do
-    putStrLn "==> design-guide.json"
-    generateDesignGuide
+    dg <- parseDesignGuide "design-guide.toml"
+    putStrLn "==> design-guide.tokens.json"
+    generateDesignGuide dg
     putStrLn "==> design-guide/*.jsonld"
-    generateJsonLd
+    generateJsonLd dg
     let elmOut = baElmTokensOut ba
     putStrLn $ "==> " ++ elmOut
     createDirectoryIfMissing True (takeDirectory elmOut)
-    TIO.writeFile elmOut generateBrandModule
+    TIO.writeFile elmOut (generateBrandModule dg)
     putStrLn $ "Wrote " ++ elmOut
     case baCssOut ba of
         Nothing -> return ()
         Just cssOut -> do
             putStrLn $ "==> " ++ cssOut
             createDirectoryIfMissing True (takeDirectory cssOut)
-            BS.writeFile cssOut (TE.encodeUtf8 generateBrandCss)
+            BS.writeFile cssOut (TE.encodeUtf8 (generateBrandCss dg))
             putStrLn $ "Wrote " ++ cssOut
     putStrLn "brand-gen: done."
 

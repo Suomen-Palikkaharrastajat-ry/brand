@@ -1,0 +1,779 @@
+# design-guide.toml — Single source of truth for all design tokens
+#
+# Conforms to W3C Design Tokens 2025.10 when processed by brand-gen.
+# Human-editable; committed to the repo.
+# Run `make brand-gen` (or `cabal run --offline brand-gen`) after changes.
+
+# ═══════════════════════════════════════════════════════════════════════
+# Metadata
+# ═══════════════════════════════════════════════════════════════════════
+
+[meta]
+version = "2025.10"
+organization = "Suomen Palikkaharrastajat ry"
+canonical-url = "https://logo.palikkaharrastajat.fi"
+brand-guide-url = "https://logo.palikkaharrastajat.fi"
+feature-color = "#05131D"
+highlight-color = "#FFFFFF"
+dark-bg = "#05131D"
+subtitle-on-light = "#05131D"
+subtitle-on-dark = "#FFFFFF"
+head-svg-face-color = "#f8c70b"
+
+# ═══════════════════════════════════════════════════════════════════════
+# Brand colors (primitive)
+# ═══════════════════════════════════════════════════════════════════════
+
+[[color.brand]]
+id = "lego-black"
+name = "Black"
+hex = "#05131D"
+description = "Primary brand color. Never hard-code this hex — use Guide.Colors in Haskell or Guide.Tokens in Elm."
+usage = ["features", "text", "dark background"]
+
+  [[color.brand.wcag]]
+  on = "onWhite"
+  ratio = 17.3
+  rating = "AAA"
+
+  [[color.brand.wcag]]
+  on = "onYellow"
+  ratio = 11.5
+  rating = "AAA"
+
+[[color.brand]]
+id = "lego-white"
+name = "White"
+hex = "#FFFFFF"
+description = "Use for eye highlights and text on dark/brand-colored backgrounds."
+usage = ["eye highlights", "text on dark background"]
+
+  [[color.brand.wcag]]
+  on = "onBrand"
+  ratio = 17.3
+  rating = "AAA"
+
+[[color.brand]]
+id = "red"
+name = "Red"
+hex = "#C91A09"
+description = "Accent colour from the Blacktron series. Use for highlights, danger states, and emphasis."
+usage = ["accent", "danger", "highlights"]
+
+  [[color.brand.wcag]]
+  on = "onWhite"
+  ratio = 5.0
+  rating = "AA"
+
+  [[color.brand.wcag]]
+  on = "onBlack"
+  ratio = 4.2
+  rating = "AA"
+
+# ═══════════════════════════════════════════════════════════════════════
+# Skin tones
+# ═══════════════════════════════════════════════════════════════════════
+
+[[color.skin-tone]]
+id = "yellow"
+name = "Yellow"
+hex = "#FAC80A"
+description = "Classic LEGO minifig yellow. Brand accent color."
+
+  [[color.skin-tone.wcag]]
+  on = "onWhite"
+  ratio = 1.5
+  rating = "fail"
+
+  [[color.skin-tone.wcag]]
+  on = "onBlack"
+  ratio = 11.5
+  rating = "AAA"
+
+[[color.skin-tone]]
+id = "light-nougat"
+name = "Light Nougat"
+hex = "#F6D7B3"
+description = "Light skin tone. Contrast on white: 1.4:1 — decorative only."
+
+  [[color.skin-tone.wcag]]
+  on = "onWhite"
+  ratio = 1.4
+  rating = "fail"
+
+  [[color.skin-tone.wcag]]
+  on = "onBlack"
+  ratio = 12.4
+  rating = "AAA"
+
+[[color.skin-tone]]
+id = "nougat"
+name = "Nougat"
+hex = "#D09168"
+description = "Medium skin tone. Contrast on black: 6.7:1 (AA)."
+
+  [[color.skin-tone.wcag]]
+  on = "onWhite"
+  ratio = 2.6
+  rating = "fail"
+
+  [[color.skin-tone.wcag]]
+  on = "onBlack"
+  ratio = 6.7
+  rating = "AA"
+
+[[color.skin-tone]]
+id = "dark-nougat"
+name = "Dark Nougat"
+hex = "#AD6140"
+description = "Dark skin tone. Contrast on white: 4.4:1 (AA large text)."
+
+  [[color.skin-tone.wcag]]
+  on = "onWhite"
+  ratio = 4.4
+  rating = "AA"
+
+  [[color.skin-tone.wcag]]
+  on = "onBlack"
+  ratio = 4.0
+  rating = "AA"
+
+# ═══════════════════════════════════════════════════════════════════════
+# Rainbow colors
+# ═══════════════════════════════════════════════════════════════════════
+
+[[color.rainbow]]
+id = "salmon"
+name = "Salmon"
+hex = "#F2705E"
+description = "Red"
+
+[[color.rainbow]]
+id = "light-orange"
+name = "Light Orange"
+hex = "#F9BA61"
+description = "Orange"
+
+[[color.rainbow]]
+id = "yellow"
+name = "Yellow"
+hex = "#FAC80A"
+description = "Yellow"
+
+[[color.rainbow]]
+id = "medium-green"
+name = "Medium Green"
+hex = "#73DCA1"
+description = "Green"
+
+[[color.rainbow]]
+id = "bright-light-blue"
+name = "Bright Light Blue"
+hex = "#9FC3E9"
+description = "Blue"
+
+[[color.rainbow]]
+id = "light-lilac"
+name = "Light Lilac"
+hex = "#9195CA"
+description = "Indigo"
+
+[[color.rainbow]]
+id = "medium-lavender"
+name = "Medium Lavender"
+hex = "#AC78BA"
+description = "Violet"
+
+# ═══════════════════════════════════════════════════════════════════════
+# Semantic colors
+# ═══════════════════════════════════════════════════════════════════════
+
+[[color.semantic]]
+elm-name = "colorTextPrimary"
+json-path = "text.primary"
+hex = "#05131D"
+tailwind-class = "text-text-primary"
+css-variable = "--color-text-primary"
+description = "Primary body text; use on white or light-gray backgrounds."
+
+[[color.semantic]]
+elm-name = "colorTextOnDark"
+json-path = "text.onDark"
+hex = "#FFFFFF"
+tailwind-class = "text-text-on-dark"
+css-variable = "--color-text-on-dark"
+description = "Text on dark or brand-colored backgrounds."
+
+[[color.semantic]]
+elm-name = "colorTextMuted"
+json-path = "text.muted"
+hex = "#6B7280"
+tailwind-class = "text-text-muted"
+css-variable = "--color-text-muted"
+description = "Secondary labels, captions, helper text on light backgrounds."
+
+[[color.semantic]]
+elm-name = "colorTextSubtle"
+json-path = "text.subtle"
+hex = "#9CA3AF"
+tailwind-class = "text-text-subtle"
+css-variable = "--color-text-subtle"
+description = "De-emphasised metadata; use only for large text."
+
+[[color.semantic]]
+elm-name = "colorBgPage"
+json-path = "background.page"
+hex = "#FFFFFF"
+tailwind-class = "bg-bg-page"
+css-variable = "--color-bg-page"
+description = "Default page/document background."
+
+[[color.semantic]]
+elm-name = "colorBgDark"
+json-path = "background.dark"
+hex = "#05131D"
+tailwind-class = "bg-bg-dark"
+css-variable = "--color-bg-dark"
+description = "Dark section backgrounds. Pair with colorTextOnDark."
+
+[[color.semantic]]
+elm-name = "colorBgSubtle"
+json-path = "background.subtle"
+hex = "#F9FAFB"
+tailwind-class = "bg-bg-subtle"
+css-variable = "--color-bg-subtle"
+description = "Light card and section backgrounds."
+
+[[color.semantic]]
+elm-name = "colorBgAccent"
+json-path = "background.accent"
+hex = "#FAC80A"
+tailwind-class = "bg-bg-accent"
+css-variable = "--color-bg-accent"
+description = "Brand accent CTA color. Always pair with colorTextPrimary."
+
+[[color.semantic]]
+elm-name = "colorBorderDefault"
+json-path = "border.default"
+hex = "#E5E7EB"
+tailwind-class = "border-border-default"
+css-variable = "--color-border-default"
+description = "Standard card and section divider borders."
+
+[[color.semantic]]
+elm-name = "colorBorderBrand"
+json-path = "border.brand"
+hex = "#05131D"
+tailwind-class = "border-border-brand"
+css-variable = "--color-border-brand"
+description = "Brand-colored borders, left-accent rules, focus rings."
+
+[[color.semantic]]
+elm-name = "colorBrandRed"
+json-path = "color.brandRed"
+hex = "#C91A09"
+tailwind-class = "text-brand-red"
+css-variable = "--color-brand-red"
+description = "Error states, destructive actions, required field indicators."
+
+# ═══════════════════════════════════════════════════════════════════════
+# Typography
+# ═══════════════════════════════════════════════════════════════════════
+
+[typography]
+font-family = ["Outfit", "system-ui", "sans-serif"]
+font-file = "fonts/Outfit-VariableFont_wght.ttf"
+font-license = "OFL-1.1"
+font-license-file = "fonts/OFL.txt"
+
+usage-rules = [
+  "Use the Outfit font exclusively; never substitute a system font in designed output.",
+  "Minimum body text size is 16px (1rem) at weight 400.",
+  "Minimum caption/label text size is 14px (0.875rem); use weight 500 or higher for readability.",
+  "Maximum recommended line length is 75 characters for body text.",
+  "Heading hierarchy must descend: Display > H1 > H2 > H3 > H4. Do not skip levels.",
+  "Code and monospace content should use font-family: monospace as a fallback.",
+]
+
+[[typography.scale]]
+name = "Display"
+weight = 700
+size-rem = 3.0
+size-px = 48
+line-height = 1.1
+letter-spacing-em = -0.02
+css-class = "type-display"
+description = "Hero headlines and landing-page titles only."
+
+[[typography.scale]]
+name = "Heading1"
+weight = 700
+size-rem = 1.875
+size-px = 30
+line-height = 1.2
+letter-spacing-em = -0.01
+css-class = "type-h1"
+description = "Page-level headings (one per page)."
+
+[[typography.scale]]
+name = "Heading2"
+weight = 700
+size-rem = 1.5
+size-px = 24
+line-height = 1.3
+letter-spacing-em = 0.0
+css-class = "type-h2"
+description = "Section headings."
+
+[[typography.scale]]
+name = "Heading3"
+weight = 600
+size-rem = 1.25
+size-px = 20
+line-height = 1.35
+letter-spacing-em = 0.0
+css-class = "type-h3"
+description = "Sub-section headings."
+
+[[typography.scale]]
+name = "Heading4"
+weight = 600
+size-rem = 1.125
+size-px = 18
+line-height = 1.4
+letter-spacing-em = 0.0
+css-class = "type-h4"
+description = "Card and widget headings. Use below Heading3."
+
+[[typography.scale]]
+name = "Body"
+weight = 400
+size-rem = 1.0
+size-px = 16
+line-height = 1.6
+letter-spacing-em = 0.0
+css-class = "type-body"
+description = "Default body copy. Minimum size for accessible reading."
+
+[[typography.scale]]
+name = "BodySmall"
+weight = 500
+size-rem = 0.875
+size-px = 14
+line-height = 1.5
+letter-spacing-em = 0.0
+css-class = "type-body-small"
+description = "Secondary labels, UI controls, and form hints."
+
+[[typography.scale]]
+name = "Caption"
+weight = 400
+size-rem = 0.875
+size-px = 14
+line-height = 1.4
+letter-spacing-em = 0.02
+css-class = "type-caption"
+description = "Image captions, footnotes, and metadata."
+
+[[typography.scale]]
+name = "Mono"
+weight = 400
+size-rem = 0.875
+size-px = 14
+line-height = 1.6
+letter-spacing-em = 0.0
+css-class = "type-mono"
+description = "Hex values, IDs, and code snippets."
+
+[[typography.scale]]
+name = "Overline"
+weight = 600
+size-rem = 0.75
+size-px = 12
+line-height = 1.4
+letter-spacing-em = 0.08
+css-class = "type-overline"
+description = "Section category labels. Always uppercase."
+
+# ═══════════════════════════════════════════════════════════════════════
+# Spacing
+# ═══════════════════════════════════════════════════════════════════════
+
+[spacing]
+base-unit = 4
+content-width-px = 1024
+content-width-tailwind = "max-w-5xl"
+page-padding-x-px = 16
+page-padding-x-tailwind = "px-4"
+page-wrapper-class = "max-w-5xl mx-auto px-4"
+
+responsive-rules = [
+  "Design mobile-first: write base styles for mobile, then override with sm:, md:, lg: prefixes.",
+  "All page content wraps at max-w-5xl (1024px) with px-4 (16px) horizontal padding on all screens.",
+  "Stack layouts vertically on mobile; switch to horizontal/grid at sm (640px) or md (768px).",
+  "Tables wider than the viewport must use overflow-x-auto.",
+  "Never rely on hover-only interactions; provide touch-friendly tap targets (min 44x44px).",
+  "Use the prefers-reduced-motion media query for all animations.",
+  "The Display type style is recommended for screens >= md (768px). Use Heading1 on smaller screens.",
+  "Minimum tap target size: 44x44px (WCAG 2.5.5 AAA). Use py-3 px-4 as a minimum for interactive elements.",
+]
+
+[[spacing.scale]]
+name = "space-1"
+multiplier = 1
+px = 4
+rem = 0.25
+tailwind-class = "p-1 / m-1"
+description = "Tight: icon padding, inline gaps."
+
+[[spacing.scale]]
+name = "space-2"
+multiplier = 2
+px = 8
+rem = 0.5
+tailwind-class = "p-2 / m-2"
+description = "Compact: button padding, tag gaps."
+
+[[spacing.scale]]
+name = "space-3"
+multiplier = 3
+px = 12
+rem = 0.75
+tailwind-class = "p-3 / m-3"
+description = "Small: input padding, list item gaps."
+
+[[spacing.scale]]
+name = "space-4"
+multiplier = 4
+px = 16
+rem = 1.0
+tailwind-class = "p-4 / m-4"
+description = "Base: card padding, form field gaps."
+
+[[spacing.scale]]
+name = "space-6"
+multiplier = 6
+px = 24
+rem = 1.5
+tailwind-class = "p-6 / m-6"
+description = "Medium: section sub-divisions."
+
+[[spacing.scale]]
+name = "space-8"
+multiplier = 8
+px = 32
+rem = 2.0
+tailwind-class = "p-8 / m-8"
+description = "Large: card body padding, section gaps."
+
+[[spacing.scale]]
+name = "space-12"
+multiplier = 12
+px = 48
+rem = 3.0
+tailwind-class = "p-12 / m-12"
+description = "XL: page section vertical margins."
+
+[[spacing.scale]]
+name = "space-16"
+multiplier = 16
+px = 64
+rem = 4.0
+tailwind-class = "p-16 / m-16"
+description = "2XL: hero and feature block spacing."
+
+[[spacing.breakpoint]]
+name = "sm"
+px = 640
+
+[[spacing.breakpoint]]
+name = "md"
+px = 768
+
+[[spacing.breakpoint]]
+name = "lg"
+px = 1024
+
+[[spacing.breakpoint]]
+name = "xl"
+px = 1280
+
+[[spacing.border-radius]]
+name = "sm"
+px = 4
+tailwind-class = "rounded"
+
+[[spacing.border-radius]]
+name = "md"
+px = 8
+tailwind-class = "rounded-lg"
+
+[[spacing.border-radius]]
+name = "lg"
+px = 12
+tailwind-class = "rounded-xl"
+
+[[spacing.border-radius]]
+name = "full"
+px = 9999
+tailwind-class = "rounded-full"
+
+[[spacing.responsive-grid]]
+name = "colorSwatches"
+description = "Colour swatch grid"
+mobile = 1
+sm = 2
+md = 2
+lg = 3
+xl = 4
+
+[[spacing.responsive-grid]]
+name = "logoCards"
+description = "Logo card grid"
+mobile = 1
+sm = 2
+md = 2
+lg = 3
+xl = 3
+
+[[spacing.responsive-grid]]
+name = "componentPreviews"
+description = "Component preview cards"
+mobile = 1
+sm = 1
+md = 2
+lg = 2
+xl = 3
+
+[[spacing.responsive-grid]]
+name = "statCards"
+description = "Stats / metric cards"
+mobile = 1
+sm = 2
+md = 2
+lg = 4
+xl = 4
+
+# ═══════════════════════════════════════════════════════════════════════
+# Motion
+# ═══════════════════════════════════════════════════════════════════════
+
+[motion]
+usage-rules = [
+  "Always provide a prefers-reduced-motion alternative.",
+  "Animate transform and opacity only; never animate layout properties.",
+  "The animated logo must not autoplay when prefers-reduced-motion: reduce is set.",
+  "Use duration.fast for hover/focus, duration.base for reveals, duration.slow for page transitions.",
+]
+
+[[motion.duration]]
+name = "fast"
+ms = 150
+css-variable = "--duration-fast"
+description = "Hover states, focus rings, button fills."
+
+[[motion.duration]]
+name = "base"
+ms = 300
+css-variable = "--duration-base"
+description = "Default: card lift, menu open, accordion expand."
+
+[[motion.duration]]
+name = "slow"
+ms = 500
+css-variable = "--duration-slow"
+description = "Page-level transitions, large content reveals."
+
+[[motion.duration]]
+name = "logoFrame"
+ms = 10000
+css-variable = "--duration-logo-frame"
+description = "Animated logo frame hold — do not modify without regenerating assets."
+
+[[motion.easing]]
+name = "standard"
+p1x = 0.4
+p1y = 0.0
+p2x = 0.2
+p2y = 1.0
+description = "Default easing for elements that both enter and exit."
+
+[[motion.easing]]
+name = "decelerate"
+p1x = 0.0
+p1y = 0.0
+p2x = 0.2
+p2y = 1.0
+description = "Elements entering the screen."
+
+[[motion.easing]]
+name = "accelerate"
+p1x = 0.4
+p1y = 0.0
+p2x = 1.0
+p2y = 1.0
+description = "Elements leaving the screen."
+# ═══════════════════════════════════════════════════════════════════════
+# Components
+# ═══════════════════════════════════════════════════════════════════════
+
+[[component]]
+name = "ColorSwatch"
+module = "Component.ColorSwatch"
+description = "Color token display with hex, name, description, usage tags."
+props = ["hex: String", "name: String", "description: String", "usageTags: List String"]
+token-deps = ["colors.semantic.text.primary"]
+
+[[component]]
+name = "LogoCard"
+module = "Component.LogoCard"
+description = "Logo variant gallery card with download links."
+props = ["id, description, theme, animated, withText, svgUrl, pngUrl, webpUrl, gifUrl"]
+token-deps = ["colors.semantic.background.dark"]
+
+[[component]]
+name = "DownloadButton"
+module = "Component.DownloadButton"
+description = "Inline download link as button."
+props = ["label: String", "href: String"]
+token-deps = ["colors.semantic.background.accent"]
+
+[[component]]
+name = "SectionHeader"
+module = "Component.SectionHeader"
+description = "Section heading with optional description."
+props = ["title: String", "description: Maybe String"]
+token-deps = ["typography.scale[Heading2]"]
+
+[[component]]
+name = "Alert"
+module = "Component.Alert"
+description = "Contextual feedback message. Types: Info, Success, Warning, Error."
+props = ["alertType: AlertType", "title: Maybe String", "body: List (Html msg)"]
+token-deps = []
+
+[[component]]
+name = "Badge"
+module = "Component.Badge"
+description = "Small inline label. Colors: Gray, Blue, Green, Yellow, Red, Purple, Indigo."
+props = ["label: String", "color: Color"]
+token-deps = []
+
+[[component]]
+name = "Button"
+module = "Component.Button"
+description = "Action button or link-button. Variants: Primary, Secondary, Ghost, Danger."
+props = ["label: String", "variant: Variant", "size: Size (Small|Medium|Large)", "onClick: msg  OR  href: String"]
+token-deps = ["colors.semantic.background.accent"]
+
+[[component]]
+name = "Card"
+module = "Component.Card"
+description = "Content container with optional header, footer, image, shadow."
+props = ["body, header, footer: Maybe Html", "image: Maybe String", "shadow: Shadow (None|Sm|Md|Lg)"]
+token-deps = ["colors.semantic.border.default"]
+
+[[component]]
+name = "Accordion"
+module = "Component.Accordion"
+description = "Collapsible sections using native <details>."
+props = ["items: List { title: String, body: List (Html msg) }"]
+token-deps = ["colors.semantic.border.default"]
+
+[[component]]
+name = "Breadcrumb"
+module = "Component.Breadcrumb"
+description = "Navigation breadcrumb trail."
+props = ["items: List { label: String, href: Maybe String }"]
+token-deps = []
+
+[[component]]
+name = "ButtonGroup"
+module = "Component.ButtonGroup"
+description = "Horizontally grouped buttons."
+props = ["buttons: List (Html msg)"]
+token-deps = []
+
+[[component]]
+name = "CloseButton"
+module = "Component.CloseButton"
+description = "Accessible close / dismiss button."
+props = ["onClick: msg", "label: String (aria-label)"]
+token-deps = []
+
+[[component]]
+name = "Collapse"
+module = "Component.Collapse"
+description = "Single collapsible section using <details>."
+props = ["title: String", "body: List (Html msg)", "open: Bool"]
+token-deps = ["colors.semantic.border.default"]
+
+[[component]]
+name = "Dropdown"
+module = "Component.Dropdown"
+description = "Disclosure dropdown using <details>/<summary>."
+props = ["trigger: Html msg", "items: List (Html msg)"]
+token-deps = []
+
+[[component]]
+name = "ListGroup"
+module = "Component.ListGroup"
+description = "Vertical list with optional active/disabled states."
+props = ["items: List ListItem"]
+token-deps = ["colors.semantic.border.default"]
+
+[[component]]
+name = "Pagination"
+module = "Component.Pagination"
+description = "Page navigation control."
+props = ["current: Int", "total: Int", "onPage: Int -> msg"]
+token-deps = []
+
+[[component]]
+name = "Placeholder"
+module = "Component.Placeholder"
+description = "Animated loading skeleton."
+props = ["lines: Int", "withImage: Bool"]
+token-deps = []
+
+[[component]]
+name = "Progress"
+module = "Component.Progress"
+description = "Horizontal progress bar."
+props = ["value: Float (0-1)", "label: Maybe String", "color: String"]
+token-deps = []
+
+[[component]]
+name = "Spinner"
+module = "Component.Spinner"
+description = "Loading spinner animation."
+props = ["size: SpinnerSize (Sm|Md|Lg)", "label: Maybe String"]
+token-deps = []
+
+[[component]]
+name = "Stats"
+module = "Component.Stats"
+description = "Metric display grid."
+props = ["items: List { label, value, change }"]
+token-deps = ["colors.semantic.text.muted"]
+
+[[component]]
+name = "Timeline"
+module = "Component.Timeline"
+description = "Vertical timeline for changelogs."
+props = ["items: List { date, title, children }"]
+token-deps = ["colors.semantic.border.default"]
+
+[[component]]
+name = "Toast"
+module = "Component.Toast"
+description = "Notification message bar."
+props = ["message: String", "toastType: ToastType (Info|Success|Warning|Error)"]
+token-deps = []
+
+[[component]]
+name = "Tabs"
+module = "Component.Tabs"
+description = "Tab navigation strip (stateless — host provides active index)."
+props = ["tabs: List String", "activeIndex: Int", "onTabClick: Int -> msg"]
+token-deps = []

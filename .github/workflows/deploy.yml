@@ -83,7 +83,7 @@ jobs:
           path: |
             logo/
             favicon/
-            design-guide.json
+            design-guide.tokens.json
             design-guide/
             src/Brand/Tokens.elm
           key: pipeline-${{ runner.os }}-${{ hashFiles('layout/*.blay', 'fonts/*.ttf', 'src/**/*.hs', 'app/**/*.hs') }}
@@ -92,7 +92,7 @@ jobs:
         if: steps.pipeline-cache.outputs.cache-hit == 'true'
         run: |
           find logo favicon design-guide -type f -exec touch {} + 2>/dev/null || true
-          touch design-guide.json src/Brand/Tokens.elm 2>/dev/null || true
+          touch design-guide.tokens.json src/Brand/Tokens.elm 2>/dev/null || true
 
       # ── Node / Elm caches ─────────────────────────────────────────────────────
 

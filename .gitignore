@@ -30,12 +30,14 @@ src/Guide/Tokens.elm
 logo/
 favicon/
 design-guide.json
+design-guide.tokens.json
 design-guide/
 public/logo/
 public/favicon/
 public/fonts/
 public/design-guide/
 public/design-guide.json
+public/design-guide.tokens.json
 
 # --- Editor & OS ---
 .DS_Store
