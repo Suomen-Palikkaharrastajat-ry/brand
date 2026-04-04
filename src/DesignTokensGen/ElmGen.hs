@@ -31,6 +31,8 @@ generateElmPackage dg =
     , ("src/DesignTokens/Accessibility.elm", accessibilityModule dg)
     , ("src/DesignTokens/Opacity.elm", opacityModule dg)
     , ("src/DesignTokens/Components.elm", componentsModule dg)
+    , ("src/DesignTokens/Guide/Colors.elm", guideColorsModule dg)
+    , ("src/DesignTokens/Guide/Logos.elm", guideLogosModule dg)
     ]
 
 -- ---------------------------------------------------------------------------
@@ -55,7 +57,9 @@ elmJson =
         , "        \"DesignTokens.Effects\","
         , "        \"DesignTokens.Accessibility\","
         , "        \"DesignTokens.Opacity\","
-        , "        \"DesignTokens.Components\""
+        , "        \"DesignTokens.Components\","
+        , "        \"DesignTokens.Guide.Colors\","
+        , "        \"DesignTokens.Guide.Logos\""
         , "    ],"
         , "    \"elm-version\": \"0.19.0 <= v < 0.20.0\","
         , "    \"dependencies\": {"
@@ -458,6 +462,178 @@ componentDef cs =
         ]
 
 -- ---------------------------------------------------------------------------
+-- Guide.Colors module
+-- ---------------------------------------------------------------------------
+
+guideColorsModule :: DesignGuide -> Text
+guideColorsModule dg =
+    T.unlines $
+        [ moduleHeader
+            "DesignTokens.Guide.Colors"
+            [ "ColorEntry"
+            , "SkinToneEntry"
+            , "RainbowColor"
+            , "brandColors"
+            , "skinTones"
+            , "rainbowColors"
+            ]
+        , ""
+        , ""
+        , "{-| Structured colour data for brand guide pages."
+        , ""
+        , "Use these lists to render colour palettes, swatches, and documentation."
+        , "Hex values are kept in sync with 'DesignTokens.Colors'."
+        , ""
+        , "-}"
+        , ""
+        , ""
+        , "{-| A brand colour entry with display metadata. -}"
+        , "type alias ColorEntry ="
+        , "    { hex : String"
+        , "    , id : String"
+        , "    , name : String"
+        , "    , description : String"
+        , "    , usage : List String"
+        , "    }"
+        , ""
+        , ""
+        , "{-| A skin-tone entry with display metadata. -}"
+        , "type alias SkinToneEntry ="
+        , "    { hex : String"
+        , "    , id : String"
+        , "    , name : String"
+        , "    , description : String"
+        , "    }"
+        , ""
+        , ""
+        , "{-| A rainbow colour entry with display metadata. -}"
+        , "type alias RainbowColor ="
+        , "    { hex : String"
+        , "    , name : String"
+        , "    , description : String"
+        , "    }"
+        , ""
+        , ""
+        , "{-| Brand colour palette. -}"
+        , "brandColors : List ColorEntry"
+        , "brandColors ="
+        , "    " <> elmRecordList (map brandColorRecord $ dgBrandColors dg)
+        , ""
+        , ""
+        , "{-| Minifig skin-tone palette. -}"
+        , "skinTones : List SkinToneEntry"
+        , "skinTones ="
+        , "    " <> elmRecordList (map skinToneRecord $ dgSkinTones dg)
+        , ""
+        , ""
+        , "{-| Rainbow colour palette. -}"
+        , "rainbowColors : List RainbowColor"
+        , "rainbowColors ="
+        , "    " <> elmRecordList (map rainbowRecord $ dgRainbowColors dg)
+        ]
+
+brandColorRecord :: BrandColor -> Text
+brandColorRecord bc =
+    elmRecord
+        [ ("hex", quote $ hexText $ bcHex bc)
+        , ("id", quote $ bcId bc)
+        , ("name", quote $ bcName bc)
+        , ("description", quote $ bcDescriptionFi bc)
+        , ("usage", elmList (map quote $ bcUsage bc))
+        ]
+
+skinToneRecord :: SkinTone -> Text
+skinToneRecord st =
+    elmRecord
+        [ ("hex", quote $ hexText $ stHex st)
+        , ("id", quote $ stId st)
+        , ("name", quote $ stName st)
+        , ("description", quote $ stDescription st)
+        ]
+
+rainbowRecord :: RainbowColor -> Text
+rainbowRecord rc =
+    elmRecord
+        [ ("hex", quote $ hexText $ rcHex rc)
+        , ("name", quote $ rcName rc)
+        , ("description", quote $ rcDescription rc)
+        ]
+
+-- ---------------------------------------------------------------------------
+-- Guide.Logos module
+-- ---------------------------------------------------------------------------
+
+guideLogosModule :: DesignGuide -> Text
+guideLogosModule dg =
+    let lg = dgLogos dg
+     in T.unlines $
+            [ moduleHeader
+                "DesignTokens.Guide.Logos"
+                [ "LogoVariant"
+                , "squareVariants"
+                , "squareFullVariants"
+                , "horizontalVariants"
+                ]
+            , ""
+            , ""
+            , "{-| Structured logo variant data for brand guide pages."
+            , ""
+            , "Use these lists to render logo galleries and download links."
+            , ""
+            , "-}"
+            , ""
+            , ""
+            , "{-| One downloadable logo variant with all its rendering properties. -}"
+            , "type alias LogoVariant ="
+            , "    { id : String"
+            , "    , description : String"
+            , "    , theme : String"
+            , "    , animated : Bool"
+            , "    , withText : Bool"
+            , "    , bold : Bool"
+            , "    , highlight : Bool"
+            , "    , svgUrl : Maybe String"
+            , "    , pngUrl : Maybe String"
+            , "    , webpUrl : Maybe String"
+            , "    , gifUrl : Maybe String"
+            , "    }"
+            , ""
+            , ""
+            , "{-| Square (icon-only) logo variants. -}"
+            , "squareVariants : List LogoVariant"
+            , "squareVariants ="
+            , "    " <> elmRecordList (map logoVariantRecord $ lgSquare lg)
+            , ""
+            , ""
+            , "{-| Square logo variants with two-line text. -}"
+            , "squareFullVariants : List LogoVariant"
+            , "squareFullVariants ="
+            , "    " <> elmRecordList (map logoVariantRecord $ lgSquareFull lg)
+            , ""
+            , ""
+            , "{-| Horizontal logo variants. -}"
+            , "horizontalVariants : List LogoVariant"
+            , "horizontalVariants ="
+            , "    " <> elmRecordList (map logoVariantRecord $ lgHorizontal lg)
+            ]
+
+logoVariantRecord :: LogoVariant -> Text
+logoVariantRecord lv =
+    elmRecord
+        [ ("id", quote $ lvId lv)
+        , ("description", quote $ lvDescription lv)
+        , ("theme", quote $ lvTheme lv)
+        , ("animated", elmBool $ lvAnimated lv)
+        , ("withText", elmBool $ lvWithText lv)
+        , ("bold", elmBool $ lvBold lv)
+        , ("highlight", elmBool $ lvHighlight lv)
+        , ("svgUrl", elmMaybe quote $ lvSvgUrl lv)
+        , ("pngUrl", elmMaybe quote $ lvPngUrl lv)
+        , ("webpUrl", elmMaybe quote $ lvWebpUrl lv)
+        , ("gifUrl", elmMaybe quote $ lvGifUrl lv)
+        ]
+
+-- ---------------------------------------------------------------------------
 -- Helpers
 -- ---------------------------------------------------------------------------
 
@@ -522,3 +698,32 @@ elmList :: [Text] -> Text
 elmList [] = "[]"
 elmList [x] = "[ " <> x <> " ]"
 elmList xs = "[ " <> T.intercalate "\n    , " xs <> "\n    ]"
+
+elmBool :: Bool -> Text
+elmBool True = "True"
+elmBool False = "False"
+
+elmMaybe :: (Text -> Text) -> Maybe Text -> Text
+elmMaybe _ Nothing = "Nothing"
+elmMaybe f (Just t) = "Just " <> f t
+
+-- | Render a record literal from a list of (field, value) pairs.
+elmRecord :: [(Text, Text)] -> Text
+elmRecord [] = "{}"
+elmRecord ((k, v) : rest) =
+    "{ "
+        <> k
+        <> " = "
+        <> v
+        <> T.concat (map (\(fk, fv) -> "\n    , " <> fk <> " = " <> fv) rest)
+        <> "\n    }"
+
+-- | Render a list of record literals with aligned indentation.
+elmRecordList :: [Text] -> Text
+elmRecordList [] = "[]"
+elmRecordList [x] = "[ " <> T.replace "\n" "\n  " x <> "\n  ]"
+elmRecordList (x : xs) =
+    "[ "
+        <> T.replace "\n" "\n  " x
+        <> T.concat (map (\r -> "\n  , " <> T.replace "\n" "\n    " r) xs)
+        <> "\n  ]"

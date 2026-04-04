@@ -42,6 +42,7 @@ data Section
     | SAccessibility AccessibilityConfig
     | SOpacity OpacityConfig
     | SComponents [ComponentSpec]
+    | SLogos LogoGroup
 
 parseSection :: FilePath -> FilePath -> IO Section
 parseSection dir file = do
@@ -74,6 +75,9 @@ parseSection dir file = do
         "opacity.toml" -> do
             WrapOpacity op <- decodeOrFail file raw
             pure (SOpacity op)
+        "logos.toml" -> do
+            WrapLogos lg <- decodeOrFail file raw
+            pure (SLogos lg)
         _ -> fail $ "Unknown content file: " ++ file
 
 decodeOrFail :: (FromValue a) => String -> T.Text -> IO a
@@ -94,6 +98,7 @@ mergeSections sections = do
     ac <- requireOne "accessibility.toml" [x | SAccessibility x <- sections]
     op <- requireOne "opacity.toml" [x | SOpacity x <- sections]
     cs <- requireOne "components.toml" [x | SComponents x <- sections]
+    lg <- requireOne "logos.toml" [x | SLogos x <- sections]
     pure
         DesignGuide
             { dgMeta = m
@@ -109,6 +114,7 @@ mergeSections sections = do
             , dgAccessibility = ac
             , dgOpacity = op
             , dgComponents = cs
+            , dgLogos = lg
             }
 
 requireOne :: String -> [a] -> IO a
@@ -164,6 +170,10 @@ instance FromValue WrapOpacity where
 newtype WrapComponents = WrapComponents [ComponentSpec]
 instance FromValue WrapComponents where
     fromValue = parseTableFromValue $ WrapComponents <$> reqKey "component"
+
+newtype WrapLogos = WrapLogos LogoGroup
+instance FromValue WrapLogos where
+    fromValue = parseTableFromValue $ WrapLogos <$> reqKey "logo"
 
 -- ---------------------------------------------------------------------------
 -- Intermediate color table
@@ -231,6 +241,7 @@ instance FromValue BrandColor where
         n <- reqKey "name"
         h <- reqKey "hex"
         d <- reqKey "description"
+        dfi <- reqKey "description_fi"
         u <- reqKey "usage"
         w <- reqKey "wcag"
         pure
@@ -239,6 +250,7 @@ instance FromValue BrandColor where
                 , bcName = n
                 , bcHex = Hex h
                 , bcDescription = d
+                , bcDescriptionFi = dfi
                 , bcUsage = u
                 , bcWcag = w
                 }
@@ -542,4 +554,43 @@ instance FromValue ComponentSpec where
                 , csDescription = d
                 , csProps = p
                 , csTokenDependencies = td
+                }
+
+-- ---------------------------------------------------------------------------
+-- FromValue: Logos
+-- ---------------------------------------------------------------------------
+
+instance FromValue LogoGroup where
+    fromValue = parseTableFromValue $ do
+        sq <- reqKey "square"
+        sqf <- reqKey "square-full"
+        hz <- reqKey "horizontal"
+        pure LogoGroup{lgSquare = sq, lgSquareFull = sqf, lgHorizontal = hz}
+
+instance FromValue LogoVariant where
+    fromValue = parseTableFromValue $ do
+        i <- reqKey "id"
+        d <- reqKey "description"
+        th <- reqKey "theme"
+        an <- reqKey "animated"
+        wt <- reqKey "with-text"
+        bo <- reqKey "bold"
+        hi <- reqKey "highlight"
+        sv <- optKey "svg-url"
+        pn <- optKey "png-url"
+        wp <- optKey "webp-url"
+        gi <- optKey "gif-url"
+        pure
+            LogoVariant
+                { lvId = i
+                , lvDescription = d
+                , lvTheme = th
+                , lvAnimated = an
+                , lvWithText = wt
+                , lvBold = bo
+                , lvHighlight = hi
+                , lvSvgUrl = sv
+                , lvPngUrl = pn
+                , lvWebpUrl = wp
+                , lvGifUrl = gi
                 }

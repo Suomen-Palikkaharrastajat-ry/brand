@@ -4,10 +4,29 @@
 # ── Brand colors (primitive) ─────────────────────────────────────────────────
 
 [[color.brand]]
+id = "lego-yellow"
+name = "Yellow"
+hex = "#FAC80A"
+description = "Classic LEGO minifig yellow. Brand accent color."
+description_fi = "Pääaksenttiväri painikkeisiin, korostuksiin ja CTA-elementteihin. Älä käytä tekstinä vaalealla taustalla — kontrasti ei riitä."
+usage = ["primary brand", "accent"]
+
+  [[color.brand.wcag]]
+  on = "onWhite"
+  ratio = 1.5
+  rating = "fail"
+
+  [[color.brand.wcag]]
+  on = "onBlack"
+  ratio = 11.5
+  rating = "AAA"
+
+[[color.brand]]
 id = "lego-black"
 name = "Black"
 hex = "#05131D"
 description = "Primary brand color."
+description_fi = "Kaikki otsikot, leipäteksti ja navigaatio vaalealla taustalla. Käytä myös tummalle taustavärille."
 usage = ["features", "text", "dark background"]
 
   [[color.brand.wcag]]
@@ -25,6 +44,7 @@ id = "lego-white"
 name = "White"
 hex = "#FFFFFF"
 description = "Use for eye highlights and text on dark/brand-colored backgrounds."
+description_fi = "Teksti ja kuvakkeet tummalla (Brand Black) taustalla. Sivun oletustaustaväri."
 usage = ["eye highlights", "text on dark background"]
 
   [[color.brand.wcag]]
@@ -37,6 +57,7 @@ id = "red"
 name = "Red"
 hex = "#C91A09"
 description = "Accent colour from the Blacktron series. Use for highlights, danger states, and emphasis."
+description_fi = "Aksentti- ja varoitusväri. Ei koskaan pääväri — käytä korostuksiin, danger-tiloihin ja graafisiin elementteihin."
 usage = ["accent", "danger", "highlights"]
 
   [[color.brand.wcag]]

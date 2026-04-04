@@ -1,0 +1,230 @@
+# Logo variant tokens — square, square-full, and horizontal configurations.
+# Each entry describes one downloadable logo asset with its rendering properties.
+
+# ── Square (icon only) ───────────────────────────────────────────────────────
+
+[[logo.square]]
+id = "square-basic"
+description = "Neutraali ilme"
+theme = "light"
+animated = false
+with-text = false
+bold = false
+highlight = false
+svg-url = "/logo/square/svg/square-basic.svg"
+png-url = "/logo/square/png/square-basic.png"
+webp-url = "/logo/square/png/square-basic.webp"
+
+[[logo.square]]
+id = "square-smile"
+description = "Hymyilevä ilme"
+theme = "light"
+animated = false
+with-text = false
+bold = false
+highlight = true
+svg-url = "/logo/square/svg/square-smile.svg"
+png-url = "/logo/square/png/square-smile.png"
+webp-url = "/logo/square/png/square-smile.webp"
+
+[[logo.square]]
+id = "square-blink"
+description = "Silmää iskevä ilme"
+theme = "light"
+animated = false
+with-text = false
+bold = false
+highlight = false
+svg-url = "/logo/square/svg/square-blink.svg"
+png-url = "/logo/square/png/square-blink.png"
+webp-url = "/logo/square/png/square-blink.webp"
+
+[[logo.square]]
+id = "square-laugh"
+description = "Naurava ilme"
+theme = "light"
+animated = false
+with-text = false
+bold = false
+highlight = false
+svg-url = "/logo/square/svg/square-laugh.svg"
+png-url = "/logo/square/png/square-laugh.png"
+webp-url = "/logo/square/png/square-laugh.webp"
+
+[[logo.square]]
+id = "square-animated"
+description = "Animoitu logo, käy läpi kaikki neljä ilmettä"
+theme = "light"
+animated = true
+with-text = false
+bold = false
+highlight = false
+webp-url = "/logo/square/png/square-animated.webp"
+gif-url = "/logo/square/png/square-animated.gif"
+
+# ── Square full (icon + two-line text) ───────────────────────────────────────
+
+[[logo.square-full]]
+id = "square-smile-full"
+description = "Hymyilevä logo kahdella tekstirivillä, vaalea teema"
+theme = "light"
+animated = false
+with-text = true
+bold = false
+highlight = false
+svg-url = "/logo/square/svg/square-smile-full.svg"
+png-url = "/logo/square/png/square-smile-full.png"
+webp-url = "/logo/square/png/square-smile-full.webp"
+
+[[logo.square-full]]
+id = "square-smile-full-bold"
+description = "Hymyilevä logo kahdella tekstirivillä, lihavoitu, vaalea teema"
+theme = "light"
+animated = false
+with-text = true
+bold = true
+highlight = false
+svg-url = "/logo/square/svg/square-smile-full-bold.svg"
+png-url = "/logo/square/png/square-smile-full-bold.png"
+webp-url = "/logo/square/png/square-smile-full-bold.webp"
+
+[[logo.square-full]]
+id = "square-smile-full-dark"
+description = "Hymyilevä logo kahdella tekstirivillä, tumma teema"
+theme = "dark"
+animated = false
+with-text = true
+bold = false
+highlight = false
+svg-url = "/logo/square/svg/square-smile-full-dark.svg"
+png-url = "/logo/square/png/square-smile-full-dark.png"
+webp-url = "/logo/square/png/square-smile-full-dark.webp"
+
+[[logo.square-full]]
+id = "square-smile-full-dark-bold"
+description = "Hymyilevä logo kahdella tekstirivillä, lihavoitu, tumma teema"
+theme = "dark"
+animated = false
+with-text = true
+bold = true
+highlight = false
+svg-url = "/logo/square/svg/square-smile-full-dark-bold.svg"
+png-url = "/logo/square/png/square-smile-full-dark-bold.png"
+webp-url = "/logo/square/png/square-smile-full-dark-bold.webp"
+
+# ── Horizontal ───────────────────────────────────────────────────────────────
+
+[[logo.horizontal]]
+id = "horizontal"
+description = "Pelkkä logo, vaalea teema"
+theme = "light"
+animated = false
+with-text = false
+bold = false
+highlight = false
+svg-url = "/logo/horizontal/svg/horizontal.svg"
+png-url = "/logo/horizontal/png/horizontal.png"
+webp-url = "/logo/horizontal/png/horizontal.webp"
+
+[[logo.horizontal]]
+id = "horizontal-full"
+description = "Logo yhdistyksen nimellä, vaalea teema"
+theme = "light"
+animated = false
+with-text = true
+bold = false
+highlight = false
+svg-url = "/logo/horizontal/svg/horizontal-full.svg"
+png-url = "/logo/horizontal/png/horizontal-full.png"
+webp-url = "/logo/horizontal/png/horizontal-full.webp"
+
+[[logo.horizontal]]
+id = "horizontal-full-bold"
+description = "Logo nimitekstillä, lihavoitu, vaalea teema"
+theme = "light"
+animated = false
+with-text = true
+bold = true
+highlight = false
+svg-url = "/logo/horizontal/svg/horizontal-full-bold.svg"
+png-url = "/logo/horizontal/png/horizontal-full-bold.png"
+webp-url = "/logo/horizontal/png/horizontal-full-bold.webp"
+
+[[logo.horizontal]]
+id = "horizontal-full-dark"
+description = "Logo nimitekstillä, tumma teema"
+theme = "dark"
+animated = false
+with-text = true
+bold = false
+highlight = false
+svg-url = "/logo/horizontal/svg/horizontal-full-dark.svg"
+png-url = "/logo/horizontal/png/horizontal-full-dark.png"
+webp-url = "/logo/horizontal/png/horizontal-full-dark.webp"
+
+[[logo.horizontal]]
+id = "horizontal-full-dark-bold"
+description = "Logo nimitekstillä, lihavoitu, tumma teema"
+theme = "dark"
+animated = false
+with-text = true
+bold = true
+highlight = false
+svg-url = "/logo/horizontal/svg/horizontal-full-dark-bold.svg"
+png-url = "/logo/horizontal/png/horizontal-full-dark-bold.png"
+webp-url = "/logo/horizontal/png/horizontal-full-dark-bold.webp"
+
+[[logo.horizontal]]
+id = "horizontal-animated"
+description = "Animoitu logo"
+theme = "light"
+animated = true
+with-text = false
+bold = false
+highlight = false
+webp-url = "/logo/horizontal/png/horizontal-animated.webp"
+gif-url = "/logo/horizontal/png/horizontal-animated.gif"
+
+[[logo.horizontal]]
+id = "horizontal-full-animated"
+description = "Animoitu logo nimitekstillä, vaalea teema"
+theme = "light"
+animated = true
+with-text = true
+bold = false
+highlight = false
+webp-url = "/logo/horizontal/png/horizontal-full-animated.webp"
+gif-url = "/logo/horizontal/png/horizontal-full-animated.gif"
+
+[[logo.horizontal]]
+id = "horizontal-full-bold-animated"
+description = "Animoitu logo nimitekstillä, lihavoitu, vaalea teema"
+theme = "light"
+animated = true
+with-text = true
+bold = true
+highlight = false
+webp-url = "/logo/horizontal/png/horizontal-full-bold-animated.webp"
+gif-url = "/logo/horizontal/png/horizontal-full-bold-animated.gif"
+
+[[logo.horizontal]]
+id = "horizontal-full-dark-animated"
+description = "Animoitu logo nimitekstillä, tumma teema"
+theme = "dark"
+animated = true
+with-text = true
+bold = false
+highlight = false
+webp-url = "/logo/horizontal/png/horizontal-full-dark-animated.webp"
+gif-url = "/logo/horizontal/png/horizontal-full-dark-animated.gif"
+
+[[logo.horizontal]]
+id = "horizontal-full-dark-bold-animated"
+description = "Animoitu logo nimitekstillä, lihavoitu, tumma teema"
+theme = "dark"
+animated = true
+with-text = true
+bold = true
+highlight = false
+webp-url = "/logo/horizontal/png/horizontal-full-dark-bold-animated.webp"
+gif-url = "/logo/horizontal/png/horizontal-full-dark-bold-animated.gif"

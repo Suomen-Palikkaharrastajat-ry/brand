@@ -56,6 +56,10 @@ module DesignTokensGen.Types (
 
     -- * Components
     ComponentSpec (..),
+
+    -- * Logos
+    LogoVariant (..),
+    LogoGroup (..),
 )
 where
 
@@ -88,6 +92,7 @@ data DesignGuide = DesignGuide
     , dgAccessibility :: AccessibilityConfig
     , dgOpacity :: OpacityConfig
     , dgComponents :: [ComponentSpec]
+    , dgLogos :: LogoGroup
     }
     deriving (Show, Eq)
 
@@ -125,6 +130,7 @@ data BrandColor = BrandColor
     , bcName :: Text
     , bcHex :: Hex
     , bcDescription :: Text
+    , bcDescriptionFi :: Text
     , bcUsage :: [Text]
     , bcWcag :: [WcagContrast]
     }
@@ -347,5 +353,31 @@ data ComponentSpec = ComponentSpec
     , csDescription :: Text
     , csProps :: [Text]
     , csTokenDependencies :: [Text]
+    }
+    deriving (Show, Eq)
+
+-- ---------------------------------------------------------------------------
+-- Logos
+-- ---------------------------------------------------------------------------
+
+data LogoVariant = LogoVariant
+    { lvId :: Text
+    , lvDescription :: Text
+    , lvTheme :: Text
+    , lvAnimated :: Bool
+    , lvWithText :: Bool
+    , lvBold :: Bool
+    , lvHighlight :: Bool
+    , lvSvgUrl :: Maybe Text
+    , lvPngUrl :: Maybe Text
+    , lvWebpUrl :: Maybe Text
+    , lvGifUrl :: Maybe Text
+    }
+    deriving (Show, Eq)
+
+data LogoGroup = LogoGroup
+    { lgSquare :: [LogoVariant]
+    , lgSquareFull :: [LogoVariant]
+    , lgHorizontal :: [LogoVariant]
     }
     deriving (Show, Eq)
